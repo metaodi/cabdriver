@@ -1,0 +1,43 @@
+{
+  "name": "cabdriver",
+  "version": "1.0.0",
+  "description": "Helps you to fill in your hours with taxi",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/metaodi/cabdriver"
+  },
+  "keywords": [
+    "taxi",
+    "zebra",
+    "hours"
+  ],
+  "author": "Stefan Oderbolz <odi@readmore.ch> (http://metaodi.ch/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/metaodi/cabdriver/issues"
+  },
+  "homepage": "https://github.com/metaodi/cabdriver",
+  "dependencies": {
+    "async": "^1.5.2",
+    "commander": "^2.9.0",
+    "google-auth-library": "^0.9.7",
+    "googleapis": "^2.1.7",
+    "moment": "^2.11.1",
+    "moment-timezone": "^0.5.0",
+    "superagent": "^1.7.0",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-jscs": "^3.0.2",
+    "gulp-jshint": "^2.0.0",
+    "gulp-util": "^3.0.1",
+    "jshint-stylish": "^2.1.0",
+    "mocha": "~2.3.4",
+    "should": "~8.1.1"
+  }
+}
