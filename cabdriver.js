@@ -49,7 +49,7 @@ function getStartAndEndDate(dateStr) {
 
 Program
   .version(pkg.version)
-  .option('-n, --number [number of events]', 'number of events to show [10]', 10)
+  .option('-n, --number [number of events]', 'number of events to show [20]', 20)
   .option('-d, --date <date>', 'date for query [today]', 'today')
   .option('-c, --calendar [cal_id]', 'determine which calendar you want to use [primary]', 'primary')
   .option('-v, --verbose', 'more verbose output [false]', false)
