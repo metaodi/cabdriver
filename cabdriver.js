@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 
 var Program = require('commander');
-var Chrono = require('chrono-node');
 var SemanticDate = require('semantic-date');
-var Moment = require('moment-timezone');
+var Moment = require('moment');
 var _ = require('underscore');
 
 var auth = require('./lib/auth');
