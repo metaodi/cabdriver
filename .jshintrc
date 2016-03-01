@@ -18,5 +18,5 @@
     "mocha": true,
     "node": true,
     "devel": true,
-    "maxcomplexity": 5
+    "maxcomplexity": 7
 }
