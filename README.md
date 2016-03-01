@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/metaodi/cabdriver.svg?branch=master)](https://travis-ci.org/metaodi/cabdriver)
+
 cabdriver
 =========
 
