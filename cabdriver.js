@@ -8,6 +8,7 @@ var _ = require('underscore');
 
 var auth = require('./lib/auth');
 var calendar = require('./lib/calendar');
+var pkg = require('./package.json');
 
 function dashed(val) {
     var splitted = val.split('-');
@@ -17,7 +18,7 @@ function dashed(val) {
 }
 
 Program
-  .version('0.0.1')
+  .version(pkg.version)
   .option('-n, --number [number of events]', 'Number of events to show [10]', 10)
   .option('-d, --date <date>', 'Date for query [today]', 'today')
   .option('-c, --calendar [cal_id]', 'Determine which calendar you want to use [primary]', 'primary')
