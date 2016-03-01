@@ -1,6 +1,6 @@
 {
   "name": "cabdriver",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Helps you to fill in your hours with taxi",
   "main": "bot.js",
   "scripts": {
@@ -28,16 +28,7 @@
     "googleapis": "^2.1.7",
     "moment": "^2.11.1",
     "moment-timezone": "^0.5.0",
-    "superagent": "^1.7.0",
+    "semantic-date": "^0.2.1",
     "underscore": "^1.8.3"
-  },
-  "devDependencies": {
-    "gulp": "^3.8.10",
-    "gulp-jscs": "^3.0.2",
-    "gulp-jshint": "^2.0.0",
-    "gulp-util": "^3.0.1",
-    "jshint-stylish": "^2.1.0",
-    "mocha": "~2.3.4",
-    "should": "~8.1.1"
   }
 }
