@@ -30,17 +30,17 @@ For a complete help run `cabdriver --help`.
 
 * `-n --number` number of entries to return (default: 10)
 * `-d --date` supports date strings or ranges (default: today):
-** 31.12.2016
-** 01.12.2016-31.12.2016
-** yesterday
-** last-week
-** past-week (7 days)
-** last-month (month before the current)
-** past-month (30 days)
-** last-year (year before the current)
-** past-year (365 days)
-** today (up to current time)
-** this-week (up to current time)
-** this-month (up to current time)
-** this-year (up to current time)
+  * 31.12.2016
+  * 01.12.2016-31.12.2016
+  * yesterday
+  * last-week
+  * past-week (7 days)
+  * last-month (month before the current)
+  * past-month (30 days)
+  * last-year (year before the current)
+  * past-year (365 days)
+  * today (up to current time)
+  * this-week (up to current time)
+  * this-month (up to current time)
+  * this-year (up to current time)
 * `-c --calendar` choose the calendar for the entries (default: primary)
