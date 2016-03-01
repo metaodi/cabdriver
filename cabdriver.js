@@ -36,10 +36,10 @@ function getStartAndEndDate(dateStr) {
         }
 
         if (startStr && Moment(startStr, 'DD.MM.YYYY').isValid()) {
-            dates['startDate'] = Moment(startStr, 'DD.MM.YYYY');
+            dates['startDate'] = Moment(startStr, 'DD.MM.YYYY').tz('Europe/Zurich');
         }
         if (endStr && Moment(endStr, 'DD.MM.YYYY').isValid()) {
-            dates['endDate'] = Moment(endStr, 'DD.MM.YYYY');
+            dates['endDate'] = Moment(endStr, 'DD.MM.YYYY').tz('Europe/Zurich');
         }
     }
     dates['startDate'] = Moment(dates['startDate']).tz('Europe/Zurich').toISOString();
