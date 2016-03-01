@@ -4,7 +4,13 @@ cabdriver
 cabdriver is a small helper application that helps you to fill in your hours in taxi.
 It currently support Google Calendar to get entries in a taxi-friendly format.
 
-## Usage
+## Installation
+
+```bash
+npm install -g cabdriver
+```
+
+### Usage
 
 ```bash
 $ cabdriver -n 10 -d last-month
@@ -28,7 +34,7 @@ xxx    14:00-15:00   HWZ DoD
 $ cabdriver -d 01.03.2016-05.03.2016 -n 100
 ```
 
-## Options
+### Options
 
 For a complete help run `cabdriver --help`.
 
@@ -48,3 +54,11 @@ For a complete help run `cabdriver --help`.
   * this-month (up to current time)
   * this-year (up to current time)
 * `-c --calendar` choose the calendar for the entries (default: primary)
+
+## Tests
+
+To run the tests use the following command:
+
+```bash
+npm test
+```

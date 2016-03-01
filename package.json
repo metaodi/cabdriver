@@ -1,14 +1,14 @@
 {
   "name": "cabdriver",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Helps you to fill in your hours with taxi",
   "main": "cabdriver.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -R spec -t 10000"
   },
   "preferGlobal": true,
   "bin": {
-      "cabdriver": "cabdriver.js"
+    "cabdriver": "cabdriver.js"
   },
   "repository": {
     "type": "git",
@@ -32,5 +32,14 @@
     "moment": "^2.11.1",
     "semantic-date": "^0.2.1",
     "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "gulp": "^3.8.10",
+    "gulp-jscs": "^3.0.2",
+    "gulp-jshint": "^2.0.0",
+    "jshint-stylish": "^2.1.0",
+    "jshint": "^2.9.1",
+    "mocha": "~2.3.4"
   }
 }

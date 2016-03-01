@@ -1,0 +1,10 @@
+{
+    "preset": "node-style-guide",
+    "requireCapitalizedComments": null,
+    "disallowQuotedKeysInObjects": null,
+    "requireTrailingComma": null,
+    "validateQuoteMarks": null,
+    "validateIndentation": 4,
+    "maximumLineLength": 120,
+    "disallowMultipleVarDecl": null
+}
