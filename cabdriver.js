@@ -18,10 +18,10 @@ function dashed(val) {
 
 Program
   .version(pkg.version)
-  .option('-n, --number [number of events]', 'Number of events to show [10]', 10)
-  .option('-d, --date <date>', 'Date for query [today]', 'today')
-  .option('-c, --calendar [cal_id]', 'Determine which calendar you want to use [primary]', 'primary')
-  .option('-v, --verbose', 'More verbose output [false]', false)
+  .option('-n, --number [number of events]', 'number of events to show [10]', 10)
+  .option('-d, --date <date>', 'date for query [today]', 'today')
+  .option('-c, --calendar [cal_id]', 'determine which calendar you want to use [primary]', 'primary')
+  .option('-v, --verbose', 'more verbose output [false]', false)
   .parse(process.argv);
 
 

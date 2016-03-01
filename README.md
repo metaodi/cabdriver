@@ -7,7 +7,7 @@ It currently support Google Calendar to get entries in a taxi-friendly format.
 ## Usage
 
 ```bash
-$ cabdriver -c 10 -d last-month
+$ cabdriver -n 10 -d last-month
 
 02/02/2016 # Tuesday
 xxx    09:00-10:00   opendata.swiss Go-Live
@@ -22,6 +22,10 @@ xxx    09:30-09:45   Jazz Daily Stand-Up
 xxx    10:00-10:30   Support Backlog
 xxx    10:45-11:30   HWZ Preplanning
 xxx    14:00-15:00   HWZ DoD
+```
+
+```bash
+$ cabdriver -d 01.03.2016-05.03.2016 -n 100
 ```
 
 ## Options
