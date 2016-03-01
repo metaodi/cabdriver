@@ -2,18 +2,49 @@
 
 var Program = require('commander');
 var SemanticDate = require('semantic-date');
-var Moment = require('moment');
+var Moment = require('moment-timezone');
 var _ = require('underscore');
 
 var auth = require('./lib/auth');
 var calendar = require('./lib/calendar');
 var pkg = require('./package.json');
 
+exports.getStartAndEndDate = getStartAndEndDate;
+
 function dashed(val) {
     var splitted = val.split('-');
     return _.map(splitted, function(elem) {
         return elem.trim();
     });
+}
+
+function getStartAndEndDate(dateStr) {
+    var dates = {
+        'startDate': null,
+        'endDate': null
+    };
+    if (SemanticDate.validate(dateStr)) {
+        var parsed = SemanticDate.convert(dateStr);
+        dates['startDate'] = parsed.start;
+        dates['endDate'] = parsed.end;
+    } else {
+        var dateArr = dashed(dateStr);
+        var startStr = dateArr[0];
+        var endStr = '';
+        if (dateArr.length > 1) {
+            endStr = dateArr[1];
+        }
+
+        if (startStr && Moment(startStr, 'DD.MM.YYYY').isValid()) {
+            dates['startDate'] = Moment(startStr, 'DD.MM.YYYY');
+        }
+        if (endStr && Moment(endStr, 'DD.MM.YYYY').isValid()) {
+            dates['endDate'] = Moment(endStr, 'DD.MM.YYYY');
+        }
+    }
+    dates['startDate'] = Moment(dates['startDate']).tz('Europe/Zurich').toISOString();
+    dates['endDate'] = dates['endDate'] ? Moment(dates['endDate']).tz('Europe/Zurich').endOf('day').toISOString() : '';
+    return dates;
 }
 
 Program
@@ -25,41 +56,17 @@ Program
   .parse(process.argv);
 
 
-var startDate = null;
-var endDate = null;
-
-if (SemanticDate.validate(Program.date)) {
-    var parsed = SemanticDate.convert(Program.date);
-    startDate = parsed.start;
-    endDate = parsed.end;
-} else {
-    var dates = dashed(Program.date);
-    var startStr = dates[0];
-    var endStr = '';
-    if (dates.length > 1) {
-        endStr = dates[1].trim();
-    }
-
-    if (startStr && Moment(startStr, 'DD.MM.YYYY').isValid()) {
-        startDate = Moment(startStr, 'DD.MM.YYYY');
-    }
-    if (endStr && Moment(endStr, 'DD.MM.YYYY').isValid()) {
-        endDate = Moment(endStr, 'DD.MM.YYYY');
-    }
-}
-
-startDate = Moment(startDate).toISOString();
-endDate = endDate ? Moment(endDate).endOf('day').toISOString() : '';
+var dates = getStartAndEndDate(Program.date);
 
 if (Program.verbose) {
-    console.log('Start date: %s', startDate);
-    console.log('End date: %s', endDate);
+    console.log('Start date: %s', dates['startDate']);
+    console.log('End date: %s', dates['endDate']);
     console.log('Calendar: %s', Program.calendar);
     console.log('Count: %s', Program.number);
 }
 
 if (Program.number) {
     auth.getAuth(function(auth) {
-        calendar.listEvents(auth, Program.number, startDate, endDate, Program.calendar);
+        calendar.listEvents(auth, Program.number, dates['startDate'], dates['endDate'], Program.calendar);
     });
 }

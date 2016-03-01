@@ -4,7 +4,7 @@
   "description": "Helps you to fill in your hours with taxi",
   "main": "cabdriver.js",
   "scripts": {
-    "test": "mocha -R spec -t 10000"
+    "test": "mocha"
   },
   "preferGlobal": true,
   "bin": {
@@ -30,6 +30,7 @@
     "google-auth-library": "^0.9.7",
     "googleapis": "^2.1.7",
     "moment": "^2.11.1",
+    "moment-timezone": "^0.5.1",
     "semantic-date": "^0.2.1",
     "underscore": "^1.8.3"
   },
