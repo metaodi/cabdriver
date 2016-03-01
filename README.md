@@ -26,8 +26,10 @@ xxx    14:00-15:00   HWZ DoD
 
 ## Options
 
-* `-d` supports date strings or ranges:
+For a complete help run `cabdriver --help`.
 
+* `-n --number` number of entries to return (default: 10)
+* `-d --date` supports date strings or ranges (default: today):
 ** 31.12.2016
 ** 01.12.2016-31.12.2016
 ** yesterday
@@ -41,3 +43,4 @@ xxx    14:00-15:00   HWZ DoD
 ** this-week (up to current time)
 ** this-month (up to current time)
 ** this-year (up to current time)
+* `-c --calendar` choose the calendar for the entries (default: primary)

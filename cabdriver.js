@@ -18,7 +18,7 @@ function dashed(val) {
 
 Program
   .version('0.0.1')
-  .option('-c, --count [number of events]', 'Amount of events to show [10]', 10)
+  .option('-n, --number [number of events]', 'Number of events to show [10]', 10)
   .option('-d, --date <date>', 'Date for query [today]', 'today')
   .option('-c, --calendar [cal_id]', 'Determine which calendar you want to use [primary]', 'primary')
   .option('-v, --verbose', 'More verbose output [false]', false)
@@ -55,11 +55,11 @@ if (Program.verbose) {
     console.log('Start date: %s', startDate);
     console.log('End date: %s', endDate);
     console.log('Calendar: %s', Program.calendar);
-    console.log('Count: %s', Program.count);
+    console.log('Count: %s', Program.number);
 }
 
-if (Program.count) {
+if (Program.number) {
     auth.getAuth(function(auth) {
-        calendar.listEvents(auth, Program.count, startDate, endDate, Program.calendar);
+        calendar.listEvents(auth, Program.number, startDate, endDate, Program.calendar);
     });
 }
