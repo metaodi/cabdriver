@@ -40,7 +40,7 @@ $ cabdriver -d 01.03.2016-05.03.2016 -n 100
 
 For a complete help run `cabdriver --help`.
 
-* `-n --number` number of entries to return (default: 20)
+* `-n --number` number of entries to return (default: 250)
 * `-d --date` supports date strings or ranges (default: today):
   * 31.12.2016
   * 01.12.2016-31.12.2016
