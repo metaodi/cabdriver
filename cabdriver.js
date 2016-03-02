@@ -7,6 +7,7 @@ var _ = require('underscore');
 
 var auth = require('./lib/auth');
 var calendar = require('./lib/calendar');
+var mail = require('./lib/mail');
 var pkg = require('./package.json');
 
 exports.getStartAndEndDate = getStartAndEndDate;
@@ -65,8 +66,10 @@ if (Program.verbose) {
     console.log('Count: %s', Program.number);
 }
 
-if (Program.number) {
-    auth.getAuth(function(auth) {
-        calendar.listEvents(auth, Program.number, dates['startDate'], dates['endDate'], Program.calendar);
-    });
-}
+auth.getAuth(function(auth) {
+    // Google Calendar
+    calendar.listEvents(auth, Program.number, dates['startDate'], dates['endDate'], Program.calendar);
+
+    // Google Mail
+    mail.listMessages(auth, Program.number, dates['startDate'], dates['endDate']);
+});
