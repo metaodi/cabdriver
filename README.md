@@ -15,7 +15,7 @@ npm install -g cabdriver
 ### Usage
 
 ```bash
-$ cabdriver -n 10 -d last-month
+$ cabdriver -n 10 -d yesterday
 
 02/02/2016 # Tuesday
 xxx    09:00-10:00   opendata.swiss Go-Live
@@ -34,6 +34,10 @@ xxx    14:00-15:00   HWZ DoD
 
 ```bash
 $ cabdriver -d 01.03.2016-05.03.2016 -n 100
+```
+
+```bash
+$ cabdriver -d last-month
 ```
 
 ### Options
