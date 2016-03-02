@@ -36,14 +36,14 @@ function getStartAndEndDate(dateStr) {
         }
 
         if (startStr && Moment(startStr, 'DD.MM.YYYY').isValid()) {
-            dates['startDate'] = Moment(startStr, 'DD.MM.YYYY').tz('Europe/Zurich');
+            dates['startDate'] = Moment.tz(startStr, 'DD.MM.YYYY', 'Europe/Zurich');
         }
         if (endStr && Moment(endStr, 'DD.MM.YYYY').isValid()) {
-            dates['endDate'] = Moment(endStr, 'DD.MM.YYYY').tz('Europe/Zurich');
+            dates['endDate'] = Moment.tz(endStr, 'DD.MM.YYYY', 'Europe/Zurich');
         }
     }
-    dates['startDate'] = Moment(dates['startDate']).tz('Europe/Zurich').toISOString();
-    dates['endDate'] = dates['endDate'] ? Moment(dates['endDate']).tz('Europe/Zurich').endOf('day').toISOString() : '';
+    dates['startDate'] = Moment.tz(dates['startDate'], 'Europe/Zurich').toISOString();
+    dates['endDate'] = dates['endDate'] ? Moment.tz(dates['endDate'], 'Europe/Zurich').endOf('day').toISOString() : '';
     return dates;
 }
 
