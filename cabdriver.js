@@ -45,7 +45,7 @@ function getStartAndEndDate(dateStr) {
         }
     }
     dates['endDate'] = dates['endDate'] ? dates['endDate'].toISOString() : Moment(dates['startDate']).endOf('day').toISOString();
-    dates['startDate'] = dates['startDate'].toISOString();
+    dates['startDate'] = dates['startDate'] ? dates['startDate'].toISOString() : Moment().endOf('day').toISOString();
     return dates;
 }
 
