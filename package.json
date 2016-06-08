@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/metaodi/cabdriver",
   "dependencies": {
+    "async": "^1.5.2",
     "commander": "^2.9.0",
     "google-auth-library": "^0.9.7",
     "googleapis": "^2.1.7",

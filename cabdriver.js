@@ -3,6 +3,7 @@
 var Program = require('commander');
 var SemanticDate = require('semantic-date');
 var Moment = require('moment-timezone');
+var Async = require('async');
 var _ = require('underscore');
 
 var auth = require('./lib/auth');
@@ -26,8 +27,8 @@ function getStartAndEndDate(dateStr) {
     };
     if (SemanticDate.validate(dateStr)) {
         var parsed = SemanticDate.convert(dateStr);
-        dates['startDate'] = parsed.start;
-        dates['endDate'] = parsed.end;
+        dates['startDate'] = Moment.tz(parsed.start, 'Europe/Zurich');
+        dates['endDate'] = Moment.tz(parsed.end, 'Europe/Zurich');
     } else {
         var dateArr = dashed(dateStr);
         var startStr = dateArr[0];
@@ -37,14 +38,14 @@ function getStartAndEndDate(dateStr) {
         }
 
         if (startStr && Moment(startStr, 'DD.MM.YYYY').isValid()) {
-            dates['startDate'] = Moment.tz(startStr, 'DD.MM.YYYY', 'Europe/Zurich');
+            dates['startDate'] = Moment(startStr, 'DD.MM.YYYY').tz('Europe/Zurich');
         }
         if (endStr && Moment(endStr, 'DD.MM.YYYY').isValid()) {
-            dates['endDate'] = Moment.tz(endStr, 'DD.MM.YYYY', 'Europe/Zurich');
+            dates['endDate'] = Moment(endStr, 'DD.MM.YYYY').tz('Europe/Zurich');
         }
     }
-    dates['startDate'] = Moment.tz(dates['startDate'], 'Europe/Zurich').toISOString();
-    dates['endDate'] = dates['endDate'] ? Moment.tz(dates['endDate'], 'Europe/Zurich').endOf('day').toISOString() : '';
+    dates['endDate'] = dates['endDate'] ? dates['endDate'].toISOString() : Moment(dates['startDate']).endOf('day').toISOString();
+    dates['startDate'] = dates['startDate'].toISOString();
     return dates;
 }
 
@@ -60,16 +61,42 @@ Program
 var dates = getStartAndEndDate(Program.date);
 
 if (Program.verbose) {
-    console.log('Start date: %s', dates['startDate']);
-    console.log('End date: %s', dates['endDate']);
+    console.log('Start date: %s', Moment.tz(dates['startDate'], 'Europe/Zurich').format('DD.MM.YYYY'));
+    console.log('End date: %s', Moment.tz(dates['endDate'], 'Europe/Zurich').format('DD.MM.YYYY'));
     console.log('Calendar: %s', Program.calendar);
     console.log('Count: %s', Program.number);
 }
 
 auth.getAuth(function(auth) {
-    // Google Calendar
-    calendar.listEvents(auth, Program.number, dates['startDate'], dates['endDate'], Program.calendar);
+    Async.series([
+        function(callback) {
+            // Google Calendar
+            calendar.listEvents(callback, auth, Program.number, dates['startDate'], dates['endDate'], Program.calendar);
+        },
+        function(callback) {
+            // Google Mail
+            mail.listMessages(callback, auth, Program.number, dates['startDate'], dates['endDate']);
+        },
+    ],
+    function(err, results) {
+        // var currentDay = '';
+        // var start = event.start.dateTime || event.start.date;
+        // var day = Moment(start);
+        // start = Moment(start).format('HH:mm');
+        // var end = event.end.dateTime || event.end.date;
+        // end = Moment(end).format('HH:mm');
 
-    // Google Mail
-    mail.listMessages(auth, Program.number, dates['startDate'], dates['endDate']);
+        // if (day.format('DD.MM.YYYY') !== currentDay) {
+        //     console.log('');
+        //     console.log('%s # %s', day.format('DD/MM/YYYY'), day.format('dddd'));
+        //     currentDay = day.format('DD.MM.YYYY');
+        // }
+        //
+        results = _.flatten(results);
+
+        console.dir(results);
+        _.each(results, function(result) {
+            console.log(result);
+        });        
+    });
 });
