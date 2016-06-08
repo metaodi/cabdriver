@@ -37,7 +37,7 @@ $ cabdriver -d 01.03.2016-05.03.2016 -n 100
 ```
 
 ```bash
-$ cabdriver -d last-month
+$ cabdriver -d last-month -v -m
 ```
 
 ### Options
@@ -60,6 +60,8 @@ For a complete help run `cabdriver --help`.
   * this-month (up to current time)
   * this-year (up to current time)
 * `-c --calendar` choose the calendar for the entries (default: primary)
+* `-m --mail` generate entries from mails
+* `-v --verbose` verbose output
 
 ## Tests
 
