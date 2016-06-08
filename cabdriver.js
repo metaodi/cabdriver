@@ -54,6 +54,7 @@ Program
   .option('-n, --number [number of events]', 'number of events to show [250]', 250)
   .option('-d, --date <date>', 'date for query [today]', 'today')
   .option('-c, --calendar [cal_id]', 'determine which calendar you want to use [primary]', 'primary')
+  .option('-m, --mail', 'use mail as source')
   .option('-v, --verbose', 'more verbose output [false]', false)
   .parse(process.argv);
 
@@ -64,6 +65,7 @@ if (Program.verbose) {
     console.log('Start date: %s', Moment.tz(dates['startDate'], 'Europe/Zurich').format('DD.MM.YYYY'));
     console.log('End date: %s', Moment.tz(dates['endDate'], 'Europe/Zurich').format('DD.MM.YYYY'));
     console.log('Calendar: %s', Program.calendar);
+    console.log('Mail: %s', Program.mail);
     console.log('Count: %s', Program.number);
 }
 
@@ -75,28 +77,38 @@ auth.getAuth(function(auth) {
         },
         function(callback) {
             // Google Mail
-            mail.listMessages(callback, auth, Program.number, dates['startDate'], dates['endDate']);
+            if (Program.mail) {
+                mail.listMessages(callback, auth, Program.number, dates['startDate'], dates['endDate']);
+            } else {
+                callback(null, []);
+            }
         },
     ],
     function(err, results) {
-        // var currentDay = '';
-        // var start = event.start.dateTime || event.start.date;
-        // var day = Moment(start);
-        // start = Moment(start).format('HH:mm');
-        // var end = event.end.dateTime || event.end.date;
-        // end = Moment(end).format('HH:mm');
-
-        // if (day.format('DD.MM.YYYY') !== currentDay) {
-        //     console.log('');
-        //     console.log('%s # %s', day.format('DD/MM/YYYY'), day.format('dddd'));
-        //     currentDay = day.format('DD.MM.YYYY');
-        // }
-        //
         results = _.flatten(results);
+        results = _.groupBy(results, 'timestamp');
 
-        console.dir(results);
-        _.each(results, function(result) {
-            console.log(result);
-        });        
+        //order the resulting object based on timestamp
+        var orderedResults = {};
+        Object.keys(results).sort().forEach(function(key) {
+              orderedResults[key] = results[key];
+        });
+
+        //print a section for each day separated by type
+        _.each(orderedResults, function(msgs, timestamp) {
+            var day = Moment.unix(timestamp).tz('Europe/Zurich');
+
+            msgs = _.groupBy(msgs, 'type');
+            console.log('');
+            console.log('%s # %s', day.format('DD/MM/YYYY'), day.format('dddd'));
+            _.each(msgs, function(msgs, type) {
+                console.log('# ' + type);
+                _.each(msgs, function(msg) {
+                    console.log(msg.text);
+                });
+            });
+
+        });
+
     });
 });
