@@ -27,8 +27,8 @@ function getStartAndEndDate(dateStr) {
     };
     if (SemanticDate.validate(dateStr)) {
         var parsed = SemanticDate.convert(dateStr);
-        dates['startDate'] = Moment(parsed.start).tz('Europe/Zurich');
-        dates['endDate'] = Moment(parsed.end).tz('Europe/Zurich');
+        dates['startDate'] = Moment.tz(parsed.start, 'Europe/Zurich');
+        dates['endDate'] = Moment.tz(parsed.end, 'Europe/Zurich');
     } else {
         var dateArr = dashed(dateStr);
         var startStr = dateArr[0];
@@ -38,10 +38,10 @@ function getStartAndEndDate(dateStr) {
         }
 
         if (startStr && Moment(startStr, 'DD.MM.YYYY').isValid()) {
-            dates['startDate'] = Moment(startStr, 'DD.MM.YYYY').tz('Europe/Zurich');
+            dates['startDate'] = Moment.tz(startStr, 'DD.MM.YYYY', 'Europe/Zurich');
         }
         if (endStr && Moment(endStr, 'DD.MM.YYYY').isValid()) {
-            dates['endDate'] = Moment(endStr, 'DD.MM.YYYY').tz('Europe/Zurich');
+            dates['endDate'] = Moment.tz(endStr, 'DD.MM.YYYY', 'Europe/Zurich');
         }
     }
     dates['endDate'] = dates['endDate'] ? dates['endDate'].toISOString() : Moment(dates['startDate']).endOf('day').toISOString();
