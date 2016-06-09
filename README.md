@@ -70,3 +70,11 @@ To run the tests use the following command:
 ```bash
 npm test
 ```
+
+## Release
+
+To create a new release follow these steps:
+
+1. Update the version number in `package.json`
+1. Create a [new release/tag on GitHub](https://github.com/metaodi/cabdriver/releases)
+1. Publish the release with npm: `npm publish`
