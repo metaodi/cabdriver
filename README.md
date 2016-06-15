@@ -4,7 +4,7 @@ cabdriver
 =========
 
 cabdriver is a small helper application that helps you to fill in your hours in taxi.
-It currently support Google Calendar to get entries in a taxi-friendly format.
+It currently support Google Calendar and Google Mail to get entries in a taxi-friendly format.
 
 ## Installation
 
