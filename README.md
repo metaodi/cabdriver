@@ -8,6 +8,8 @@ It currently support Google Calendar and Google Mail to get entries in a taxi-fr
 
 ## Installation
 
+Make sure you have [Node.js](https://nodejs.org/en/) installed.
+
 ```bash
 npm install -g cabdriver
 ```
