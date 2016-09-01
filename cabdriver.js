@@ -110,7 +110,9 @@ auth.getAuth(function(auth) {
             _.each(msgs, function(msgs, type) {
                 console.log('# ' + type);
                 _.each(msgs, function(msg) {
-                    console.log(msg.text);
+                    if (_.has(msg, 'text') && msg.text) {
+                        console.log(msg.text);
+                    }
                 });
             });
 
