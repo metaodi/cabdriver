@@ -61,6 +61,12 @@ Program
 
 var dates = getStartAndEndDate(Program.date);
 
+Moment.suppressDeprecationWarnings = true;
+if (!Moment(dates['endDate']).isValid() || !Moment(dates['startDate']).isValid()) {
+    console.error("Please enter a valid date range");
+    process.exit(1);
+}
+
 if (Program.verbose) {
     console.log('Start date: %s', Moment.tz(dates['startDate'], 'Europe/Zurich').format('DD.MM.YYYY'));
     console.log('End date: %s', Moment.tz(dates['endDate'], 'Europe/Zurich').format('DD.MM.YYYY'));
