@@ -26,13 +26,17 @@
   },
   "homepage": "https://github.com/metaodi/cabdriver",
   "dependencies": {
-    "async": "^1.5.2",
+    "async": "^2.0.1",
+    "cli-pie": "^2.2.3",
     "commander": "^2.9.0",
+    "fanci": "^0.6.0",
     "google-auth-library": "^0.9.7",
     "googleapis": "^2.1.7",
     "moment": "^2.11.1",
     "moment-timezone": "^0.5.1",
+    "prompt-promise": "^1.0.3",
     "semantic-date": "^0.2.1",
+    "slack-api": "^0.1.11",
     "underscore": "^1.8.3"
   },
   "devDependencies": {

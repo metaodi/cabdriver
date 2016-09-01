@@ -7,8 +7,10 @@ var Async = require('async');
 var _ = require('underscore');
 
 var auth = require('./lib/auth');
+var slack_auth = require('./lib/slack_auth');
 var calendar = require('./lib/calendar');
 var mail = require('./lib/mail');
+var slack = require('./lib/slack');
 var pkg = require('./package.json');
 
 exports.getStartAndEndDate = getStartAndEndDate;
@@ -55,17 +57,27 @@ Program
   .option('-d, --date <date>', 'date for query [today]', 'today')
   .option('-c, --calendar [cal_id]', 'determine which calendar you want to use [primary]', 'primary')
   .option('-m, --mail', 'use mail as source')
+  .option('-s, --slack', 'use slack as source')
+  .option('-g, --graph', 'print graphic instead of text')
   .option('-v, --verbose', 'more verbose output [false]', false)
   .parse(process.argv);
 
 
 var dates = getStartAndEndDate(Program.date);
 
+Moment.suppressDeprecationWarnings = true;
+if (!Moment(dates['endDate']).isValid() || !Moment(dates['startDate']).isValid()) {
+    console.error("Please enter a valid date range");
+    process.exit(1);
+}
+
 if (Program.verbose) {
     console.log('Start date: %s', Moment.tz(dates['startDate'], 'Europe/Zurich').format('DD.MM.YYYY'));
     console.log('End date: %s', Moment.tz(dates['endDate'], 'Europe/Zurich').format('DD.MM.YYYY'));
     console.log('Calendar: %s', Program.calendar);
     console.log('Mail: %s', Program.mail);
+    console.log('Slack: %s', Program.slack);
+    console.log('Graph: %s', Program.graph);
     console.log('Count: %s', Program.number);
 }
 
@@ -83,6 +95,15 @@ auth.getAuth(function(auth) {
                 callback(null, []);
             }
         },
+        function(callback) {
+            if (Program.slack) {
+                slack_auth.getAuth(function(auth) {
+                    slack.dailyStats(callback, auth, Program.number, dates['startDate'], dates['endDate'], Program.graph);
+                });
+            } else {
+                callback(null, []);
+            }
+        }
     ],
     function(err, results) {
         results = _.flatten(results);
@@ -104,7 +125,9 @@ auth.getAuth(function(auth) {
             _.each(msgs, function(msgs, type) {
                 console.log('# ' + type);
                 _.each(msgs, function(msg) {
-                    console.log(msg.text);
+                    if (_.has(msg, 'text') && msg.text) {
+                        console.log(msg.text);
+                    }
                 });
             });
 
