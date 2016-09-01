@@ -4,7 +4,7 @@ cabdriver
 =========
 
 cabdriver is a small helper application that helps you to fill in your hours in taxi.
-It currently support Google Calendar and Google Mail to get entries in a taxi-friendly format.
+It currently support Google Calendar, Google Mail and Slack to get entries in a taxi-friendly format.
 
 ## Installation
 
@@ -34,13 +34,30 @@ xxx    10:45-11:30   HWZ Preplanning
 xxx    14:00-15:00   HWZ DoD
 ```
 
+
+#### Entries from 01.03.2016 until 05.03.2016, max. 100 results
 ```bash
 $ cabdriver -d 01.03.2016-05.03.2016 -n 100
 ```
 
+#### Google Mail
+
 ```bash
-$ cabdriver -d last-month -v -m
+$ cabdriver -d last-month --mail
 ```
+
+#### Slack
+
+Text entries:
+```bash
+$ cabdriver -d last-month --slack
+```
+
+Graphic (pie chart):
+```bash
+$ cabdriver -d last-month --slack --graph
+```
+
 
 ### Options
 
@@ -63,6 +80,8 @@ For a complete help run `cabdriver --help`.
   * this-year (up to current time)
 * `-c --calendar` choose the calendar for the entries (default: primary)
 * `-m --mail` generate entries from mails
+* `-s --slack` generate entries from slack
+* `-g --graph` generate graphic instead of text (currently only for slack)
 * `-v --verbose` verbose output
 
 ## Tests
