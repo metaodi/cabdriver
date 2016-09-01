@@ -57,6 +57,7 @@ Graphic (pie chart):
 ```bash
 $ cabdriver -d last-month --slack --graph
 ```
+[![cabdriver with slack pie chart](http://i.imgur.com/KcPgjcU.png)](#)
 
 
 ### Options
