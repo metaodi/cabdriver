@@ -34,7 +34,7 @@
     "git-config": "0.0.7",
     "gitlog": "^2.3.0",
     "google-auth-library": "^0.9.7",
-    "googleapis": "^2.1.7",
+    "googleapis": "^12.4.0",
     "moment": "^2.11.1",
     "moment-timezone": "^0.5.1",
     "pad": "^1.0.1",
@@ -46,10 +46,10 @@
   "devDependencies": {
     "chai": "^3.4.1",
     "gulp": "^3.8.10",
-    "gulp-jscs": "^3.0.2",
+    "gulp-jscs": "^4.0.0",
     "gulp-jshint": "^2.0.0",
     "jshint-stylish": "^2.1.0",
     "jshint": "^2.9.1",
-    "mocha": "~2.3.4"
+    "mocha": "~3.0.2"
   }
 }
