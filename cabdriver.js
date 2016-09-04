@@ -131,7 +131,7 @@ auth.getAuth(function(auth) {
             var day = Moment.unix(timestamp).tz('Europe/Zurich');
 
             var allProjects = _.keys(_.groupBy(msgs, 'project'));
-            var maxProjectLength = allProjects.reduce(function (a, b) { return a.length > b.length ? a : b; }).length
+            var maxProjectLength = allProjects.reduce(function (a, b) { return a.length > b.length ? a : b; }).length;
             var padding = Math.max(5, maxProjectLength + 1);
 
             msgs = _.groupBy(msgs, 'type');
