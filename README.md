@@ -59,6 +59,13 @@ $ cabdriver -d last-month --slack --graph
 ```
 [![cabdriver with slack pie chart](http://i.imgur.com/KcPgjcU.png)](#)
 
+#### Git
+
+Find my commits from the 01.09.2016 in all git repositories in `/home/odi/projects`:
+```bash
+$ cabdriver -d 01.09.2016 -g /home/odi/projects
+```
+
 
 ### Options
 
@@ -82,7 +89,8 @@ For a complete help run `cabdriver --help`.
 * `-c --calendar` choose the calendar for the entries (default: primary)
 * `-m --mail` generate entries from mails
 * `-s --slack` generate entries from slack
-* `-g --graph` generate graphic instead of text (currently only for slack)
+* `-g --git <path>` generate entries from your local git repositories (defaults to current directory)
+* `-p --pie` generate pie chart instead of text (currently only for slack)
 * `-v --verbose` verbose output
 
 ## Tests
