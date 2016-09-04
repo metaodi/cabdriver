@@ -4,6 +4,7 @@ var Program = require('commander');
 var SemanticDate = require('semantic-date');
 var Moment = require('moment-timezone');
 var Async = require('async');
+var Pad = require('pad');
 var _ = require('underscore');
 
 var auth = require('./lib/auth');
@@ -11,6 +12,7 @@ var slack_auth = require('./lib/slack_auth');
 var calendar = require('./lib/calendar');
 var mail = require('./lib/mail');
 var slack = require('./lib/slack');
+var git = require('./lib/git');
 var pkg = require('./package.json');
 
 exports.getStartAndEndDate = getStartAndEndDate;
@@ -58,7 +60,8 @@ Program
   .option('-c, --calendar [cal_id]', 'determine which calendar you want to use [primary]', 'primary')
   .option('-m, --mail', 'use mail as source')
   .option('-s, --slack', 'use slack as source')
-  .option('-g, --graph', 'print graphic instead of text')
+  .option('-g, --git [path]', 'use git as a source')
+  .option('-p, --pie', 'print pie chart instead of text')
   .option('-v, --verbose', 'more verbose output [false]', false)
   .parse(process.argv);
 
@@ -77,6 +80,7 @@ if (Program.verbose) {
     console.log('Calendar: %s', Program.calendar);
     console.log('Mail: %s', Program.mail);
     console.log('Slack: %s', Program.slack);
+    console.log('Git: %s', Program.git);
     console.log('Graph: %s', Program.graph);
     console.log('Count: %s', Program.number);
 }
@@ -103,6 +107,13 @@ auth.getAuth(function(auth) {
             } else {
                 callback(null, []);
             }
+        },
+        function(callback) {
+            if (Program.git) {
+                git.getCommits(callback, Program.git, dates['startDate'], dates['endDate']);
+            } else {
+                callback(null, []);
+            }
         }
     ],
     function(err, results) {
@@ -119,14 +130,28 @@ auth.getAuth(function(auth) {
         _.each(orderedResults, function(msgs, timestamp) {
             var day = Moment.unix(timestamp).tz('Europe/Zurich');
 
+            var allProjects = _.keys(_.groupBy(msgs, 'project'));
+            var maxProjectLength = allProjects.reduce(function (a, b) { return a.length > b.length ? a : b; }).length
+            var padding = Math.max(5, maxProjectLength + 1);
+
             msgs = _.groupBy(msgs, 'type');
             console.log('');
             console.log('%s # %s', day.format('DD/MM/YYYY'), day.format('dddd'));
             _.each(msgs, function(msgs, type) {
                 console.log('# ' + type);
                 _.each(msgs, function(msg) {
-                    if (_.has(msg, 'text') && msg.text) {
-                        console.log(msg.text);
+                    if (_.has(msg, 'raw') && msg.raw) {
+                        console.log(msg.raw);
+                    } else {
+                        var text = Pad(msg.project, padding);
+                        if (msg.time) {
+                            text += msg.time + ' ';
+                        }
+                        text += msg.text;
+                        if (msg.comment) {
+                            text = '# ' + text;
+                        }
+                        console.log(text);
                     }
                 });
             });
