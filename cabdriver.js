@@ -81,7 +81,7 @@ if (Program.verbose) {
     console.log('Mail: %s', Program.mail);
     console.log('Slack: %s', Program.slack);
     console.log('Git: %s', Program.git);
-    console.log('Graph: %s', Program.graph);
+    console.log('Pie chart: %s', Program.pie);
     console.log('Count: %s', Program.number);
 }
 
@@ -102,7 +102,7 @@ auth.getAuth(function(auth) {
         function(callback) {
             if (Program.slack) {
                 slack_auth.getAuth(function(auth) {
-                    slack.dailyStats(callback, auth, Program.number, dates['startDate'], dates['endDate'], Program.graph);
+                    slack.dailyStats(callback, auth, Program.number, dates['startDate'], dates['endDate'], Program.pie);
                 });
             } else {
                 callback(null, []);
