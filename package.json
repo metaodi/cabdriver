@@ -30,13 +30,13 @@
     "cli-pie": "^2.2.3",
     "commander": "^2.9.0",
     "fanci": "^0.6.0",
-    "findit": "^2.0.0",
+    "findit2": "^2.2.3",
     "git-config": "0.0.7",
-    "gitlog": "^2.3.0",
-    "google-auth-library": "^0.9.7",
+    "gitlog": "^2.4.0",
+    "google-auth-library": "^0.9.8",
     "googleapis": "^12.4.0",
-    "moment": "^2.11.1",
-    "moment-timezone": "^0.5.1",
+    "moment": "^2.14.1",
+    "moment-timezone": "^0.5.5",
     "pad": "^1.0.1",
     "prompt-promise": "^1.0.3",
     "semantic-date": "^0.2.1",
@@ -44,12 +44,12 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "chai": "^3.4.1",
-    "gulp": "^3.8.10",
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
     "gulp-jscs": "^4.0.0",
-    "gulp-jshint": "^2.0.0",
-    "jshint-stylish": "^2.1.0",
-    "jshint": "^2.9.1",
+    "gulp-jshint": "^2.0.1",
+    "jshint-stylish": "^2.2.1",
+    "jshint": "^2.9.3",
     "mocha": "~3.0.2"
   }
 }
