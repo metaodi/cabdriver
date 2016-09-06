@@ -29,7 +29,6 @@
     "async": "^2.0.1",
     "cli-pie": "^2.2.3",
     "commander": "^2.9.0",
-    "fanci": "^0.6.0",
     "findit2": "^2.2.3",
     "git-config": "0.0.7",
     "gitlog": "^2.4.0",
