@@ -110,7 +110,7 @@ auth.getAuth(function(auth) {
         },
         function(callback) {
             if (Program.git) {
-                git.getCommits(callback, Program.git, dates['startDate'], dates['endDate']);
+                git.getCommits(callback, Program.git, dates['startDate'], dates['endDate'], Program.verbose);
             } else {
                 callback(null, []);
             }
