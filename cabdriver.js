@@ -9,9 +9,11 @@ var _ = require('underscore');
 
 var auth = require('./lib/auth');
 var slack_auth = require('./lib/slack_auth');
+var jira_auth = require('./lib/jira_auth');
 var calendar = require('./lib/calendar');
 var mail = require('./lib/mail');
 var slack = require('./lib/slack');
+var jira = require('./lib/jira');
 var git = require('./lib/git');
 var pkg = require('./package.json');
 
@@ -60,6 +62,7 @@ Program
   .option('-c, --calendar [cal_id]', 'determine which calendar you want to use [primary]', 'primary')
   .option('-m, --mail', 'use mail as source')
   .option('-s, --slack', 'use slack as source')
+  .option('-j, --jira', 'use jira as source')
   .option('-g, --git [path]', 'use git as a source')
   .option('-p, --pie', 'print pie chart instead of text')
   .option('-v, --verbose', 'more verbose output [false]', false)
@@ -80,6 +83,7 @@ if (Program.verbose) {
     console.log('Calendar: %s', Program.calendar);
     console.log('Mail: %s', Program.mail);
     console.log('Slack: %s', Program.slack);
+    console.log('Jira: %s', Program.jira);
     console.log('Git: %s', Program.git);
     console.log('Pie chart: %s', Program.pie);
     console.log('Count: %s', Program.number);
@@ -103,6 +107,15 @@ auth.getAuth(function(auth) {
             if (Program.slack) {
                 slack_auth.getAuth(function(auth) {
                     slack.dailyStats(callback, auth, Program.number, dates['startDate'], dates['endDate'], Program.pie);
+                });
+            } else {
+                callback(null, []);
+            }
+        },
+        function(callback) {
+            if (Program.jira) {
+                jira_auth.getAuth(function(auth) {
+                    jira.getActivities(callback, auth, Program.number, dates['startDate'], dates['endDate']);
                 });
             } else {
                 callback(null, []);
