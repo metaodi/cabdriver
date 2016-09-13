@@ -145,7 +145,11 @@ auth.getAuth(function(auth) {
 
             var allProjects = _.keys(_.groupBy(msgs, 'project'));
             var maxProjectLength = allProjects.reduce(function (a, b) { return a.length > b.length ? a : b; }).length;
-            var padding = Math.max(5, maxProjectLength + 1);
+            var projectPadding = Math.max(5, maxProjectLength + 1);
+
+            var allTimes = _.keys(_.groupBy(msgs, 'time'));
+            var maxTimeLength = allTimes.reduce(function (a, b) { return a.length > b.length ? a : b; }).length;
+            var timePadding = Math.max(2, maxTimeLength + 1);
 
             msgs = _.groupBy(msgs, 'type');
             console.log('');
@@ -156,9 +160,9 @@ auth.getAuth(function(auth) {
                     if (_.has(msg, 'raw') && msg.raw) {
                         console.log(msg.raw);
                     } else {
-                        var text = Pad(msg.project, padding);
+                        var text = Pad(msg.project, projectPadding);
                         if (msg.time) {
-                            text += msg.time + ' ';
+                            text += Pad(msg.time, timePadding);
                         }
                         text += msg.text;
                         if (msg.comment) {
