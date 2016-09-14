@@ -90,7 +90,7 @@ if (Program.verbose) {
 }
 
 auth.getAuth(function(auth) {
-    Async.series([
+    Async.parallel([
         function(callback) {
             // Google Calendar
             calendar.listEvents(callback, auth, Program.number, dates['startDate'], dates['endDate'], Program.calendar);
