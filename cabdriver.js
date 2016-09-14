@@ -98,7 +98,7 @@ auth.getAuth(function(auth) {
         function(callback) {
             // Google Mail
             if (Program.mail) {
-                mail.listMessages(callback, auth, Program.number, dates['startDate'], dates['endDate']);
+                mail.listMessages(callback, auth, Program.number, dates['startDate'], dates['endDate'], Program.verbose);
             } else {
                 callback(null, []);
             }
