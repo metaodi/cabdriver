@@ -4,10 +4,12 @@ var urlparse = require('url').parse;
 // simple page that acts as the OAuth endpoint
 http.createServer(function(request, response) {
     var url = urlparse(request.url, true);
-    if (url.path === '/jira') {
+    if (url.path.startsWith('/jira') && url.query.oauth_verifier) {
         response.writeHead(200, {'Content-Type': 'text/html'});
-        response.write('<html><head><title>Jira | cabdriver</title></head>');
-        response.write('<p>Welcome Jira</p>');
+        response.write('<html><head><title>Authentication successful | cabdriver</title></head>');
+        response.write('<body><h1>Successfully authenticated</h1>');
+        response.write('<p>Copy the following code back to the terminal for cabdriver: ');
+        response.write('<strong>' + url.query.oauth_verifier + '</strong></p>');
         response.end('</body></html>');
         return;
     }
