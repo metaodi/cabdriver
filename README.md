@@ -4,7 +4,13 @@ cabdriver
 =========
 
 cabdriver is a small helper application that helps you to fill in your hours in taxi.
-It currently support Google Calendar, Google Mail, Slack and your local git repositories to get entries in a taxi-friendly format.
+It currently support various sources to get entries in a taxi-friendly format:
+
+* Google Calendar (default)
+* [Google Mail](#google-mail)
+* [Slack](#slack)
+* [Jira](#jira)
+* [Local git repositories](#git)
 
 ## Installation
 
@@ -59,6 +65,17 @@ $ cabdriver -d last-month --slack --graph
 ```
 [![cabdriver with slack pie chart](http://i.imgur.com/KcPgjcU.png)](#)
 
+#### Jira
+
+Note: the Liip-specific Jira instance is pre-defined as host.
+
+```bash
+$ cabdriver -d yesterday --jira
+```
+
+Unfortunately the JIRA API does not provide the activitiy stream of a user, so that the issue search is used to find recently updated issues, that are related to the logged in user.
+In those issues the changelog and worklog are evaluated to generate taxi entries.
+
 #### Git
 
 Find my commits from the 01.09.2016 in all git repositories in `/home/odi/projects`:
@@ -89,6 +106,7 @@ For a complete help run `cabdriver --help`.
 * `-c --calendar` choose the calendar for the entries (default: primary)
 * `-m --mail` generate entries from mails
 * `-s --slack` generate entries from slack
+* `-j --jira` generate entries from jira
 * `-g --git <path>` generate entries from your local git repositories (defaults to current directory)
 * `-p --pie` generate pie chart instead of text (currently only for slack)
 * `-v --verbose` verbose output
