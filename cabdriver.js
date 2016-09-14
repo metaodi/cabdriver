@@ -130,6 +130,10 @@ auth.getAuth(function(auth) {
         }
     ],
     function(err, results) {
+        if (err) {
+            console.error("Error occured: ", err);
+            return;
+        }
         results = _.flatten(results);
         results = _.groupBy(results, 'timestamp');
 
@@ -172,8 +176,7 @@ auth.getAuth(function(auth) {
                     }
                 });
             });
-
         });
-
+        process.exit(0);
     });
 });
