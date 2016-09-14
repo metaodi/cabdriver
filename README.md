@@ -49,19 +49,19 @@ $ cabdriver -d 01.03.2016-05.03.2016 -n 100
 #### Google Mail
 
 ```bash
-$ cabdriver -d last-month --mail
+$ cabdriver --mail
 ```
 
 #### Slack
 
 Text entries:
 ```bash
-$ cabdriver -d last-month --slack
+$ cabdriver --slack
 ```
 
 Graphic (pie chart):
 ```bash
-$ cabdriver -d last-month --slack --graph
+$ cabdriver --slack --graph
 ```
 [![cabdriver with slack pie chart](http://i.imgur.com/KcPgjcU.png)](#)
 
@@ -70,7 +70,7 @@ $ cabdriver -d last-month --slack --graph
 Note: the Liip-specific Jira instance is pre-defined as host.
 
 ```bash
-$ cabdriver -d yesterday --jira
+$ cabdriver --jira
 ```
 
 Unfortunately the JIRA API does not provide the activitiy stream of a user, so that the issue search is used to find recently updated issues, that are related to the logged in user.
@@ -78,9 +78,17 @@ In those issues the changelog and worklog are evaluated to generate taxi entries
 
 #### Git
 
-Find my commits from the 01.09.2016 in all git repositories in `/home/odi/projects`:
+Find my commits in all git repositories in `/home/odi/projects`:
 ```bash
-$ cabdriver -d 01.09.2016 -g /home/odi/projects
+$ cabdriver -g /home/odi/projects
+```
+
+If you omit the path all git repositories in the current working directory (recursively) are used.
+Depending on the size of your file system, this might take some time.
+You can use `--verbose` to get an indicator of the progress.
+
+```bash
+$ cabdriver -g --verbose
 ```
 
 
