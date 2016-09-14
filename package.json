@@ -1,6 +1,6 @@
 {
   "name": "cabdriver",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Helps you to fill in your hours with taxi",
   "main": "cabdriver.js",
   "scripts": {
@@ -17,7 +17,12 @@
   "keywords": [
     "taxi",
     "zebra",
-    "hours"
+    "hours",
+    "slack",
+    "jira",
+    "mail",
+    "calendar",
+    "git"
   ],
   "author": "Stefan Oderbolz <odi@readmore.ch> (http://metaodi.ch/)",
   "license": "MIT",
