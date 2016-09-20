@@ -61,7 +61,7 @@ $ cabdriver --slack
 
 Graphic (pie chart):
 ```bash
-$ cabdriver --slack --graph
+$ cabdriver --slack --pie
 ```
 [![cabdriver with slack pie chart](http://i.imgur.com/KcPgjcU.png)](#)
 
