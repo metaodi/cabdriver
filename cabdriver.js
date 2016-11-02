@@ -115,7 +115,7 @@ auth.getAuth(function(auth) {
         function(callback) {
             if (Program.jira) {
                 jira_auth.getAuth(function(auth) {
-                    jira.getActivities(callback, auth, Program.number, dates['startDate'], dates['endDate']);
+                    jira.getActivities(callback, auth, Program.number, dates['startDate'], dates['endDate'], Program.verbose);
                 });
             } else {
                 callback(null, []);
