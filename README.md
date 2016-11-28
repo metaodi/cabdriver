@@ -11,6 +11,7 @@ It currently support various sources to get entries in a taxi-friendly format:
 * [Slack](#slack)
 * [Jira](#jira)
 * [Local git repositories](#git)
+* [Zebra](#zebra)
 
 ## Installation
 
@@ -91,6 +92,15 @@ You can use `--verbose` to get an indicator of the progress.
 $ cabdriver -g --verbose
 ```
 
+#### Zebra
+
+Find zebra entries that you've already committed:
+```bash
+$ cabdriver -z -d last-week
+```
+
+This might be helpful to get a double check of the entries that are already in Zebra and to see if something is missing or to update your local taxi file with entries that you made on the web interface of Zebra.
+Because all those entries were already commited to zebra, they are commted out by default.
 
 ### Options
 
@@ -115,6 +125,7 @@ For a complete help run `cabdriver --help`.
 * `-m --mail` generate entries from mails
 * `-s --slack` generate entries from slack
 * `-j --jira` generate entries from jira
+* `-z --zebra` generate entries from zebra
 * `-g --git <path>` generate entries from your local git repositories (defaults to current directory)
 * `-p --pie` generate pie chart instead of text (currently only for slack)
 * `-v --verbose` verbose output
