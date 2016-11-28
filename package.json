@@ -48,6 +48,7 @@
     "prompt-promise": "^1.0.3",
     "semantic-date": "^0.2.1",
     "slack-api": "^0.1.12",
+    "superagent": "^3.1.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {

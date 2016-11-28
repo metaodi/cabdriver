@@ -10,10 +10,12 @@ var _ = require('underscore');
 var auth = require('./lib/auth');
 var slack_auth = require('./lib/slack_auth');
 var jira_auth = require('./lib/jira_auth');
+var zebra_auth = require('./lib/zebra_auth');
 var calendar = require('./lib/calendar');
 var mail = require('./lib/mail');
 var slack = require('./lib/slack');
 var jira = require('./lib/jira');
+var zebra = require('./lib/zebra');
 var git = require('./lib/git');
 var pkg = require('./package.json');
 
@@ -63,6 +65,7 @@ Program
   .option('-m, --mail', 'use mail as source')
   .option('-s, --slack', 'use slack as source')
   .option('-j, --jira', 'use jira as source')
+  .option('-z, --zebra', 'use zebra as source')
   .option('-g, --git [path]', 'use git as a source')
   .option('-p, --pie', 'print pie chart instead of text')
   .option('-v, --verbose', 'more verbose output [false]', false)
@@ -84,6 +87,7 @@ if (Program.verbose) {
     console.log('Mail: %s', Program.mail);
     console.log('Slack: %s', Program.slack);
     console.log('Jira: %s', Program.jira);
+    console.log('Zebra: %s', Program.zebra);
     console.log('Git: %s', Program.git);
     console.log('Pie chart: %s', Program.pie);
     console.log('Count: %s', Program.number);
@@ -116,6 +120,15 @@ auth.getAuth(function(auth) {
             if (Program.jira) {
                 jira_auth.getAuth(function(auth) {
                     jira.getActivities(callback, auth, Program.number, dates['startDate'], dates['endDate'], Program.verbose);
+                });
+            } else {
+                callback(null, []);
+            }
+        },
+        function(callback) {
+            if (Program.zebra) {
+                zebra_auth.getAuth(function(auth) {
+                    zebra.getTimesheets(callback, auth, Program.number, dates['startDate'], dates['endDate'], Program.verbose);
                 });
             } else {
                 callback(null, []);
