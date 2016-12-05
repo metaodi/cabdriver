@@ -28,6 +28,28 @@ function dashed(val) {
     });
 }
 
+function filterFloat(value) {
+    if(/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/
+      .test(value))
+      return Number(value);
+  return NaN;
+}
+
+function parseTimeRange(time) {
+    var timeRange = new RegExp("^(\\d{2}:\\d{2})-(\\d{2}:\\d{2})$");
+    if (timeRange.test(time)) {
+        var matches = timeRange.exec(time);
+        var d1 = new Moment(matches[1], 'HH:mm');
+        var d2 = new Moment(matches[2], 'HH:mm');
+
+        if (!d1.isValid() && d2.isValid) {
+            return NaN;
+        }
+        return d2.diff(d1, 'hours', true);
+    }
+    return NaN;
+}
+
 function getStartAndEndDate(dateStr) {
     var dates = {
         'startDate': null,
@@ -173,8 +195,21 @@ auth.getAuth(function(auth) {
             console.log('');
             console.log('%s # %s', day.format('DD/MM/YYYY'), day.format('dddd'));
             _.each(msgs, function(msgs, type) {
+                var total = _.reduce(msgs, function(sum, msg) {
+                   var time = filterFloat(msg.time);
+                   if (_.isNaN(time)) {
+                       time = parseTimeRange(msg.time);
+                   }
+                   return sum + (_.isNaN(time) ? 0 : time);
+                }, 0);
+                total = total.toFixed(2);
                 console.log('');
-                console.log('# ' + type);
+                process.stdout.write('# ' + type);
+                if (total > 0) {
+                    process.stdout.write(' (Total: ' + total + 'h)');
+                }
+                process.stdout.write('\n');
+
                 console.log('#------------------');
                 _.each(msgs, function(msg) {
                     if (_.has(msg, 'raw') && msg.raw) {
