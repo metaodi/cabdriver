@@ -170,9 +170,12 @@ auth.getAuth(function(auth) {
 
             msgs = _.groupBy(msgs, 'type');
             console.log('');
+            console.log('');
             console.log('%s # %s', day.format('DD/MM/YYYY'), day.format('dddd'));
             _.each(msgs, function(msgs, type) {
+                console.log('');
                 console.log('# ' + type);
+                console.log('#------------------');
                 _.each(msgs, function(msg) {
                     if (_.has(msg, 'raw') && msg.raw) {
                         console.log(msg.raw);
