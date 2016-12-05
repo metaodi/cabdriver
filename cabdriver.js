@@ -5,7 +5,7 @@ var SemanticDate = require('semantic-date');
 var Moment = require('moment-timezone');
 var Async = require('async');
 var Pad = require('pad');
-var _ = require('underscore');
+var _ = require('lodash');
 
 var auth = require('./lib/auth');
 var slack_auth = require('./lib/slack_auth');
