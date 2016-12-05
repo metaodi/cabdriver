@@ -33,7 +33,7 @@
   "dependencies": {
     "async": "^2.0.1",
     "bluebird": "^3.4.6",
-    "cli-pie": "^2.2.3",
+    "cli-pie": "^2.3.0",
     "commander": "^2.9.0",
     "findit2": "^2.2.3",
     "git-config": "0.0.7",

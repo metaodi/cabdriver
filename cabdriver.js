@@ -128,7 +128,7 @@ auth.getAuth(function(auth) {
         function(callback) {
             if (Program.zebra) {
                 zebra_auth.getAuth(function(auth) {
-                    zebra.getTimesheets(callback, auth, Program.number, dates['startDate'], dates['endDate'], Program.verbose);
+                    zebra.getTimesheets(callback, auth, Program.number, dates['startDate'], dates['endDate'], Program.verbose, Program.pie);
                 });
             } else {
                 callback(null, []);

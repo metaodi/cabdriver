@@ -99,6 +99,11 @@ Find zebra entries that you've already committed:
 $ cabdriver -z -d last-week
 ```
 
+Pie chart:
+```bash
+$ cabdriver -z -p
+```
+
 This might be helpful to get a double check of the entries that are already in Zebra and to see if something is missing or to update your local taxi file with entries that you made on the web interface of Zebra.
 Because all those entries were already commited to zebra, they are commted out by default.
 
