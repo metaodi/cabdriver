@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased][unreleased]
 
+## 0.1.0 - 2016-12-12
+### Added
+- Added CHANGELOG for the whole history
+
 ## 0.0.20 - 2016-12-06
 ### Changed
 - Add total of hours to each section title when possible

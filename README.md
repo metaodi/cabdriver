@@ -148,5 +148,6 @@ npm test
 To create a new release follow these steps:
 
 1. Update the version number in `package.json`
+1. Update the `CHANGELOG.md`
 1. Create a [new release/tag on GitHub](https://github.com/metaodi/cabdriver/releases)
 1. Publish the release with npm: `npm publish`
