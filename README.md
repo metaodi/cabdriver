@@ -158,12 +158,13 @@ The file looks like this:
 defaults:
     jira: true
     slack: true
-    calendar: true
+    calendar: primary
     zebra: false
     git: /home/metaodi
 ```
 
 If you have the config file in place and you type `cabdriver` these values will be applied.
+You can use all comand line options in config file, simply use their long name.
 
 **NOTE: if you specify a source on the command line, the config file is not used, e.g. with `cabdriver -z` will only list zebra entries**
 
