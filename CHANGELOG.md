@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+### Fixed
+- Workaround for gitlog date bug (https://github.com/domharrington/node-gitlog/issues/28), so that all dates can be parsed correctly again
 
 ## 0.2.0 - 2017-02-02
 ### Changed
