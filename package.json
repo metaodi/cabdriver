@@ -32,25 +32,25 @@
   "homepage": "https://github.com/metaodi/cabdriver",
   "dependencies": {
     "async": "^2.1.4",
-    "bluebird": "^3.4.6",
+    "bluebird": "^3.4.7",
     "cli-pie": "^2.3.0",
     "commander": "^2.9.0",
     "findit2": "^2.2.3",
     "git-config": "0.0.7",
     "gitlog": "^2.4.0",
-    "google-auth-library": "^0.9.10",
-    "googleapis": "^13.0.0",
-    "jira-client": "^3.0.3",
+    "google-auth-library": "^0.10.0",
+    "googleapis": "^16.1.0",
+    "jira-client": "^4.2.0",
     "js-yaml": "^3.7.0",
-    "lodash": "^4.17.2",
+    "lodash": "^4.17.4",
     "moment": "^2.17.1",
-    "moment-timezone": "^0.5.10",
-    "oauth": "^0.9.14",
+    "moment-timezone": "^0.5.11",
+    "oauth": "^0.9.15",
     "pad": "^1.0.1",
     "prompt-promise": "^1.0.3",
     "semantic-date": "^0.2.1",
     "slack-api": "^0.1.12",
-    "superagent": "^3.1.0"
+    "superagent": "^3.4.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -59,6 +59,6 @@
     "gulp-jshint": "^2.0.4",
     "jshint-stylish": "^2.2.1",
     "jshint": "^2.9.3",
-    "mocha": "~3.0.2"
+    "mocha": "~3.2.0"
   }
 }
