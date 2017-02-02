@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+
+## 0.2.0 - 2017-02-02
 ### Changed
 - The calendar option (-c or --calendar) is no longer a default option, altough if you do not have a config file and do not specify any other source, it will still be used
 
