@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var Program = require('commander');
-var SemanticDate = require('semantic-date');
 var Moment = require('moment-timezone');
 var Async = require('async');
 var Pad = require('pad');
@@ -20,67 +19,9 @@ var slack = require('./lib/slack');
 var jira = require('./lib/jira');
 var zebra = require('./lib/zebra');
 var git = require('./lib/git');
+var date = require('./lib/date');
+var util = require('./lib/util');
 var pkg = require('./package.json');
-
-exports.getStartAndEndDate = getStartAndEndDate;
-
-function dashed(val) {
-    var splitted = val.split('-');
-    return _.map(splitted, function(elem) {
-        return elem.trim();
-    });
-}
-
-function filterFloat(value) {
-    if (/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/.test(value)) {
-      return Number(value);
-    }
-    return NaN;
-}
-
-function parseTimeRange(time) {
-    var timeRange = new RegExp("^(\\d{2}:\\d{2})-(\\d{2}:\\d{2})$");
-    if (timeRange.test(time)) {
-        var matches = timeRange.exec(time);
-        var d1 = new Moment(matches[1], 'HH:mm');
-        var d2 = new Moment(matches[2], 'HH:mm');
-
-        if (!d1.isValid() && d2.isValid) {
-            return NaN;
-        }
-        return d2.diff(d1, 'hours', true);
-    }
-    return NaN;
-}
-
-function getStartAndEndDate(dateStr) {
-    var dates = {
-        'startDate': null,
-        'endDate': null
-    };
-    if (SemanticDate.validate(dateStr)) {
-        var parsed = SemanticDate.convert(dateStr);
-        dates['startDate'] = Moment.tz(parsed.start, 'Europe/Zurich');
-        dates['endDate'] = Moment.tz(parsed.end, 'Europe/Zurich');
-    } else {
-        var dateArr = dashed(dateStr);
-        var startStr = dateArr[0];
-        var endStr = '';
-        if (dateArr.length > 1) {
-            endStr = dateArr[1];
-        }
-
-        if (startStr && Moment(startStr, 'DD.MM.YYYY').isValid()) {
-            dates['startDate'] = Moment.tz(startStr, 'DD.MM.YYYY', 'Europe/Zurich');
-        }
-        if (endStr && Moment(endStr, 'DD.MM.YYYY').isValid()) {
-            dates['endDate'] = Moment.tz(endStr, 'DD.MM.YYYY', 'Europe/Zurich');
-        }
-    }
-    dates['endDate'] = dates['endDate'] ? dates['endDate'].toISOString() : Moment(dates['startDate']).endOf('day').toISOString();
-    dates['startDate'] = dates['startDate'] ? dates['startDate'].toISOString() : Moment().tz('Europe/Zurich').endOf('day').toISOString();
-    return dates;
-}
 
 //load config file
 var config;
@@ -114,17 +55,17 @@ Program
 
 var options = {};
 var sourceKeys = ['calendar', 'mail', 'slack', 'jira', 'zebra', 'git'];
+
 var calledWithoutSources = _.every(Program.opts(), function(value, key) {
     return sourceKeys.indexOf(key) < 0 || !value;
 });
-
 if (calledWithoutSources) {
     _.assignIn(options, Program.opts(), config.defaults);
 } else {
     _.assignIn(options, config.defaults, Program.opts());
 }
 
-var dates = getStartAndEndDate(options.date);
+var dates = date.getStartAndEndDate(options.date);
 
 Moment.suppressDeprecationWarnings = true;
 if (!Moment(dates['endDate']).isValid() || !Moment(dates['startDate']).isValid()) {
@@ -236,9 +177,9 @@ function(err, results) {
         console.log('%s # %s', day.format('DD/MM/YYYY'), day.format('dddd'));
         _.each(msgs, function(msgs, type) {
             var total = _.reduce(msgs, function(sum, msg) {
-               var time = filterFloat(msg.time);
+               var time = util.filterFloat(msg.time);
                if (_.isNaN(time)) {
-                   time = parseTimeRange(msg.time);
+                   time = date.parseTimeRange(msg.time);
                }
                return sum + (_.isNaN(time) ? 0 : time);
             }, 0);
