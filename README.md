@@ -6,7 +6,7 @@ cabdriver
 cabdriver is a small helper application that helps you to fill in your hours in taxi.
 It currently support various sources to get entries in a taxi-friendly format:
 
-* Google Calendar (default)
+* [Google Calendar](#google-calendar)
 * [Google Mail](#google-mail)
 * [Slack](#slack)
 * [Jira](#jira)
@@ -24,7 +24,7 @@ npm install -g cabdriver
 ### Usage
 
 ```bash
-$ cabdriver -n 10 -d yesterday
+$ cabdriver -c -n 10 -d yesterday
 
 02/02/2016 # Tuesday
 xxx    09:00-10:00   opendata.swiss Go-Live
@@ -45,6 +45,20 @@ xxx    14:00-15:00   HWZ DoD
 #### Entries from 01.03.2016 until 05.03.2016, max. 100 results
 ```bash
 $ cabdriver -d 01.03.2016-05.03.2016 -n 100
+```
+
+#### Google Calendar
+
+```bash
+$ cabdriver --calendar
+```
+
+This uses the primary calendar associated with the Google account.
+
+But you can specify another one, if you want (check the "Calendar ID" on the settings page):
+
+```bash
+$ cabdriver --calendar private@example.com
 ```
 
 #### Google Mail
