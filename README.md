@@ -135,6 +135,26 @@ For a complete help run `cabdriver --help`.
 * `-p --pie` generate pie chart instead of text (currently only for slack)
 * `-v --verbose` verbose output
 
+## Configuration File
+
+Instead of typing all options, you can specify your default options in a YAML file, which must be in your home directory under `~/.cabdriver/cabdriver.yml`.
+The file looks like this:
+
+```yaml
+defaults:
+    jira: true
+    slack: true
+    calendar: true
+    zebra: false
+    git: /home/metaodi
+```
+
+If you have the config file in place and you type `cabdriver` these values will be applied.
+
+**NOTE: if you specify a source on the command line, the config file is not used, e.g. with `cabdriver -z` will only list zebra entries**
+
+The config file is really just meant as a place to write down your default values.
+
 ## Tests
 
 To run the tests use the following command:
