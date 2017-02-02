@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+### Changed
+- BC-Break: the calendar option (-c or --calendar) is no longer a default option
+
+### Added
+- There is now a config file at ~/.cabdriver/cabdriver.yml to save your default options (see README for details)
 
 ## 0.1.0 - 2016-12-12
 ### Added
