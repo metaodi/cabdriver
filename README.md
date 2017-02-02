@@ -6,7 +6,7 @@ cabdriver
 cabdriver is a small helper application that helps you to fill in your hours in taxi.
 It currently support various sources to get entries in a taxi-friendly format:
 
-* Google Calendar (default)
+* [Google Calendar](#google-calendar) (default)
 * [Google Mail](#google-mail)
 * [Slack](#slack)
 * [Jira](#jira)
@@ -45,6 +45,20 @@ xxx    14:00-15:00   HWZ DoD
 #### Entries from 01.03.2016 until 05.03.2016, max. 100 results
 ```bash
 $ cabdriver -d 01.03.2016-05.03.2016 -n 100
+```
+
+#### Google Calendar
+
+```bash
+$ cabdriver --calendar
+```
+
+This uses the primary calendar associated with the Google account.
+
+But you can specify another one, if you want (check the "Calendar ID" on the settings page):
+
+```bash
+$ cabdriver --calendar private@example.com
 ```
 
 #### Google Mail
@@ -134,6 +148,27 @@ For a complete help run `cabdriver --help`.
 * `-g --git <path>` generate entries from your local git repositories (defaults to current directory)
 * `-p --pie` generate pie chart instead of text (currently only for slack)
 * `-v --verbose` verbose output
+
+## Configuration File
+
+Instead of typing all options, you can specify your default options in a YAML file, which must be in your home directory under `~/.cabdriver/cabdriver.yml`.
+The file looks like this:
+
+```yaml
+defaults:
+    jira: true
+    slack: true
+    calendar: primary
+    zebra: false
+    git: /home/metaodi
+```
+
+If you have the config file in place and you type `cabdriver` these values will be applied.
+You can use all comand line options in config file, simply use their long name.
+
+**NOTE: if you specify a source on the command line, the config file is not used, e.g. with `cabdriver -z` will only list zebra entries**
+
+The config file is really just meant as a place to write down your default values.
 
 ## Tests
 

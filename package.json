@@ -41,6 +41,7 @@
     "google-auth-library": "^0.9.10",
     "googleapis": "^13.0.0",
     "jira-client": "^3.0.3",
+    "js-yaml": "^3.7.0",
     "lodash": "^4.17.2",
     "moment": "^2.17.1",
     "moment-timezone": "^0.5.10",
