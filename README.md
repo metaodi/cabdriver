@@ -3,7 +3,7 @@
 cabdriver
 =========
 
-cabdriver is a small helper application that helps you to fill in your hours in taxi.
+cabdriver is a small helper application that helps you to fill in your hours in [taxi](https://github.com/sephii/taxi).
 It currently support various sources to get entries in a taxi-friendly format:
 
 * [Google Calendar](#google-calendar) (default)
