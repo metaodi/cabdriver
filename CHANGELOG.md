@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased][unreleased]
 ### Changed
-- BC-Break: the calendar option (-c or --calendar) is no longer a default option
+- The calendar option (-c or --calendar) is no longer a default option, altough if you do not have a config file and do not specify any other source, it will still be used
 
 ### Added
 - There is now a config file at ~/.cabdriver/cabdriver.yml to save your default options (see README for details)

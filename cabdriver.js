@@ -65,6 +65,14 @@ if (calledWithoutSources) {
     _.assignIn(options, config.defaults, Program.opts());
 }
 
+var noSourcesInOptions = _.every(options, function(value, key) {
+    return sourceKeys.indexOf(key) < 0 || !value;
+});
+
+if (noSourcesInOptions) {
+    options.calendar = true;
+}
+
 var dates = date.getStartAndEndDate(options.date);
 
 Moment.suppressDeprecationWarnings = true;
