@@ -27,18 +27,16 @@ npm install -g cabdriver
 $ cabdriver -n 10 -d yesterday
 
 02/02/2016 # Tuesday
-xxx    09:00-10:00   opendata.swiss Go-Live
+xxx    09:00-10:00   Go-Live Planning
 xxx    09:30-09:45   Jazz Daily Stand-Up
-xxx    10:05-10:30   Weiteres Vorgehen Vowi
-xxx    10:30-12:00   Analyse Altium
+xxx    10:05-10:30   Weiteres Vorgehen Stagging
 xxx    13:30-14:00   IPA-Besprechung
 xxx    16:00-19:00   Byebye Apero Lukas
 
 03/02/2016 # Wednesday
 xxx    09:30-09:45   Jazz Daily Stand-Up
 xxx    10:00-10:30   Support Backlog
-xxx    10:45-11:30   HWZ Preplanning
-xxx    14:00-15:00   HWZ DoD
+xxx    10:45-11:30   Sprint 3 Planning 2
 ```
 
 
