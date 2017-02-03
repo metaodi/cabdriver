@@ -29,7 +29,7 @@ $ cabdriver -n 10 -d yesterday
 02/02/2016 # Tuesday
 xxx    09:00-10:00   Go-Live Planning
 xxx    09:30-09:45   Jazz Daily Stand-Up
-xxx    10:05-10:30   Weiteres Vorgehen Stagging
+xxx    10:05-10:30   Weiteres Vorgehen Stageing
 xxx    13:30-14:00   IPA-Besprechung
 xxx    16:00-19:00   Byebye Apero Lukas
 
