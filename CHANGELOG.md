@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+
+## 0.3.0 - 2017-02-17
 ### Added
 - Taxi alias for zebra entries (thanks to Zebra 4.11, where the API now contains this information)
 
