@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased][unreleased]
 
+## 0.4.2 - 2017-03-08
+### Fixed
+- Use string as default value for time in logbot to fix display problems 
+
 ## 0.4.1 - 2017-03-08
 ### Fixed
 - Make sure logbot is correctly recognized as source by cabdriver, so it can be run "standalone"
