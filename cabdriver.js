@@ -56,7 +56,7 @@ Program
 
 
 var options = {};
-var sourceKeys = ['calendar', 'mail', 'slack', 'jira', 'zebra', 'git'];
+var sourceKeys = ['calendar', 'mail', 'slack', 'logbot', 'jira', 'zebra', 'git'];
 
 var calledWithoutSources = _.every(Program.opts(), function(value, key) {
     return sourceKeys.indexOf(key) < 0 || !value;
