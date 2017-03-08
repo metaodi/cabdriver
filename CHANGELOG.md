@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased][unreleased]
 
+## 0.4.0 - 2017-03-08
+### Added
+- Support for Logbot, so now you can create taxi entries via Slack, and get them out via cabdriver (see https://github.com/metaodi/logbot)
+
 ## 0.3.0 - 2017-02-17
 ### Added
 - Taxi alias for zebra entries (thanks to Zebra 4.11, where the API now contains this information)
