@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased][unreleased]
 
+## 0.4.1 - 2017-03-08
+### Fixed
+- Make sure logbot is correctly recognized as source by cabdriver, so it can be run "standalone"
+
 ## 0.4.0 - 2017-03-08
 ### Added
 - Support for Logbot, so now you can create taxi entries via Slack, and get them out via cabdriver (see https://github.com/metaodi/logbot)
