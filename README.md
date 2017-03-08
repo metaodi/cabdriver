@@ -12,6 +12,7 @@ It currently support various sources to get entries in a taxi-friendly format:
 * [Jira](#jira)
 * [Local git repositories](#git)
 * [Zebra](#zebra)
+* [Logbot](#logbot)
 
 ## Installation
 
@@ -119,6 +120,13 @@ $ cabdriver -z -p
 This might be helpful to get a double check of the entries that are already in Zebra and to see if something is missing or to update your local taxi file with entries that you made on the web interface of Zebra.
 Because all those entries were already commited to zebra, they are commted out by default.
 
+#### Logbot
+
+Find entries from [Logbot](https://github.com/metaodi/logbot):
+```
+$ cabdriver -l
+```
+
 ### Options
 
 For a complete help run `cabdriver --help`.
@@ -141,6 +149,7 @@ For a complete help run `cabdriver --help`.
 * `-c --calendar` choose the calendar for the entries (default: primary)
 * `-m --mail` generate entries from mails
 * `-s --slack` generate entries from slack
+* `-l --logbot` generate entries from logbot
 * `-j --jira` generate entries from jira
 * `-z --zebra` generate entries from zebra
 * `-g --git <path>` generate entries from your local git repositories (defaults to current directory)
