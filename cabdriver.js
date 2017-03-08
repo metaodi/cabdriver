@@ -16,6 +16,7 @@ var zebra_auth = require('./lib/zebra_auth');
 var calendar = require('./lib/calendar');
 var mail = require('./lib/mail');
 var slack = require('./lib/slack');
+var logbot = require('./lib/logbot');
 var jira = require('./lib/jira');
 var zebra = require('./lib/zebra');
 var git = require('./lib/git');
@@ -45,6 +46,7 @@ Program
   .option('-c, --calendar [cal_id]', 'use calendar as a source, if not specified the primary calendar will be used')
   .option('-m, --mail', 'use mail as source')
   .option('-s, --slack', 'use slack as source')
+  .option('-l, --logbot', 'use logbot as source')
   .option('-j, --jira', 'use jira as source')
   .option('-z, --zebra', 'use zebra as source')
   .option('-g, --git [path]', 'use git as a source')
@@ -87,6 +89,7 @@ if (options.verbose) {
     console.log('Calendar: %s', options.calendar);
     console.log('Mail: %s', options.mail);
     console.log('Slack: %s', options.slack);
+    console.log('Logbot: %s', options.logbot);
     console.log('Jira: %s', options.jira);
     console.log('Zebra: %s', options.zebra);
     console.log('Git: %s', options.git);
@@ -122,6 +125,15 @@ Async.parallel([
         if (options.slack) {
             slack_auth.getAuth(function(auth) {
                 slack.dailyStats(callback, auth, options.number, dates['startDate'], dates['endDate'], options.pie);
+            });
+        } else {
+            callback(null, []);
+        }
+    },
+    function(callback) {
+        if (options.logbot) {
+            slack_auth.getAuth(function(auth) {
+                logbot.getLogs(callback, auth, options.number, dates['startDate'], dates['endDate']);
             });
         } else {
             callback(null, []);
