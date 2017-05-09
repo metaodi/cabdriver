@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Make use of the limit parameter in the logbot API
 - New option (-H/--hours) to change the output from time ranges to durations in hours (#39)
 
+### Changed
+- Updated all dependencies
+
 ### Fixed
 - Error output when directory can't be accessed (#40)
 
