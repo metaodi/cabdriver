@@ -39,8 +39,8 @@
     "git-config": "0.0.7",
     "gitlog": "^2.4.0",
     "google-auth-library": "^0.10.0",
-    "googleapis": "^16.1.0",
-    "jira-client": "^4.2.0",
+    "googleapis": "^19.0.0",
+    "jira-client": "^6.1.1",
     "js-yaml": "^3.7.0",
     "lodash": "^4.17.4",
     "moment": "^2.17.1",
@@ -60,6 +60,6 @@
     "gulp-jshint": "^2.0.4",
     "jshint-stylish": "^2.2.1",
     "jshint": "^2.9.3",
-    "mocha": "~3.2.0"
+    "mocha": "~3.3.0"
   }
 }
