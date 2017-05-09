@@ -37,7 +37,16 @@ xxx    16:00-19:00   Byebye Apero Lukas
 03/02/2016 # Wednesday
 xxx    09:30-09:45   Jazz Daily Stand-Up
 xxx    10:00-10:30   Support Backlog
-xxx    10:45-11:30   Sprint 3 Planning 2
+xxx    10:45-11:45   Sprint 3 Planning 2
+```
+
+```bash
+$ cabdriver --hours -d 03.02.2016
+
+03/02/2016 # Wednesday
+xxx    0.25 Jazz Daily Stand-Up
+xxx    0.5  Support Backlog
+xxx    1    Sprint 3 Planning 2
 ```
 
 
@@ -153,7 +162,8 @@ For a complete help run `cabdriver --help`.
 * `-j --jira` generate entries from jira
 * `-z --zebra` generate entries from zebra
 * `-g --git <path>` generate entries from your local git repositories (defaults to current directory)
-* `-p --pie` generate pie chart instead of text (currently only for slack)
+* `-p --pie` generate pie chart instead of text (currently only for slack and zebra)
+* `-H --hours` prefer output in hours instead of start/end date
 * `-v --verbose` verbose output
 
 ## Configuration File

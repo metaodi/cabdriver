@@ -51,6 +51,7 @@ Program
   .option('-z, --zebra', 'use zebra as source')
   .option('-g, --git [path]', 'use git as a source')
   .option('-p, --pie', 'print pie chart instead of text')
+  .option('-H, --hours', 'prefer output as number of hours instead of time ranges [false]', false)
   .option('-v, --verbose', 'more verbose output [false]', false)
   .parse(process.argv);
 
@@ -81,11 +82,14 @@ Moment.suppressDeprecationWarnings = true;
 if (!Moment(dates['endDate']).isValid() || !Moment(dates['startDate']).isValid()) {
     console.error("Please enter a valid date range");
     process.exit(1);
+} else {
+    options['startDate'] = dates['startDate'];
+    options['endDate'] = dates['endDate'];
 }
 
 if (options.verbose) {
-    console.log('Start date: %s', Moment.tz(dates['startDate'], 'Europe/Zurich').format('DD.MM.YYYY'));
-    console.log('End date: %s', Moment.tz(dates['endDate'], 'Europe/Zurich').format('DD.MM.YYYY'));
+    console.log('Start date: %s', Moment.tz(options['startDate'], 'Europe/Zurich').format('DD.MM.YYYY'));
+    console.log('End date: %s', Moment.tz(options['endDate'], 'Europe/Zurich').format('DD.MM.YYYY'));
     console.log('Calendar: %s', options.calendar);
     console.log('Mail: %s', options.mail);
     console.log('Slack: %s', options.slack);
@@ -94,6 +98,7 @@ if (options.verbose) {
     console.log('Zebra: %s', options.zebra);
     console.log('Git: %s', options.git);
     console.log('Pie chart: %s', options.pie);
+    console.log('Hours: %s', options.hours);
     console.log('Count: %s', options.number);
 }
 
@@ -105,7 +110,7 @@ Async.parallel([
                 if (_.isBoolean(options.calendar)) {
                     options.calendar = 'primary';
                 }
-                calendar.listEvents(callback, auth, options.number, dates['startDate'], dates['endDate'], options.calendar);
+                calendar.listEvents(callback, auth, options);
             });
         } else {
             callback(null, []);
@@ -115,7 +120,7 @@ Async.parallel([
         // Google Mail
         if (options.mail) {
             auth.getAuth(function(auth) {
-                mail.listMessages(callback, auth, options.number, dates['startDate'], dates['endDate'], options.verbose);
+                mail.listMessages(callback, auth, options);
             });
         } else {
             callback(null, []);
@@ -124,7 +129,7 @@ Async.parallel([
     function(callback) {
         if (options.slack) {
             slack_auth.getAuth(function(auth) {
-                slack.dailyStats(callback, auth, options.number, dates['startDate'], dates['endDate'], options.pie);
+                slack.dailyStats(callback, auth, options);
             });
         } else {
             callback(null, []);
@@ -133,7 +138,7 @@ Async.parallel([
     function(callback) {
         if (options.logbot) {
             slack_auth.getAuth(function(auth) {
-                logbot.getLogs(callback, auth, options.number, dates['startDate'], dates['endDate']);
+                logbot.getLogs(callback, auth, options);
             });
         } else {
             callback(null, []);
@@ -142,7 +147,7 @@ Async.parallel([
     function(callback) {
         if (options.jira) {
             jira_auth.getAuth(function(auth) {
-                jira.getActivities(callback, auth, options.number, dates['startDate'], dates['endDate'], options.verbose);
+                jira.getActivities(callback, auth, options);
             });
         } else {
             callback(null, []);
@@ -151,7 +156,7 @@ Async.parallel([
     function(callback) {
         if (options.zebra) {
             zebra_auth.getAuth(function(auth) {
-                zebra.getTimesheets(callback, auth, options.number, dates['startDate'], dates['endDate'], options.verbose, options.pie);
+                zebra.getTimesheets(callback, auth, options);
             });
         } else {
             callback(null, []);
@@ -159,7 +164,7 @@ Async.parallel([
     },
     function(callback) {
         if (options.git) {
-            git.getCommits(callback, options.git, dates['startDate'], dates['endDate'], options.verbose);
+            git.getCommits(callback, options);
         } else {
             callback(null, []);
         }

@@ -50,7 +50,8 @@
     "prompt-promise": "^1.0.3",
     "semantic-date": "^0.2.1",
     "slack-api": "^0.1.12",
-    "superagent": "^3.4.1"
+    "superagent": "^3.4.1",
+    "twix": "^1.1.5"
   },
   "devDependencies": {
     "chai": "^3.5.0",
