@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+
+## 0.5.0 - 2017-05-10
 ### Added
 - Make use of the limit parameter in the logbot API
 - New option (-H/--hours) to change the output from time ranges to durations in hours (#39)
