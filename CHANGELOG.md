@@ -7,6 +7,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - Make use of the limit parameter in the logbot API
 
+### Fixed
+- Error output when directory can't be accessed (#40)
+
 ## 0.4.2 - 2017-03-08
 ### Fixed
 - Use string as default value for time in logbot to fix display problems 
