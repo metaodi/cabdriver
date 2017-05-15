@@ -1,11 +1,9 @@
 #!/usr/bin/env node
 
 var Program = require('commander');
-var _ = require('lodash');
 
 var cli = require('./lib/cli');
 var pkg = require('./package.json');
-
 
 Program
   .version(pkg.version)
@@ -23,17 +21,4 @@ Program
   .option('-v, --verbose', 'more verbose output [false]', false)
   .parse(process.argv);
 
-//load config
-var configDir = (process.env.HOME || process.env.HOMEPATH ||
-                 process.env.USERPROFILE) + '/.cabdriver/';
-var config = cli.loadConfig(configDir);
-var options = cli.getOptions(Program, config);
-
-cli.run(options, function(err, results) {
-    if (err) {
-        console.error("Error occured: ", err);
-        return;
-    }
-    cli.printResults(results);
-    process.exit(0);
-});
+cli.run(Program);
