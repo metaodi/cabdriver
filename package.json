@@ -61,6 +61,7 @@
     "jshint-stylish": "^2.2.1",
     "mocha": "~3.3.0",
     "mock-fs": "^4.3.0",
+    "nock": "^9.0.13",
     "sinon": "^2.2.0",
     "std-mocks": "^1.0.1"
   }
