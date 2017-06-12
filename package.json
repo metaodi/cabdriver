@@ -53,13 +53,13 @@
     "superagent": "^3.5.2"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.0.2",
     "gulp": "^3.9.1",
     "gulp-jscs": "^4.0.0",
     "gulp-jshint": "^2.0.4",
     "jshint": "^2.9.4",
     "jshint-stylish": "^2.2.1",
-    "mocha": "~3.3.0",
+    "mocha": "~3.4.2",
     "mock-fs": "^4.3.0",
     "nock": "^9.0.13",
     "sinon": "^2.2.0",
