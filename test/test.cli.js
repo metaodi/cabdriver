@@ -1,6 +1,7 @@
 /*jshint expr: true*/
 var Sinon = require('sinon');
 var stdMocks = require('std-mocks');
+var MockFs = require('mock-fs');
 var expect = require('chai').expect;
 
 var auth = require('../lib/auth');
@@ -13,6 +14,7 @@ describe('CLI', function() {
     afterEach(function () {
         sandbox.restore();
         stdMocks.restore();
+        MockFs.restore();
     });
 
     describe('querySources', function() {
@@ -62,7 +64,7 @@ describe('CLI', function() {
     });
     describe('printResults', function() {
         it('should print a correct calendar taxi entry', function() {
-            //setup stubs
+            //setup mocks
             stdMocks.use();
 
             var msg = {
@@ -88,6 +90,50 @@ describe('CLI', function() {
                 "xxx  1 Test Entry\n"
             ];
             expect(output).to.deep.equal(expectedOutput);
+        });
+    });
+    describe('loadConfig', function() {
+        it('should load a provided config file', function() {
+            //setup mocks
+            var ymlContent = 'defaults:\n' +
+                '   jira: true\n' +
+                '   slack: true\n' +
+                '   calendar: primary\n' +
+                '   zebra: false\n' +
+                '   logbot: true\n' +
+                '   git: /home/testuser\n' +
+                '   hours: true';
+            MockFs({
+              '/home/testuser/.cabdriver/cabdriver.yml': ymlContent 
+            });
+            
+
+            var config = cli.loadConfig('/home/testuser/.cabdriver/');
+            expect(config).to.deep.equal({
+                'defaults': {
+                    'jira': true,
+                    'slack': true,
+                    'calendar': 'primary',
+                    'zebra': false,
+                    'logbot': true,
+                    'git': '/home/testuser',
+                    'hours': true
+                }
+            });
+        });
+        it('should default to empty config on error', function() {
+            //setup mocks
+            stdMocks.use();
+            MockFs({
+              '/home/testuser/.cabdriver/cabdriver.yml': 'test: badconfig'
+            });
+            
+
+            var config = cli.loadConfig('/home/testuser/.cabdriver/');
+            expect(config).to.deep.equal({'defaults': {}});
+
+            var output = stdMocks.flush().stderr;
+            expect(output).to.deep.equal(["Config file has no 'defaults' key\n"]);
         });
     });
 });
