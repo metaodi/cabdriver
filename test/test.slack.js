@@ -45,7 +45,7 @@ describe('Slack', function() {
                 'time': '',
                 'text': '1 messages in #testchannel',
                 'graph': { 'label': "testchannel - 1", 'value': 1 },
-                'timestamp': "1497045535200",
+                'timestamp': "1497045538800",
                 'comment': false,
                 'type': 'slack'
             };
