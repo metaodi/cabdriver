@@ -25,5 +25,13 @@ gulp.task('test', function(cb) {
     });
 });
 
+gulp.task('testcoverage', function(cb) {
+    exec('NODE_ENV=test YOURPACKAGE_COVERAGE=1 ./node_modules/.bin/mocha --require blanket --reporter mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js', function(err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
+
 gulp.task('default', [ 'lint' ]);
-gulp.task('travis', [ 'lint', 'test' ]);
+gulp.task('travis', [ 'lint', 'test', 'testcoverage' ]);
