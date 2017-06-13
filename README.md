@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/metaodi/cabdriver.svg?branch=master)](https://travis-ci.org/metaodi/cabdriver)
+[![Coverage Status](https://coveralls.io/repos/github/metaodi/cabdriver/badge.svg?branch=master)](https://coveralls.io/github/metaodi/cabdriver?branch=master)
 
 cabdriver
 =========
