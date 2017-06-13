@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+### Added
+- Unit tests + test coverage for the important parts of the application
+
+### Changed
+- Refactored modules with prototypes
+
 ### Removed
 - Removed dependency to the moment.js plugin 'twix'
 
