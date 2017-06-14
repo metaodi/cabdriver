@@ -92,6 +92,55 @@ describe('CLI', function() {
             expect(output).to.deep.equal(expectedOutput);
         });
     });
+    describe('getOptions', function() {
+        it('should combine config values with cli arguments', function() {
+            //setup mocks
+            stdMocks.use();
+            var config = {
+                'defaults': {
+                    'jira': false,
+                    'slack': true,
+                    'logbot': false,
+                    'calendar': 'primary',
+                    'zebra': false,
+                    'git': false,
+                    'mail': false,
+                    'pie': false,
+                    'hours': false,
+                    'number': 1000
+                }
+            };
+            var optsStub = sandbox.stub().returns(
+                {
+                    'date': '02.12.2017',
+                    'jira': true,
+                    'verbose': true,
+                    'hours': true
+                }
+            );
+            var programStub = {'opts': optsStub};
+
+
+            cli.getOptions(programStub, config);
+            var output = stdMocks.flush().stdout;
+            stdMocks.restore();
+            var expectedOutput = [
+                "Start date: 02.12.2017\n",
+                "End date: 02.12.2017\n",
+                "Calendar: primary\n",
+                "Mail: false\n",
+                "Slack: true\n",
+                "Logbot: false\n",
+                "Jira: true\n",
+                "Zebra: false\n",
+                "Git: false\n",
+                "Pie chart: false\n",
+                "Hours: true\n",
+                "Count: 1000\n",
+            ];
+            expect(output).to.deep.equal(expectedOutput);
+        });
+    });
     describe('loadConfig', function() {
         it('should load a provided config file', function() {
             //setup mocks
