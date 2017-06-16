@@ -4,7 +4,7 @@ var stdMocks = require('std-mocks');
 var MockFs = require('mock-fs');
 var expect = require('chai').expect;
 
-var auth = require('../lib/auth');
+var google_auth = require('../lib/google_auth');
 var calendar = require('../lib/calendar');
 var cli = require('../lib/cli');
 
@@ -29,7 +29,7 @@ describe('CLI', function() {
                     'comment': false,
                     'type': 'calendar'
                 };
-                var authStub = sandbox.stub(auth, 'getAuth').yields({"auth": 123});
+                var authStub = sandbox.stub(google_auth, 'getAuth').yields({"auth": 123});
                 var calStub = sandbox.stub(calendar, 'listEvents').yields(null, [expectedMsg]);
 
                 var options = {'calendar': 'primary'};
@@ -49,7 +49,7 @@ describe('CLI', function() {
                     'comment': false,
                     'type': 'calendar'
                 };
-                var authStub = sandbox.stub(auth, 'getAuth').yields({"auth": 123});
+                var authStub = sandbox.stub(google_auth, 'getAuth').yields({"auth": 123});
                 var calStub = sandbox.stub(calendar, 'listEvents').yields(null, [expectedMsg]);
 
                 var options = {'calendar': true};
