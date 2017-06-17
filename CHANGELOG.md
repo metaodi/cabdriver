@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Changed
 - Refactored modules with prototypes
+- Renamed auth module to google_auth
 
 ### Removed
 - Removed dependency to the moment.js plugin 'twix'
