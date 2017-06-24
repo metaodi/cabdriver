@@ -37,6 +37,7 @@
     "commander": "^2.9.0",
     "findit2": "^2.2.3",
     "git-config": "0.0.7",
+    "github-api": "^3.0.0",
     "gitlog": "^2.4.0",
     "google-auth-library": "^0.10.0",
     "googleapis": "^19.0.0",
@@ -70,8 +71,13 @@
   },
   "config": {
     "blanket": {
-      "pattern": [ "" ],
-      "data-cover-never": [ "node_modules", "test" ]
+      "pattern": [
+        ""
+      ],
+      "data-cover-never": [
+        "node_modules",
+        "test"
+      ]
     }
   }
 }

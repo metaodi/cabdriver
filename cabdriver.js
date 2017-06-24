@@ -16,6 +16,7 @@ Program
   .option('-j, --jira', 'use jira as source')
   .option('-z, --zebra', 'use zebra as source')
   .option('-g, --git [path]', 'use git as a source')
+  .option('-G, --github', 'use github as a source')
   .option('-p, --pie', 'print pie chart instead of text')
   .option('-H, --hours', 'prefer output as number of hours instead of time ranges [false]', false)
   .option('-v, --verbose', 'more verbose output [false]', false)
