@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased][unreleased]
 ### Added
+- Github as a source (creates entries based on user activity)
 - Unit tests + test coverage for the important parts of the application
 
 ### Changed
