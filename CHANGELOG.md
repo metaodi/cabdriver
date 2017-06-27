@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+
+## 0.6.0 - 2017-06-27
 ### Added
 - Github as a source (creates entries based on user activity)
 - Unit tests + test coverage for the important parts of the application
