@@ -12,6 +12,7 @@ It currently support various sources to get entries in a taxi-friendly format:
 * [Slack](#slack)
 * [Jira](#jira)
 * [Local git repositories](#git)
+* [Github](#github)
 * [Zebra](#zebra)
 * [Logbot](#logbot)
 
@@ -130,6 +131,14 @@ $ cabdriver -z -p
 This might be helpful to get a double check of the entries that are already in Zebra and to see if something is missing or to update your local taxi file with entries that you made on the web interface of Zebra.
 Because all those entries were already commited to zebra, they are commted out by default.
 
+#### Github
+
+Generate entries based on GitHub activity this week:
+
+```
+$ cabdriver --github -d this-week
+```
+
 #### Logbot
 
 Find entries from [Logbot](https://github.com/metaodi/logbot):
@@ -163,6 +172,7 @@ For a complete help run `cabdriver --help`.
 * `-j --jira` generate entries from jira
 * `-z --zebra` generate entries from zebra
 * `-g --git <path>` generate entries from your local git repositories (defaults to current directory)
+* `-G --github` generate entries from github activities
 * `-p --pie` generate pie chart instead of text (currently only for slack and zebra)
 * `-H --hours` prefer output in hours instead of start/end date
 * `-v --verbose` verbose output
@@ -179,6 +189,7 @@ defaults:
     calendar: primary
     zebra: false
     git: /home/metaodi
+    github: true
 ```
 
 If you have the config file in place and you type `cabdriver` these values will be applied.
