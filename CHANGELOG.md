@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [Unreleased][unreleased]
 ### Fixed
 - Show nice error message if jira fails (#51)
+- Allow each jira issue to fail separately (i.e. get the information if possible)
 - If one source fails, continue the command
 
 ## 0.6.0 - 2017-06-27
