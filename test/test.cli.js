@@ -6,6 +6,8 @@ var expect = require('chai').expect;
 
 var google_auth = require('../lib/google_auth');
 var calendar = require('../lib/calendar');
+var mail = require('../lib/mail');
+
 var cli = require('../lib/cli');
 
 var sandbox = Sinon.sandbox.create();
@@ -57,6 +59,28 @@ describe('CLI', function() {
                     expect(err).to.not.exist;
                     expect(results).to.be.deep.equal([expectedMsg]);
                     expect(calStub.firstCall.args[2]).to.deep.equal({'calendar': 'primary'});
+                    done();
+                });
+            });
+        });
+        describe('Failing source', function() {
+            it('should not fail everything, print error msg on stderr', function(done) {
+                //setup stubs
+                stdMocks.use();
+                var authStub = sandbox.stub(google_auth, 'getAuth').yields({"auth": 123});
+                var mailStub = sandbox.stub(mail, 'listMessages').yields('Could not fetch mails');
+
+                var options = {'mail': true};
+                cli.querySources(options, function(err, results) {
+                    expect(err).to.not.exist;
+                    expect(results).to.deep.equal([]);
+
+                    var output = stdMocks.flush().stderr;
+                    stdMocks.restore();
+                    expect(output).to.deep.equal([
+                        "\n",
+                        "mail source failed with error: Could not fetch mails\n"
+                    ]);
                     done();
                 });
             });
