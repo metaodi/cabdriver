@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+### Fixed
+- Show nice error message if jira fails (#51)
+- If one source fails, continue the command
 
 ## 0.6.0 - 2017-06-27
 ### Added
