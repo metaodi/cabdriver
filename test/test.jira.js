@@ -192,5 +192,34 @@ describe('Jira', function() {
                 }
             }, auth, options);
         });
+        it('prints nice error message if JIRA fails', function(done) {
+            var currentUserStub = sandbox.stub(JiraApi.prototype, 'getCurrentUser')
+                .rejects({
+                    'name': 'StatusCodeError',
+                    'statusCode': 500,
+                    'message': '500 - {"errorMessages":["Internal server error"],"errors":{}}'
+                });
+
+
+            var options = {
+                'startDate': '2017-03-28',
+                'endDate': '2017-03-30',
+                'jira': true
+            };
+            var auth = {
+                'consumer_key': '123',
+                'consumer_secret': 'secret',
+                'access_token': '1234',
+                'access_token_secret': 'secret'
+            };
+            jira.getActivities(function(err, result) {
+                try {
+                    expect(err).to.equal('The JIRA API returned an error: 500 - {"errorMessages":["Internal server error"],"errors":{}}');
+                    done();
+                } catch (e) {
+                    done(e);
+                }
+            }, auth, options);
+        });
    });
 });
