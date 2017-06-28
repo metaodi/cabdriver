@@ -9,6 +9,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Allow each jira issue to fail separately (i.e. get the information if possible)
 - If one source fails, continue the command
 
+### Changed
+- Updated all dependencies (except by googleapis, as there seems to be an error with the release)
+
 ## 0.6.0 - 2017-06-27
 ### Added
 - Github as a source (creates entries based on user activity)
