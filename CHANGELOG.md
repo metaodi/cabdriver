@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+### Changed
+- BC-Break: `cabdriver` changed to ES6 classes, therefore node >= 4.0.0 is now required
+- BC-Break: the token file for google was renamed, previously it was called `calendar-nodejs-token.json` now it is simply called `google-token.json`. This might cause, that you have to re-authorize cabdriver to access your calendar and mail.
+- Major refactoring to use ES6 classes and use promises instead of callbacks
 
 ## 0.8.1 - 2017-07-07
 ### Fixed

@@ -7,6 +7,9 @@
     "test": "mocha"
   },
   "preferGlobal": true,
+  "engines" : { 
+      "node" : ">= 4.0.0"
+  },
   "bin": {
     "cabdriver": "cabdriver.js"
   },
