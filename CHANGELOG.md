@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased][unreleased]
 
+## 0.8.0 - 2017-07-03
+### Added
+- GitLab as a source
+
 ## 0.7.0 - 2017-06-28
 ### Fixed
 - Show nice error message if jira fails (#51)
