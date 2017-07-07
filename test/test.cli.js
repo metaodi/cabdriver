@@ -4,9 +4,9 @@ var stdMocks = require('std-mocks');
 var MockFs = require('mock-fs');
 var expect = require('chai').expect;
 
-var google_auth = require('../lib/google_auth');
-var calendar = require('../lib/calendar');
-var mail = require('../lib/mail');
+var GoogleAuth = require('../lib/google_auth');
+var GoogleCalendar = require('../lib/calendar');
+var GoogleMail = require('../lib/mail');
 
 var cli = require('../lib/cli');
 
@@ -31,35 +31,34 @@ describe('CLI', function() {
                     'comment': false,
                     'type': 'calendar'
                 };
-                var authStub = sandbox.stub(google_auth, 'getAuth').yields({"auth": 123});
-                var calStub = sandbox.stub(calendar, 'listEvents').yields(null, [expectedMsg]);
+                var sourceStub = {
+                    'calendar': {
+                        'getEntries': sandbox.stub().resolves([expectedMsg])
+                    }
+                };
 
-                var options = {'calendar': 'primary'};
-                cli.querySources(options, function(err, results) {
+                var options = {
+                    'calendar': 'primary',
+                };
+
+                cli.querySources(sourceStub, options, function(err, results) {
                     expect(err).to.not.exist;
                     expect(results).to.be.deep.equal([expectedMsg]);
                     done();
                 });
             });
-            it('should use the primary calendar if none is specified', function(done) {
+            it('should return an empty list if argument is not set', function(done) {
                 //setup stubs
-                var expectedMsg = {
-                    'project': 'xxx',
-                    'time': '1',
-                    'text': 'Test Entry',
-                    'timestamp': 0,
-                    'comment': false,
-                    'type': 'calendar'
-                };
-                var authStub = sandbox.stub(google_auth, 'getAuth').yields({"auth": 123});
-                var calStub = sandbox.stub(calendar, 'listEvents').yields(null, [expectedMsg]);
-
-                var options = {'calendar': true};
-                cli.querySources(options, function(err, results) {
-                    expect(err).to.not.exist;
-                    expect(results).to.be.deep.equal([expectedMsg]);
-                    expect(calStub.firstCall.args[2]).to.deep.equal({'calendar': 'primary'});
-                    done();
+                var options = {};
+                var sources = cli.getSources(options);
+                cli.querySources(sources, options, function(err, results) {
+                    try {
+                        expect(err).to.not.exist;
+                        expect(results).to.be.deep.equal([]);
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
             });
         });
@@ -67,21 +66,29 @@ describe('CLI', function() {
             it('should not fail everything, print error msg on stderr', function(done) {
                 //setup stubs
                 stdMocks.use();
-                var authStub = sandbox.stub(google_auth, 'getAuth').yields({"auth": 123});
-                var mailStub = sandbox.stub(mail, 'listMessages').yields('Could not fetch mails');
+                var sourceStub = {
+                    mail: {
+                        'getEntries': sandbox.stub().rejects('Could not fetch mails')
+                    }
+                };
 
                 var options = {'mail': true};
-                cli.querySources(options, function(err, results) {
-                    expect(err).to.not.exist;
-                    expect(results).to.deep.equal([]);
+                var sources = cli.getSources(options, sourceStub);
+                cli.querySources(sources, options, function(err, results) {
+                    try {
+                        expect(err).to.not.exist;
+                        expect(results).to.deep.equal([]);
 
-                    var output = stdMocks.flush().stderr;
-                    stdMocks.restore();
-                    expect(output).to.deep.equal([
-                        "\n",
-                        "mail source failed with error: Could not fetch mails\n"
-                    ]);
-                    done();
+                        var output = stdMocks.flush().stderr;
+                        stdMocks.restore();
+                        expect(output).to.deep.equal([
+                            "\n",
+                            "mail source failed: Could not fetch mails\n"
+                        ]);
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
             });
         });
@@ -206,6 +213,7 @@ describe('CLI', function() {
             expect(config).to.deep.equal({'defaults': {}});
 
             var output = stdMocks.flush().stderr;
+            stdMocks.restore();
             expect(output).to.deep.equal(["Config file has no 'defaults' key\n"]);
         });
     });
