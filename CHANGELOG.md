@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+
+## 0.8.1 - 2017-07-07
 ### Fixed
 - Prevent internal server error for JIRA by always setting the `properties` query param (see also #51)
 
