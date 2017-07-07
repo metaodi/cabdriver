@@ -13,13 +13,21 @@ It currently support various sources to get entries in a taxi-friendly format:
 * [Jira](#jira)
 * [Local git repositories](#git)
 * [Github](#github)
+* [Gitlab](#gitlab)
 * [Zebra](#zebra)
 * [Logbot](#logbot)
 
 ## Installation
 
-Make sure you have [Node.js](https://nodejs.org/en/) installed.
+Make sure you have [Node.js](https://nodejs.org/en/) >= 4.0.0 installed.
 
+To check the node version number, use the following command:
+
+```bash
+node --version
+```
+
+Install `cabdriver` globally:
 ```bash
 npm install -g cabdriver
 ```
@@ -139,6 +147,14 @@ Generate entries based on GitHub activity this week:
 $ cabdriver --github -d this-week
 ```
 
+#### Gitlab
+
+Generate entries based on GitLab activity:
+
+```
+$ cabdriver --gitlab
+```
+
 #### Logbot
 
 Find entries from [Logbot](https://github.com/metaodi/logbot):
@@ -173,6 +189,7 @@ For a complete help run `cabdriver --help`.
 * `-z --zebra` generate entries from zebra
 * `-g --git <path>` generate entries from your local git repositories (defaults to current directory)
 * `-G --github` generate entries from github activities
+* `-L --gitlab` generate entries from gitlab activities
 * `-p --pie` generate pie chart instead of text (currently only for slack and zebra)
 * `-H --hours` prefer output in hours instead of start/end date
 * `-v --verbose` verbose output
@@ -190,6 +207,7 @@ defaults:
     zebra: false
     git: /home/metaodi
     github: true
+    gitlab: true
 ```
 
 If you have the config file in place and you type `cabdriver` these values will be applied.
