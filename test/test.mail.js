@@ -51,7 +51,7 @@ describe('Mail', function() {
             };
             var authStub = {'getAuth': sandbox.stub().resolves('1234')};
 
-            var mail = new GoogleMail(authStub, options);
+            var mail = new GoogleMail(options, authStub);
 
             return mail.getEntries()
                 .then(function(results) {

@@ -33,7 +33,7 @@ describe('Gitlab', function() {
                 'gitlab': true
             };
             var authStub = {getAuth: sandbox.stub().resolves('1234')};
-            var gitlab = new Gitlab(authStub, options);
+            var gitlab = new Gitlab(options, authStub);
             return gitlab.getEntries()
                 .then(function(entries) {
                     expect(entries).to.deep.equal([{
@@ -84,7 +84,7 @@ describe('Gitlab', function() {
                 'gitlab': true
             };
             var authStub = {getAuth: sandbox.stub().resolves('1234')};
-            var gitlab = new Gitlab(authStub, options);
+            var gitlab = new Gitlab(options, authStub);
             return gitlab.getEntries()
                 .then(function(result) {
                     expect(result).to.deep.equal([{

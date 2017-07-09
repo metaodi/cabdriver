@@ -53,7 +53,7 @@ describe('Jira', function() {
             var authStub = {
                 'getAuth': sandbox.stub().resolves(auth)
             };
-            var jira = new Jira(authStub, options);
+            var jira = new Jira(options, authStub);
             return jira.getEntries()
                 .then(function(result) {
                     expect(result).to.deep.equal([{
@@ -115,7 +115,7 @@ describe('Jira', function() {
             var authStub = {
                 'getAuth': sandbox.stub().resolves(auth)
             };
-            var jira = new Jira(authStub, options);
+            var jira = new Jira(options, authStub);
             return jira.getEntries()
                 .then(function(result) {
                     expect(result).to.deep.equal([
@@ -173,7 +173,7 @@ describe('Jira', function() {
             var authStub = {
                 'getAuth': sandbox.stub().resolves(auth)
             };
-            var jira = new Jira(authStub, options);
+            var jira = new Jira(options, authStub);
             return jira.getEntries()
                 .then(function(result) {
                     expect(result).to.deep.equal([
@@ -211,7 +211,7 @@ describe('Jira', function() {
             var authStub = {
                 'getAuth': sandbox.stub().resolves(auth)
             };
-            var jira = new Jira(authStub, options);
+            var jira = new Jira(options, authStub);
             return jira.getEntries()
                 .then(function(result) {
                     throw new Error("we should never get here");
@@ -269,7 +269,7 @@ describe('Jira', function() {
             var authStub = {
                 'getAuth': sandbox.stub().resolves(auth)
             };
-            var jira = new Jira(authStub, options);
+            var jira = new Jira(options, authStub);
             return jira.getEntries()
                 .then(function(result) {
                     expect(result).to.deep.equal([

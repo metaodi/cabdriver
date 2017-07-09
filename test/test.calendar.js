@@ -37,7 +37,7 @@ describe('Calendar', function() {
             };
             var authStub = {'getAuth': sandbox.stub().resolves('1234')};
 
-            var calendar = new GoogleCalendar(authStub, options);
+            var calendar = new GoogleCalendar(options, authStub);
             return calendar.getEntries()
                 .then(function(results) {
                     var msg = {
@@ -73,7 +73,7 @@ describe('Calendar', function() {
                 'calendar': 'events',
             };
             var authStub = {'getAuth': sandbox.stub().resolves('1234')};
-            var calendar = new GoogleCalendar(authStub, options);
+            var calendar = new GoogleCalendar(options, authStub);
 
             return calendar.getEntries()
                 .then(function(results) {
