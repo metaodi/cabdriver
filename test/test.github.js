@@ -40,22 +40,22 @@ describe('Github', function() {
                 }]
             });
             var apiStub = { 
+                'authenticate': sandbox.stub(),
                 'hasNextPage': sandbox.stub().returns(false),
                 'users': {'get': userStub},
                 'activity': {'getEventsForUser': eventStub}
             };
+            var authStub = {
+                'getAuth': sandbox.stub().resolves('1234')
+            };
+
             // call the function
             var options = {
                 'startDate': '2017-06-22',
                 'endDate': '2017-06-24',
                 'github': true
             };
-            var authStub = {
-                'getAuth': sandbox.stub().resolves('1234')
-            };
-            var github = new Github(authStub, options);
-            sandbox.stub(github, 'getApi').returns(apiStub);
-
+            var github = new Github(options, authStub, apiStub);
             return github.getEntries()
                 .then(function(result) {
                     Sinon.assert.calledWith(
