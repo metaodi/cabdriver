@@ -2,7 +2,7 @@
 var Sinon = require('sinon');
 var expect = require('chai').expect;
 
-var github = require('../lib/github');
+var Github = require('../lib/github');
 var GithubApi = require('github');
 
 var sandbox = Sinon.sandbox.create();
@@ -12,8 +12,8 @@ describe('Github', function() {
         sandbox.restore();
     });
 
-    describe('getContributions', function() {
-        it('returns the correct entry for a PullRequestEvent', function(done) {
+    describe('getEntries', function() {
+        it('returns the correct entry for a PullRequestEvent', function() {
             // setup stubs  
             var userStub = sandbox.stub().resolves({
                 'data': {
@@ -44,35 +44,37 @@ describe('Github', function() {
                 'users': {'get': userStub},
                 'activity': {'getEventsForUser': eventStub}
             };
-            sandbox.stub(github, 'getApi').returns(apiStub);
-
             // call the function
             var options = {
                 'startDate': '2017-06-22',
                 'endDate': '2017-06-24',
                 'github': true
             };
-            github.getContributions(
-                function(err, result) {
-                    try {
-                        expect(err).to.not.exist;
-                        var msg = {
-                            'project': 'test-repo',
-                            'time': '1',
-                            'text': '#1337: Test pull request, pull request created',
-                            'timestamp': "1498168800",
-                            'comment': false,
-                            'type': 'github'
-                        };
-                        expect(result).to.be.deep.equal([msg]);
-                        done();
-                    } catch (e) {
-                        done(e);
-                    }
-                },
-                '1234',
-                options
-            );
+            var authStub = {
+                'getAuth': sandbox.stub().resolves('1234')
+            };
+            var github = new Github(authStub, options);
+            sandbox.stub(github, 'getApi').returns(apiStub);
+
+            return github.getEntries()
+                .then(function(result) {
+                    Sinon.assert.calledWith(
+                        apiStub.authenticate,
+                        {
+                            type: 'oauth',
+                            token: '1234'
+                        }
+                    );
+                    var msg = {
+                        'project': 'test-repo',
+                        'time': '1',
+                        'text': '#1337: Test pull request, pull request created',
+                        'timestamp': "1498168800",
+                        'comment': false,
+                        'type': 'github'
+                    };
+                    expect(result).to.be.deep.equal([msg]);
+                });
         });
     });
 });
