@@ -5,17 +5,17 @@ var expect = require('chai').expect;
 
 var sandbox = Sinon.sandbox.create();
 
-var logbot = require('../lib/logbot');
+var Logbot = require('../lib/logbot');
 
 describe('Logbot', function() {
     afterEach(function () {
         sandbox.restore();
     });
 
-    describe('getLogs', function() {
-        it('generates entry based on formatted log', function(done) {
+    describe('getEntries', function() {
+        it('generates entry based on formatted log', function() {
             Nock('https://logbotcmd.herokuapp.com')
-                .post('/logs')
+                .post('/logs', {'token': 'abcd'})
                 .query(true)
                 .reply(200, {
                     result: [
@@ -25,16 +25,18 @@ describe('Logbot', function() {
                         }
                     ]
                 });
-
+            var authStub = {
+                'getAuth': sandbox.stub().resolves('abcd')
+            };
 
             var options = {
                 'startDate': '2017-06-28',
                 'endDate': '2017-06-30',
                 'logbot': true
             };
-            logbot.getLogs(function(err, result) {
-                try {
-                    expect(err).to.not.exist;
+            var logbot = new Logbot(options, authStub);
+            return logbot.getEntries()
+                .then(function(result) {
                     expect(result).to.deep.equal([{
                         project: '_internal',
                         time: '1',
@@ -42,11 +44,7 @@ describe('Logbot', function() {
                         timestamp: '1498687200',
                         type: 'logbot',
                     }]);
-                    done();
-                } catch (e) {
-                    done(e);
-                }
-            }, '1234', options);
+                });
         });
     });
 });
