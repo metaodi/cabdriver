@@ -6,7 +6,8 @@ var expect = require('chai').expect;
 
 var sandbox = Sinon.sandbox.create();
 
-var git = require('../lib/git');
+var Git = require('../lib/git');
+var NullAuth = require('../lib/null_auth');
 
 describe('Git', function() {
     afterEach(function () {
@@ -16,14 +17,14 @@ describe('Git', function() {
     });
 
     describe('getCommits', function() {
-        it('generates entries based on commits', function(done) {
+        it('generates entries based on commits', function() {
             MockFs({
                 '/path/to/repo/test/.git': {}
             });
-            var configStub = sandbox.stub(git, 'getConfig').yields(null, {
+            var configStub = sandbox.stub().yields(null, {
                 'user': {'name': 'Test User'}
             });
-            var logStub = sandbox.stub(git, 'getLog').yields(null, [{
+            var logStub = sandbox.stub().resolves([{
                 authorDate: '2017-03-29T14:45:28.000Z',
                 subject: 'Test Commit'
             }]);
@@ -33,38 +34,40 @@ describe('Git', function() {
                 'endDate': '2017-03-30',
                 'git': '/path/to/repo'
             };
-            git.getCommits(function(err, result) {
-                Sinon.assert.called(configStub);
-                Sinon.assert.called(logStub);
-                Sinon.assert.calledWith(logStub, {
-                    repo: '/path/to/repo/test',
-                    number: 1000,
-                    author: 'Test User',
-                    all: true,
-                    after: '2017-03-28',
-                    before: '2017-03-30',
-                    fields: [
-                        'abbrevHash',
-                        'subject',
-                        'authorName',
-                        'authorDate'
-                    ],
-                    execOptions: {
-                        maxBuffer: 1024000
-                    }
-                });
-                expect(result).to.deep.equal([{
-                    project: 'test',
-                    time: '',
-                    text: 'Test Commit',
-                    timestamp: '1490738400',
-                    comment: false,
-                    type: 'git'
-                }]);
-                done();
-            }, options);
+            var auth = new NullAuth();
+            var git = new Git(options, auth, logStub, configStub);
+            return git.getEntries()
+                .then(function(result) {
+                    Sinon.assert.called(configStub);
+                    Sinon.assert.called(logStub);
+                    Sinon.assert.calledWith(logStub, {
+                        repo: '/path/to/repo/test',
+                        number: 1000,
+                        author: 'Test User',
+                        all: true,
+                        after: '2017-03-28',
+                        before: '2017-03-30',
+                        fields: [
+                            'abbrevHash',
+                            'subject',
+                            'authorName',
+                            'authorDate'
+                        ],
+                        execOptions: {
+                            maxBuffer: 1024000
+                        }
+                    });
+                    expect(result).to.deep.equal([{
+                        project: 'test',
+                        time: '',
+                        text: 'Test Commit',
+                        timestamp: '1490738400',
+                        comment: false,
+                        type: 'git'
+                    }]);
+            });
         });
-        it('generates error msg for not-accessible directory', function(done) {
+        it('generates error msg for not-accessible directory', function() {
             stdMocks.use();
             MockFs({
                 '/path/to/repo/test/.git': {},
@@ -80,10 +83,10 @@ describe('Git', function() {
                     }
                 })
             });
-            var configStub = sandbox.stub(git, 'getConfig').yields(null, {
+            var configStub = sandbox.stub().yields(null, {
                 'user': {'name': 'Test User'}
             });
-            var logStub = sandbox.stub(git, 'getLog').yields(null, [{
+            var logStub = sandbox.stub().resolves([{
                 authorDate: '2017-03-29T14:45:28.000Z',
                 subject: 'Test Commit'
             }]);
@@ -94,19 +97,15 @@ describe('Git', function() {
                 'git': '/path/to/',
                 'verbose': true
             };
-            git.getCommits(function(err, result) {
-                try {
-                    expect(err).to.not.exist;
-
+            var auth = new NullAuth();
+            var git = new Git(options, auth, logStub, configStub);
+            git.getEntries()
+                .then(function(result) {
                     var output = stdMocks.flush().stderr;
                     expect(output).to.deep.equal(
                         ["Error accessing path /path/to/unreadable/readable-child\n"]
                     );
-                    done();
-                } catch (e) {
-                    done(e);
-                }
-            }, options);
+            });
         });
     });
 });
