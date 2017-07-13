@@ -3,17 +3,17 @@ var Sinon = require('sinon');
 var Nock = require('nock');
 var expect = require('chai').expect;
 
-var sandbox = Sinon.sandbox.create();
+var Gitlab = require('../lib/gitlab');
 
-var gitlab = require('../lib/gitlab');
+var sandbox = Sinon.sandbox.create();
 
 describe('Gitlab', function() {
     afterEach(function () {
         sandbox.restore();
     });
 
-    describe('getEvents', function() {
-        it('generates entry based on GitLab push event', function(done) {
+    describe('generateEntries', function() {
+        it('generates entry based on GitLab push event', function() {
             Nock('https://gitlab.liip.ch')
                 .get('/api/v3/events')
                 .query(true)
@@ -32,10 +32,11 @@ describe('Gitlab', function() {
                 'endDate': '2017-03-30',
                 'gitlab': true
             };
-            gitlab.getEvents(function(err, result) {
-                try {
-                    expect(err).to.not.exist;
-                    expect(result).to.deep.equal([{
+            var authStub = {getAuth: sandbox.stub().resolves('1234')};
+            var gitlab = new Gitlab(options, authStub);
+            return gitlab.getEntries()
+                .then(function(entries) {
+                    expect(entries).to.deep.equal([{
                         project: 'xxx',
                         time: '1',
                         text: 'pushed to branch master',
@@ -43,13 +44,9 @@ describe('Gitlab', function() {
                         type: 'gitlab',
                         comment: false
                     }]);
-                    done();
-               } catch (e) {
-                   done(e);
-               }
-            }, '1234', options);
+                });
         });
-        it('generates entry based on GitLab note event', function(done) {
+        it('generates entry based on GitLab note event', function() {
             Nock('https://gitlab.liip.ch')
                 .get('/api/v3/events')
                 .query(true)
@@ -86,9 +83,10 @@ describe('Gitlab', function() {
                 'endDate': '2017-03-30',
                 'gitlab': true
             };
-            gitlab.getEvents(function(err, result) {
-                try {
-                    expect(err).to.not.exist;
+            var authStub = {getAuth: sandbox.stub().resolves('1234')};
+            var gitlab = new Gitlab(options, authStub);
+            return gitlab.getEntries()
+                .then(function(result) {
                     expect(result).to.deep.equal([{
                         project: 'testproject',
                         time: '1',
@@ -97,11 +95,7 @@ describe('Gitlab', function() {
                         type: 'gitlab',
                         comment: false
                     }]);
-                    done();
-               } catch (e) {
-                   done(e);
-               }
-            }, '1234', options);
+                });
         });
     });
 });

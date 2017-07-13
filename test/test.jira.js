@@ -8,7 +8,7 @@ var JiraApi = require('jira-client');
 
 var sandbox = Sinon.sandbox.create();
 
-var jira = require('../lib/jira');
+var Jira = require('../lib/jira');
 
 describe('Jira', function() {
     afterEach(function () {
@@ -16,9 +16,8 @@ describe('Jira', function() {
         stdMocks.restore();
     });
 
-    describe('getActivities', function() {
-        it('generates entries based on Jira history', function(done) {
-            this.timeout(5000);
+    describe('getEntries', function() {
+        it('generates entries based on Jira history', function() {
             var currentUserStub = sandbox.stub(JiraApi.prototype, 'getCurrentUser')
                 .resolves({'key': 'testuser'});
             var searchJiraStub = sandbox.stub(JiraApi.prototype, 'searchJira')
@@ -51,9 +50,12 @@ describe('Jira', function() {
                 'access_token': '1234',
                 'access_token_secret': 'secret'
             };
-            jira.getActivities(function(err, result) {
-                try {
-                    expect(err).to.not.exist;
+            var authStub = {
+                'getAuth': sandbox.stub().resolves(auth)
+            };
+            var jira = new Jira(options, authStub);
+            return jira.getEntries()
+                .then(function(result) {
                     expect(result).to.deep.equal([{
                         project: 'test',
                         time: '1',
@@ -62,13 +64,9 @@ describe('Jira', function() {
                         type: 'jira',
                         comment: false
                     }]);
-                    done();
-                } catch (e) {
-                    done(e);
-                }
-            }, auth, options);
+                });
         });
-        it('generates entries based on Jira comments', function(done) {
+        it('generates entries based on Jira comments', function() {
             var currentUserStub = sandbox.stub(JiraApi.prototype, 'getCurrentUser')
                 .resolves({'key': 'testuser'});
             var searchJiraStub = sandbox.stub(JiraApi.prototype, 'searchJira')
@@ -114,9 +112,12 @@ describe('Jira', function() {
                 'access_token': '1234',
                 'access_token_secret': 'secret'
             };
-            jira.getActivities(function(err, result) {
-                try {
-                    expect(err).to.not.exist;
+            var authStub = {
+                'getAuth': sandbox.stub().resolves(auth)
+            };
+            var jira = new Jira(options, authStub);
+            return jira.getEntries()
+                .then(function(result) {
                     expect(result).to.deep.equal([
                         {
                             project: 'test',
@@ -127,13 +128,9 @@ describe('Jira', function() {
                             comment: false
                         }
                     ]);
-                    done();
-                } catch (e) {
-                    done(e);
-                }
-            }, auth, options);
+                });
         });
-        it('generates entries based on Jira worklog', function(done) {
+        it('generates entries based on Jira worklog', function() {
             var currentUserStub = sandbox.stub(JiraApi.prototype, 'getCurrentUser')
                 .resolves({'key': 'testuser'});
             var searchJiraStub = sandbox.stub(JiraApi.prototype, 'searchJira')
@@ -173,9 +170,12 @@ describe('Jira', function() {
                 'access_token': '1234',
                 'access_token_secret': 'secret'
             };
-            jira.getActivities(function(err, result) {
-                try {
-                    expect(err).to.not.exist;
+            var authStub = {
+                'getAuth': sandbox.stub().resolves(auth)
+            };
+            var jira = new Jira(options, authStub);
+            return jira.getEntries()
+                .then(function(result) {
                     expect(result).to.deep.equal([
                         {
                             project: 'test',
@@ -186,13 +186,9 @@ describe('Jira', function() {
                             comment: false
                         }
                     ]);
-                    done();
-                } catch (e) {
-                    done(e);
-                }
-            }, auth, options);
+                });
         });
-        it('returns nice error message if JIRA fails', function(done) {
+        it('returns nice error message if JIRA fails', function() {
             var currentUserStub = sandbox.stub(JiraApi.prototype, 'getCurrentUser')
                 .rejects({
                     'name': 'StatusCodeError',
@@ -212,16 +208,19 @@ describe('Jira', function() {
                 'access_token': '1234',
                 'access_token_secret': 'secret'
             };
-            jira.getActivities(function(err, result) {
-                try {
-                    expect(err).to.equal('The JIRA API returned an error: 500 - {"errorMessages":["Internal server error"],"errors":{}}');
-                    done();
-                } catch (e) {
-                    done(e);
-                }
-            }, auth, options);
+            var authStub = {
+                'getAuth': sandbox.stub().resolves(auth)
+            };
+            var jira = new Jira(options, authStub);
+            return jira.getEntries()
+                .then(function(result) {
+                    throw new Error("we should never get here");
+                })
+                .catch(function(err) {
+                    expect(err.message).to.equal('The JIRA API returned an error: 500 - {"errorMessages":["Internal server error"],"errors":{}}');
+                });
         });
-        it('generate entries for successful issue requests, print error otherwise', function(done) {
+        it('generate entries for successful issue requests, print error otherwise', function() {
             stdMocks.use();
             var currentUserStub = sandbox.stub(JiraApi.prototype, 'getCurrentUser')
                 .resolves({'key': 'testuser'});
@@ -267,9 +266,12 @@ describe('Jira', function() {
                 'access_token': '1234',
                 'access_token_secret': 'secret'
             };
-            jira.getActivities(function(err, result) {
-                try {
-                    expect(err).to.not.exist;
+            var authStub = {
+                'getAuth': sandbox.stub().resolves(auth)
+            };
+            var jira = new Jira(options, authStub);
+            return jira.getEntries()
+                .then(function(result) {
                     expect(result).to.deep.equal([
                         {
                             project: 'test',
@@ -283,11 +285,7 @@ describe('Jira', function() {
                     var output = stdMocks.flush().stderr;
                     stdMocks.restore();
                     expect(output).to.deep.equal(['Error fetching issue FAIL-666: 500 - {"errorMessages":["Internal server error"],"errors":{}}' + "\n"]);
-                    done();
-                } catch (e) {
-                    done(e);
-                }
-            }, auth, options);
+                });
         });
    });
 });

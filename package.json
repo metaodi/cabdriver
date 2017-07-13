@@ -7,6 +7,9 @@
     "test": "mocha"
   },
   "preferGlobal": true,
+  "engines": {
+    "node": ">= 4.0.0"
+  },
   "bin": {
     "cabdriver": "cabdriver.js"
   },
@@ -36,6 +39,7 @@
     "cli-pie": "^2.3.2",
     "commander": "^2.10.0",
     "findit2": "^2.2.3",
+    "fs-extra": "^3.0.1",
     "git-config": "0.0.7",
     "github": "^9.2.0",
     "gitlog": "^2.4.0",
@@ -48,6 +52,7 @@
     "moment-timezone": "^0.5.13",
     "oauth": "^0.9.15",
     "pad": "^1.1.0",
+    "promise-async": "^0.2.0",
     "prompt-promise": "^1.0.3",
     "semantic-date": "^0.2.1",
     "slack-api": "^0.1.12",
@@ -60,6 +65,7 @@
     "gulp": "^3.9.1",
     "gulp-jscs": "^4.0.0",
     "gulp-jshint": "^2.0.4",
+    "istanbul": "^0.4.5",
     "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1",
     "mocha": "~3.4.2",

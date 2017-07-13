@@ -1,6 +1,7 @@
 {
     "predef": {
     },
+    "esversion": 6,
     "jquery": true,
     "curly": true,
     "strict": false,

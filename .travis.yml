@@ -1,8 +1,12 @@
 language: node_js
 node_js:
-- 4.0.0
+- "node"
+- "4"
 before_script:
 - npm install -g gulp
+after_script:
+- gulp testcoverage
+- "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
 script:
 - gulp travis
 sudo: false

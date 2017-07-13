@@ -5,15 +5,15 @@ var expect = require('chai').expect;
 
 var sandbox = Sinon.sandbox.create();
 
-var zebra = require('../lib/zebra');
+var Zebra = require('../lib/zebra');
 
 describe('Zebra', function() {
     afterEach(function () {
         sandbox.restore();
     });
 
-    describe('getTimesheets', function() {
-        it('generates entries based on timesheets', function(done) {
+    describe('getEntries', function() {
+        it('generates entries based on timesheets', function() {
             Nock('https://zebra.liip.ch')
                 .get('/api/v2/timesheets')
                 .query(true)
@@ -28,16 +28,18 @@ describe('Zebra', function() {
                         }]
                     }
                 });
-
+            var authStub = {
+                'getAuth': sandbox.stub().resolves('abcd')
+            };
 
             var options = {
                 'startDate': '2017-03-28',
                 'endDate': '2017-03-30',
                 'zebra': true
             };
-            zebra.getTimesheets(function(err, result) {
-                try {
-                    expect(err).to.not.exist;
+            var zebra = new Zebra(options, authStub);
+            return zebra.getEntries()
+                .then(function(result) {
                     expect(result).to.deep.equal([{
                         project: '_test',
                         time: '12',
@@ -50,13 +52,9 @@ describe('Zebra', function() {
                             value: 12.0
                         }
                     }]);
-                    done();
-               } catch (e) {
-                   done(e);
-               }
-            }, '1234', options);
+                });
         });
-        it('generates pie based on timesheets', function(done) {
+        it('generates pie based on timesheets', function() {
             Nock('https://zebra.liip.ch')
                 .get('/api/v2/timesheets')
                 .query(true)
@@ -71,6 +69,9 @@ describe('Zebra', function() {
                         }]
                     }
                 });
+            var authStub = {
+                'getAuth': sandbox.stub().resolves('abcd')
+            };
 
 
             var options = {
@@ -79,18 +80,14 @@ describe('Zebra', function() {
                 'zebra': true,
                 'pie': true
             };
-            zebra.getTimesheets(function(err, result) {
-                try {
+            var zebra = new Zebra(options, authStub);
+            return zebra.getEntries()
+                .then(function(result) {
                     var entry = result[0];
-                    expect(err).to.not.exist;
                     expect(entry.timestamp).to.equal('1490652000');
                     expect(entry.type).to.equal('zebra');
                     expect(entry.raw).to.exist;
-                    done();
-                } catch (e) {
-                    done(e);
-                }
-            }, '1234', options);
+                });
         });
     });
 });

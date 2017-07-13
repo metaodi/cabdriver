@@ -2,7 +2,7 @@
 var Sinon = require('sinon');
 var expect = require('chai').expect;
 
-var mail = require('../lib/mail');
+var GoogleMail = require('../lib/mail');
 var Google = require('googleapis');
 
 var sandbox = Sinon.sandbox.create();
@@ -12,13 +12,13 @@ describe('Mail', function() {
         sandbox.restore();
     });
 
-    describe('listMessages', function() {
+    describe('generateEntries', function() {
         it('returns the correct msgs', function() {
             var callback = sandbox.spy();
             var listStub = sandbox.stub().yields(
                 null,
                 {
-                    'messages': {'id': 12345}
+                    'messages': [{'id': 12345}]
                 }
             );
             var getStub = sandbox.stub().yields(
@@ -49,16 +49,22 @@ describe('Mail', function() {
                 'endDate': '2017-04-11',
                 'mail': true
             };
-            mail.listMessages(callback, '1234', options);
-            var msg = {
-                'project': 'xxx',
-                'time': '12:00',
-                'text': 'Test Email (From: test@example.com)',
-                'timestamp': "1497045600",
-                'comment': false,
-                'type': 'mail'
-            };
-            Sinon.assert.calledWith(callback, null, [msg]);
+            var authStub = {'getAuth': sandbox.stub().resolves('1234')};
+
+            var mail = new GoogleMail(options, authStub);
+
+            return mail.getEntries()
+                .then(function(results) {
+                    var msg = {
+                        'project': 'xxx',
+                        'time': '12:00',
+                        'text': 'Test Email (From: test@example.com)',
+                        'timestamp': "1497045600",
+                        'comment': false,
+                        'type': 'mail'
+                    };
+                    expect(results).to.be.deep.equal([msg]);
+                });
         });
     });
 });
