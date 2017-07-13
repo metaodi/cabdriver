@@ -50,7 +50,11 @@ describe('CLI', function() {
             it('should return an empty list if argument is not set', function(done) {
                 //setup stubs
                 var options = {};
-                var sources = cli.getSources(options);
+                var sourceConfig = {
+                    calendar: { source: GoogleCalendar, auth: GoogleAuth },
+                    mail: { source: GoogleMail, auth: GoogleAuth },
+                };
+                var sources = cli.getSources(options, sourceConfig);
                 cli.querySources(sources, options, function(err, results) {
                     try {
                         expect(err).to.not.exist;
@@ -66,14 +70,17 @@ describe('CLI', function() {
             it('should not fail everything, print error msg on stderr', function(done) {
                 //setup stubs
                 stdMocks.use();
-                var sourceStub = {
-                    mail: {
+                var sourceStub = function() {
+                    return {
                         'getEntries': sandbox.stub().rejects('Could not fetch mails')
-                    }
+                    };
                 };
 
                 var options = {'mail': true};
-                var sources = cli.getSources(options, sourceStub);
+                var sourceConfig = {
+                    mail: { source: sourceStub, auth: GoogleAuth },
+                };
+                var sources = cli.getSources(options, sourceConfig);
                 cli.querySources(sources, options, function(err, results) {
                     try {
                         expect(err).to.not.exist;
@@ -143,6 +150,17 @@ describe('CLI', function() {
                     'number': 1000
                 }
             };
+            var sources = [
+                'jira',
+                'slack',
+                'logbot',
+                'calendar',
+                'zebra',
+                'git',
+                'gitlab',
+                'github',
+                'mail'
+            ];
             var optsStub = sandbox.stub().returns(
                 {
                     'date': '02.12.2017',
@@ -153,8 +171,7 @@ describe('CLI', function() {
             );
             var programStub = {'opts': optsStub};
 
-
-            cli.getOptions(programStub, config);
+            cli.getOptions(programStub, config, sources);
             var output = stdMocks.flush().stdout;
             stdMocks.restore();
             var expectedOutput = [

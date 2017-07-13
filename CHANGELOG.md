@@ -5,9 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased][unreleased]
 ### Changed
-- BC-Break: `cabdriver` changed to ES6 classes, therefore node >= 4.0.0 is now required
-- BC-Break: the token file for google was renamed, previously it was called `calendar-nodejs-token.json` now it is simply called `google-token.json`. This might cause, that you have to re-authorize cabdriver to access your calendar and mail.
 - Major refactoring to use ES6 classes and use promises instead of callbacks
+- BC-Break: `cabdriver` changed to ES6 classes, therefore node >= 4.0.0 is now required
+- BC-Break: the token file for google was renamed, previously it was called `calendar-nodejs-token.json` now it is simply called `google-token.json`. This might cause, that you have to re-authorize cabdriver to access your calendar and mail. You can simply rename the file in `~/.cabdriver` to avoid this.
 
 ## 0.8.1 - 2017-07-07
 ### Fixed
