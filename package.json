@@ -8,7 +8,7 @@
   },
   "preferGlobal": true,
   "engines": {
-    "node": ">= 4.0.0"
+    "node": ">=4.8.4"
   },
   "bin": {
     "cabdriver": "cabdriver.js"

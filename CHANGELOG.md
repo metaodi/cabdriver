@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+### Security
+- Make sure the minimum node version is 4.8.4 due to a vulnerability in node (see https://nodejs.org/en/blog/vulnerability/july-2017-security-releases/)
+
 ### Changed
 - Major refactoring to use ES6 classes and use promises instead of callbacks
 - BC-Break: `cabdriver` changed to ES6 classes, therefore node >= 4.0.0 is now required
