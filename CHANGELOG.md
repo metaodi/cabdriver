@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+
+## 1.0.0 - 2017-07-19
 ### Security
 - Make sure the minimum node version is 4.8.4 due to a vulnerability in node (see https://nodejs.org/en/blog/vulnerability/july-2017-security-releases/)
 
