@@ -15,14 +15,15 @@ describe('Gitlab', function() {
     describe('generateEntries', function() {
         it('generates entry based on GitLab push event', function() {
             Nock('https://gitlab.liip.ch')
-                .get('/api/v3/events')
+                .get('/api/v4/events')
                 .query(true)
                 .reply(200, [{
                     'target_type': null,
                     'target_id': null,
+                    'target_iid': null,
                     'project_id': null,
                     'action_name': 'pushed to',
-                    'data': {'ref': 'refs/heads/master'},
+                    'push_data': {'ref_type': 'branch', 'ref': 'master'},
                     'created_at': '2017-03-29'
                 }], {'x-next-page': ''});
 
@@ -48,29 +49,30 @@ describe('Gitlab', function() {
         });
         it('generates entry based on GitLab note event', function() {
             Nock('https://gitlab.liip.ch')
-                .get('/api/v3/events')
+                .get('/api/v4/events')
                 .query(true)
                 .reply(200, [{
                     'target_type': 'Note',
-                    'target_id': '1234',
+                    'target_id': '12341234',
+                    'target_iid': '1234',
                     'target_title': 'Test target title',
                     'note': {
                         'noteable_type': 'MergeRequest',
-                        'noteable_id': '4321'
+                        'noteable_iid': '4321'
                     },
                     'project_id': '5678',
                     'action_name': 'commented on',
-                    'data': {'ref': 'refs/heads/master'},
+                    'push_data': {'ref_type': 'branch', 'ref': 'master'},
                     'created_at': '2017-03-29'
                 }], {'x-next-page': ''});
             Nock('https://gitlab.liip.ch')
-                .get('/api/v3/projects/5678')
+                .get('/api/v4/projects/5678')
                 .query(true)
                 .reply(200, {
                     'name': 'testproject',
                 });
             Nock('https://gitlab.liip.ch')
-                .get('/api/v3/projects/5678/merge_requests/4321')
+                .get('/api/v4/projects/5678/merge_requests/4321')
                 .query(true)
                 .reply(200, {
                     'iid': '42',
