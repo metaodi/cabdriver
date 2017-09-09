@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [Unreleased][unreleased]
 ### Changed
 - Updated all npm dependencies
+- BC-Break: Usage of GitLab API v4 (i.e. GitLab >= 9.0 is now required)
 
 ## 1.0.0 - 2017-07-19
 ### Security
