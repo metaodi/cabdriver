@@ -11,7 +11,8 @@
     "node": "4.8.4"
   },
   "bin": {
-    "cabdriver": "cabdriver.js"
+    "cabdriver": "cabdriver.js",
+    "cab": "cabdriver.js"
   },
   "repository": {
     "type": "git",

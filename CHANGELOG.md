@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+### Added
+- Add `cab` as short command to the cli (instead of having to type `cabdriver`)
+
 ### Changed
 - Updated all npm dependencies
 - Usage of GitLab API v4 (i.e. GitLab >= 9.0 is now required)
