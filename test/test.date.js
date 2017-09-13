@@ -39,4 +39,22 @@ describe('Date', function() {
             });
         });
     });
+    describe('parseFirstDayOfMonth', function() {
+        describe('Valid month strings', function() {
+            it('should return the correct first day of the month', function() {
+                expect(date.parseFirstDayOfMonth('feb-2012')).to.be.equal('2012-01-31T23:00:00.000Z');
+            });
+            it('should return the correct first day of the given month', function() {
+                expect(date.parseFirstDayOfMonth('2017-10-17')).to.be.equal('2017-09-30T22:00:00.000Z');
+            });
+        });
+        describe('Invalid month strings', function() {
+            it('should return null for random string', function() {
+                expect(date.parseFirstDayOfMonth('asdf')).to.be.null;
+            });
+            it('should return null for incomplete date', function() {
+                expect(date.parseFirstDayOfMonth('08-2018')).to.be.null;
+            });
+        });
+    });
 });

@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [Unreleased][unreleased]
 ### Added
 - Add `cab` as short command to the cli (instead of having to type `cabdriver`)
+- Split cabdriver into different commands (backwards-compatible), i.e. `fetch` is the default command to get entries, `sheet is a new command to generate empty taxi files
 
 ### Changed
 - Updated all npm dependencies
