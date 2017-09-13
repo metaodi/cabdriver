@@ -8,11 +8,11 @@ var GoogleAuth = require('../lib/google_auth');
 var GoogleCalendar = require('../lib/calendar');
 var GoogleMail = require('../lib/mail');
 
-var cli = require('../lib/cli');
+var cli = require('../cli/fetch');
 
 var sandbox = Sinon.sandbox.create();
 
-describe('CLI', function() {
+describe('CLI Fetch', function() {
     afterEach(function () {
         sandbox.restore();
         stdMocks.restore();
@@ -161,17 +161,14 @@ describe('CLI', function() {
                 'github',
                 'mail'
             ];
-            var optsStub = sandbox.stub().returns(
-                {
-                    'date': '02.12.2017',
-                    'jira': true,
-                    'verbose': true,
-                    'hours': true
-                }
-            );
-            var programStub = {'opts': optsStub};
+            var opts = {
+                'date': '02.12.2017',
+                'jira': true,
+                'verbose': true,
+                'hours': true
+            };
 
-            cli.getOptions(programStub, config, sources);
+            cli.getOptions(opts, config, sources);
             var output = stdMocks.flush().stdout;
             stdMocks.restore();
             var expectedOutput = [

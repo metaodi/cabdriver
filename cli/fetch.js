@@ -6,24 +6,24 @@ var _ = require('lodash');
 
 var fs = require('fs');
 
-var GoogleAuth = require('./google_auth');
-var SlackAuth = require('./slack_auth');
-var JiraAuth = require('./jira_auth');
-var ZebraAuth = require('./zebra_auth');
-var GithubAuth = require('./github_auth');
-var GitlabAuth = require('./gitlab_auth');
-var NullAuth = require('./null_auth');
-var GoogleCalendar = require('./calendar');
-var GoogleMail = require('./mail');
-var Slack = require('./slack');
-var Logbot = require('./logbot');
-var Jira = require('./jira');
-var Zebra = require('./zebra');
-var Git = require('./git');
-var Github = require('./github');
-var Gitlab = require('./gitlab');
-var date = require('./date');
-var util = require('./util');
+var GoogleAuth = require('../lib/google_auth');
+var SlackAuth = require('../lib/slack_auth');
+var JiraAuth = require('../lib/jira_auth');
+var ZebraAuth = require('../lib/zebra_auth');
+var GithubAuth = require('../lib/github_auth');
+var GitlabAuth = require('../lib/gitlab_auth');
+var NullAuth = require('../lib/null_auth');
+var GoogleCalendar = require('../lib/calendar');
+var GoogleMail = require('../lib/mail');
+var Slack = require('../lib/slack');
+var Logbot = require('../lib/logbot');
+var Jira = require('../lib/jira');
+var Zebra = require('../lib/zebra');
+var Git = require('../lib/git');
+var Github = require('../lib/github');
+var Gitlab = require('../lib/gitlab');
+var date = require('../lib/date');
+var util = require('../lib/util');
 
 exports.run = run;
 exports.querySources = querySources;
@@ -45,12 +45,12 @@ var SOURCES = {
     zebra: { source: Zebra, auth: ZebraAuth }
 };
 
-function run(program) {
+function run(programOpts) {
     //load config
     var configDir = (process.env.HOME || process.env.HOMEPATH ||
                      process.env.USERPROFILE) + '/.cabdriver/';
     var config = loadConfig(configDir);
-    var options = getOptions(program, config, _.keys(SOURCES));
+    var options = getOptions(programOpts, config, _.keys(SOURCES));
     var sources = getSources(options, SOURCES);
 
     querySources(sources, options, function(err, results) {
@@ -116,16 +116,16 @@ function loadConfig(configDir) {
     return config;
 }
 
-function getOptions(program, config, sourceKeys) {
+function getOptions(programOpts, config, sourceKeys) {
     var options = {};
 
-    var calledWithoutSources = _.every(program.opts(), function(value, key) {
+    var calledWithoutSources = _.every(programOpts, function(value, key) {
         return sourceKeys.indexOf(key) < 0 || !value;
     });
     if (calledWithoutSources) {
-        _.assignIn(options, program.opts(), config.defaults);
+        _.assignIn(options, programOpts, config.defaults);
     } else {
-        _.assignIn(options, config.defaults, program.opts());
+        _.assignIn(options, config.defaults, programOpts);
     }
 
     var noSourcesInOptions = _.every(options, function(value, key) {
@@ -135,7 +135,7 @@ function getOptions(program, config, sourceKeys) {
     if (noSourcesInOptions) {
         options.calendar = true;
     }
-
+    
     var dates = date.getStartAndEndDate(options.date);
 
     Moment.suppressDeprecationWarnings = true;
