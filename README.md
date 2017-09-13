@@ -155,6 +155,8 @@ Generate entries based on GitLab activity:
 $ cabdriver --gitlab
 ```
 
+Note: GitLab API v4 is required (prefered API version since GitLab 9.0)
+
 #### Logbot
 
 Find entries from [Logbot](https://github.com/metaodi/logbot):
