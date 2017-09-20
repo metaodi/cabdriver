@@ -2,7 +2,7 @@
 
 var Program = require('commander');
 
-var fetch = require('./cli/fetch');
+var FetchCli = require('./cli/fetch');
 var pkg = require('./package.json');
 
 Program
@@ -21,6 +21,8 @@ Program
   .option('-p, --pie', 'print pie chart instead of text')
   .option('-H, --hours', 'prefer output as number of hours instead of time ranges [false]', false)
   .option('-v, --verbose', 'more verbose output [false]', false)
+  .option('-T, --test', 'for internal use only [false]', false)
   .parse(process.argv);
 
-fetch.run(Program.opts());
+var fetch = new FetchCli(Program.opts());
+fetch.run();
