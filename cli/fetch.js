@@ -28,9 +28,9 @@ var util = require('../lib/util');
 var Cli = require('./cli');
 
 class FetchCli extends Cli {
-    constructor(programOpts) {
+    constructor(programOpts, sources) {
         super(programOpts);
-        this.sources = {
+        this.sources = sources || {
             calendar: { source: GoogleCalendar, auth: GoogleAuth },
             mail: { source: GoogleMail, auth: GoogleAuth },
             git: { source: Git, auth: NullAuth },
@@ -54,6 +54,10 @@ class FetchCli extends Cli {
             me.printResults(results);
             process.exit(0);
         });
+    }
+
+    getCmdName() {
+        return 'fetch';
     }
 
     querySources(exitCallback) {
@@ -119,7 +123,7 @@ class FetchCli extends Cli {
         if (noSourcesInOptions) {
             options.calendar = true;
         }
-        
+
         var dates = date.getStartAndEndDate(options.date);
 
         Moment.suppressDeprecationWarnings = true;
@@ -146,11 +150,6 @@ class FetchCli extends Cli {
             console.log('Pie chart: %s', options.pie);
             console.log('Hours: %s', options.hours);
             console.log('Count: %s', options.number);
-        }
-
-        if (options.test) {
-            console.dir(options);
-            process.exit(0);
         }
 
         return options;

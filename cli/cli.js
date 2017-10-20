@@ -7,6 +7,15 @@ class Cli {
         this.configPath = this.getConfigPath();
         this.config = this.loadConfig();
         this.options = this.getOptions();
+        this.options.cmdName = this.getCmdName();
+        if (this.options.test) {
+            console.log(JSON.stringify(this.options));
+            process.exit(0);
+        }
+    }
+
+    getCmdName() {
+        return null;
     }
 
     loadConfig() {
@@ -35,11 +44,6 @@ class Cli {
         var options = {};
 
         _.assignIn(options, me.config.defaults, me.programOpts);
-
-        if (options.test) {
-            console.dir(options);
-            process.exit(0);
-        }
 
         return options;
     }

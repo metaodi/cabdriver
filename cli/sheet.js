@@ -7,14 +7,18 @@ var Cli = require('./cli');
 Moment.suppressDeprecationWarnings = true;
 
 class SheetCli extends Cli {
-    run(options) {
+    run() {
         var me = this;
-        // get the month for the sheet
-        var startDate = date.parseFirstDayOfMonth(options.month);
-        me.printSheet(startDate);
+        me.printSheet();
     }
 
-    printSheet(startDate) {
+    getCmdName() {
+        return 'sheet';
+    }
+
+    printSheet() {
+        var me = this;
+        var startDate = date.parseFirstDayOfMonth(me.options.month);
         var firstDay = Moment.tz(startDate, 'Europe/Zurich');
         console.log('# taxi file for ' + firstDay.format('MM.Y') + "\n");
 
