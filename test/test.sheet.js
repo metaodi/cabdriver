@@ -3,7 +3,7 @@ var Sinon = require('sinon');
 var stdMocks = require('std-mocks');
 var expect = require('chai').expect;
 
-var cli = require('../cli/sheet');
+var SheetCli = require('../cli/sheet');
 
 var sandbox = Sinon.sandbox.create();
 
@@ -18,8 +18,8 @@ describe('CLI Sheet', function() {
             //setup mocks
             stdMocks.use();
 
-            var startDate = '2017-08-31T23:00:00.000Z';
-            cli.printSheet(startDate);
+            var cli = new SheetCli({'month': '2017-09'});
+            cli.printSheet();
             var output = stdMocks.flush().stdout;
             stdMocks.restore();
             var expectedOutput = [

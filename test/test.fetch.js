@@ -8,7 +8,7 @@ var GoogleAuth = require('../lib/google_auth');
 var GoogleCalendar = require('../lib/calendar');
 var GoogleMail = require('../lib/mail');
 
-var cli = require('../cli/fetch');
+var FetchCli = require('../cli/fetch');
 
 var sandbox = Sinon.sandbox.create();
 
@@ -31,17 +31,22 @@ describe('CLI Fetch', function() {
                     'comment': false,
                     'type': 'calendar'
                 };
-                var sourceStub = {
-                    'calendar': {
+                var sourceStub = function() {
+                    return {
                         'getEntries': sandbox.stub().resolves([expectedMsg])
-                    }
+                    };
+                };
+                var sourceConfig = {
+                    calendar: { source: sourceStub, auth: GoogleAuth },
                 };
 
                 var options = {
+                    'date': 'today',
                     'calendar': 'primary',
                 };
+                var cli = new FetchCli(options, sourceConfig);
 
-                cli.querySources(sourceStub, options, function(err, results) {
+                cli.querySources(function(err, results) {
                     expect(err).to.not.exist;
                     expect(results).to.be.deep.equal([expectedMsg]);
                     done();
@@ -49,13 +54,11 @@ describe('CLI Fetch', function() {
             });
             it('should return an empty list if argument is not set', function(done) {
                 //setup stubs
-                var options = {};
-                var sourceConfig = {
-                    calendar: { source: GoogleCalendar, auth: GoogleAuth },
-                    mail: { source: GoogleMail, auth: GoogleAuth },
+                var options = {
+                    'date': 'today'
                 };
-                var sources = cli.getSources(options, sourceConfig);
-                cli.querySources(sources, options, function(err, results) {
+                var cli = new FetchCli(options, {});
+                cli.querySources(function(err, results) {
                     try {
                         expect(err).to.not.exist;
                         expect(results).to.be.deep.equal([]);
@@ -76,12 +79,15 @@ describe('CLI Fetch', function() {
                     };
                 };
 
-                var options = {'mail': true};
+                var options = {
+                    'date': 'today',
+                    'mail': true
+                };
                 var sourceConfig = {
                     mail: { source: sourceStub, auth: GoogleAuth },
                 };
-                var sources = cli.getSources(options, sourceConfig);
-                cli.querySources(sources, options, function(err, results) {
+                var cli = new FetchCli(options, sourceConfig);
+                cli.querySources(function(err, results) {
                     try {
                         expect(err).to.not.exist;
                         expect(results).to.deep.equal([]);
@@ -113,11 +119,11 @@ describe('CLI Fetch', function() {
                 'comment': false,
                 'type': 'calendar'
             };
+            var cli = new FetchCli(null, null);
             cli.printResults([msg]);
             var output = stdMocks.flush().stdout;
             stdMocks.restore();
             var expectedOutput = [
-                "\n",
                 "\n",
                 "01/01/1970 # Thursday\n",
                 "\n",
@@ -132,8 +138,8 @@ describe('CLI Fetch', function() {
     });
     describe('getOptions', function() {
         it('should combine config values with cli arguments', function() {
-            //setup mocks
             stdMocks.use();
+            //setup mocks
             var config = {
                 'defaults': {
                     'jira': false,
@@ -150,25 +156,17 @@ describe('CLI Fetch', function() {
                     'number': 1000
                 }
             };
-            var sources = [
-                'jira',
-                'slack',
-                'logbot',
-                'calendar',
-                'zebra',
-                'git',
-                'gitlab',
-                'github',
-                'mail'
-            ];
             var opts = {
                 'date': '02.12.2017',
                 'jira': true,
                 'verbose': true,
                 'hours': true
             };
+            var cli = new FetchCli(opts);
+            cli.config = config;
+            stdMocks.flush().stdout;
 
-            cli.getOptions(opts, config, sources);
+            cli.getOptions();
             var output = stdMocks.flush().stdout;
             stdMocks.restore();
             var expectedOutput = [
@@ -192,6 +190,7 @@ describe('CLI Fetch', function() {
     });
     describe('loadConfig', function() {
         it('should load a provided config file', function() {
+            var cli = new FetchCli();
             //setup mocks
             var ymlContent = 'defaults:\n' +
                 '   jira: true\n' +
@@ -204,9 +203,10 @@ describe('CLI Fetch', function() {
             MockFs({
               '/home/testuser/.cabdriver/cabdriver.yml': ymlContent 
             });
-            
 
-            var config = cli.loadConfig('/home/testuser/.cabdriver/');
+            console.log("test");
+            
+            var config = cli.loadConfig('/home/testuser/.cabdriver/cabdriver.yml');
             expect(config).to.deep.equal({
                 'defaults': {
                     'jira': true,
@@ -221,13 +221,13 @@ describe('CLI Fetch', function() {
         });
         it('should default to empty config on error', function() {
             //setup mocks
-            stdMocks.use();
             MockFs({
               '/home/testuser/.cabdriver/cabdriver.yml': 'test: badconfig'
             });
             
-
-            var config = cli.loadConfig('/home/testuser/.cabdriver/');
+            var cli = new FetchCli();
+            stdMocks.use();
+            var config = cli.loadConfig('/home/testuser/.cabdriver/cabdriver.yml');
             expect(config).to.deep.equal({'defaults': {}});
 
             var output = stdMocks.flush().stderr;

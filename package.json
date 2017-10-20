@@ -12,6 +12,8 @@
   },
   "bin": {
     "cabdriver": "cabdriver.js",
+    "cabdriver-fetch": "cabdriver-fetch.js",
+    "cabdriver-sheet": "cabdriver-sheet.js",
     "cab": "cabdriver.js"
   },
   "repository": {
@@ -62,6 +64,7 @@
   "devDependencies": {
     "blanket": "^1.2.3",
     "chai": "^4.1.2",
+    "command-line-test": "^1.0.10",
     "coveralls": "^2.13.1",
     "gulp": "^3.9.1",
     "gulp-jscs": "^4.0.0",
