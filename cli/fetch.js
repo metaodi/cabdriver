@@ -1,5 +1,4 @@
 var Async = require('async');
-var Yaml = require('js-yaml');
 var Moment = require('moment-timezone');
 var Pad = require('pad');
 var _ = require('lodash');

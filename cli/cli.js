@@ -1,10 +1,10 @@
 var _ = require('lodash');
+var Yaml = require('js-yaml');
 var fs = require('fs');
 
 class Cli {
     constructor(programOpts) {
         this.programOpts = programOpts;
-        this.configPath = this.getConfigPath();
         this.config = this.loadConfig();
         this.options = this.getOptions();
         this.options.cmdName = this.getCmdName();
@@ -18,11 +18,13 @@ class Cli {
         return null;
     }
 
-    loadConfig() {
+    loadConfig(configPath) {
         var me = this;
+        configPath = configPath || me.getConfigPath();
+
         var config;
         try {
-            config = Yaml.safeLoad(fs.readFileSync(me.configPath, 'utf8'));
+            config = Yaml.safeLoad(fs.readFileSync(configPath, 'utf8'));
             if (!_.has(config, 'defaults')) {
                 console.error("Config file has no 'defaults' key");
                 throw "malformated config";
