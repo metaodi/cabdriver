@@ -1,3 +1,5 @@
+"use strict";
+
 var Async = require('async');
 var Moment = require('moment-timezone');
 var Pad = require('pad');

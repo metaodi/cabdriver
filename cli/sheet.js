@@ -1,3 +1,5 @@
+"use strict";
+
 var Moment = require('moment-timezone');
 
 var date = require('../lib/date');
