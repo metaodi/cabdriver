@@ -1,5 +1,6 @@
 /*jshint expr: true*/
 var expect = require('chai').expect;
+var Moment = require('moment-timezone');
 
 var date = require('../lib/date');
 
@@ -19,6 +20,16 @@ describe('Date', function() {
                 expect(date.getStartAndEndDate('01.02.2016-02.02.2016')).to.be.deep.equal({
                     "startDate": "2016-01-31T23:00:00.000Z",
                     "endDate": "2016-02-01T23:00:00.000Z"
+                });
+            });
+        });
+
+        describe('Date string with semantic date', function() {
+            it('should return object with start and end date based on CET timezone', function() {
+                var today = Moment().tz('Europe/Zurich');
+                expect(date.getStartAndEndDate('today')).to.be.deep.equal({
+                    "startDate": today.endOf('day').toISOString(),
+                    "endDate": today.endOf('day').toISOString()
                 });
             });
         });
