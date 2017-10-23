@@ -44,7 +44,7 @@ describe('CLI Fetch', function() {
                     'date': 'today',
                     'calendar': 'primary',
                 };
-                var cli = new FetchCli(options, sourceConfig);
+                var cli = new FetchCli(options, null, sourceConfig);
 
                 cli.querySources(function(err, results) {
                     expect(err).to.not.exist;
@@ -57,7 +57,7 @@ describe('CLI Fetch', function() {
                 var options = {
                     'date': 'today'
                 };
-                var cli = new FetchCli(options, {});
+                var cli = new FetchCli(options, null, {});
                 cli.querySources(function(err, results) {
                     try {
                         expect(err).to.not.exist;
@@ -86,7 +86,7 @@ describe('CLI Fetch', function() {
                 var sourceConfig = {
                     mail: { source: sourceStub, auth: GoogleAuth },
                 };
-                var cli = new FetchCli(options, sourceConfig);
+                var cli = new FetchCli(options, null, sourceConfig);
                 cli.querySources(function(err, results) {
                     try {
                         expect(err).to.not.exist;
@@ -119,7 +119,7 @@ describe('CLI Fetch', function() {
                 'comment': false,
                 'type': 'calendar'
             };
-            var cli = new FetchCli(null, null);
+            var cli = new FetchCli(null, null, null);
             cli.printResults([msg]);
             var output = stdMocks.flush().stdout;
             stdMocks.restore();

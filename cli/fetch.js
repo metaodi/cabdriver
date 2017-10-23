@@ -29,7 +29,7 @@ var util = require('../lib/util');
 var Cli = require('./cli');
 
 class FetchCli extends Cli {
-    constructor(programOpts, sources) {
+    constructor(programOpts, configPath, sources) {
         super(programOpts);
         this.sources = sources || {
             calendar: { source: GoogleCalendar, auth: GoogleAuth },

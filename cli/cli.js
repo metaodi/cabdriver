@@ -5,9 +5,9 @@ var Yaml = require('js-yaml');
 var fs = require('fs');
 
 class Cli {
-    constructor(programOpts) {
+    constructor(programOpts, configPath) {
         this.programOpts = programOpts;
-        this.config = this.loadConfig();
+        this.config = this.loadConfig(configPath);
         this.options = this.getOptions();
         this.options.cmdName = this.getCmdName();
         if (this.options.test) {
