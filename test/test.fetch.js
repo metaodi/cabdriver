@@ -184,6 +184,7 @@ describe('CLI Fetch', function() {
                 "Pie chart: false\n",
                 "Hours: true\n",
                 "Count: 1000\n",
+                "Config: undefined\n",
             ];
             expect(output).to.deep.equal(expectedOutput);
         });

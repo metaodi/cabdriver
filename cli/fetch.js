@@ -30,7 +30,7 @@ var Cli = require('./cli');
 
 class FetchCli extends Cli {
     constructor(programOpts, configPath, sources) {
-        super(programOpts);
+        super(programOpts, configPath);
         this.sources = sources || {
             calendar: { source: GoogleCalendar, auth: GoogleAuth },
             mail: { source: GoogleMail, auth: GoogleAuth },
@@ -151,6 +151,7 @@ class FetchCli extends Cli {
             console.log('Pie chart: %s', options.pie);
             console.log('Hours: %s', options.hours);
             console.log('Count: %s', options.number);
+            console.log('Config: %s', options.config);
         }
 
         return options;

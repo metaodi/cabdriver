@@ -21,6 +21,7 @@ Program
   .option('-p, --pie', 'print pie chart instead of text')
   .option('-H, --hours', 'prefer output as number of hours instead of time ranges [false]', false)
   .option('-v, --verbose', 'more verbose output [false]', false)
+  .option('-C, --config <path>', 'path to config file (defaults to ~/.cabdriver/cabdriver.yml)', false)
   .option('-T, --test', 'for internal use only [false]', false)
   .parse(process.argv);
 

@@ -7,6 +7,10 @@ var fs = require('fs');
 class Cli {
     constructor(programOpts, configPath) {
         this.programOpts = programOpts;
+        var configPath = configPath || this.getConfigPath();
+        if (programOpts && programOpts['config']) {
+            configPath = programOpts['config'];
+        }
         this.config = this.loadConfig(configPath);
         this.options = this.getOptions();
         this.options.cmdName = this.getCmdName();
@@ -22,8 +26,6 @@ class Cli {
 
     loadConfig(configPath) {
         var me = this;
-        configPath = configPath || me.getConfigPath();
-
         var config;
         try {
             config = Yaml.safeLoad(fs.readFileSync(configPath, 'utf8'));
