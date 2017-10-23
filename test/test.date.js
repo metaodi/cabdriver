@@ -52,19 +52,25 @@ describe('Date', function() {
     });
     describe('parseFirstDayOfMonth', function() {
         describe('Valid month strings', function() {
-            it('should return the correct first day of the month', function() {
-                expect(date.parseFirstDayOfMonth('feb-2012')).to.be.equal('2012-01-31T23:00:00.000Z');
+            it('should return the correct first day of the given text month', function() {
+                expect(date.parseFirstDayOfMonth('feb', '2012')).to.be.equal('2012-01-31T23:00:00.000Z');
             });
-            it('should return the correct first day of the given month', function() {
-                expect(date.parseFirstDayOfMonth('2017-10-17')).to.be.equal('2017-09-30T22:00:00.000Z');
+            it('should return the correct first day of the given number month', function() {
+                expect(date.parseFirstDayOfMonth('10', '2017')).to.be.equal('2017-09-30T22:00:00.000Z');
+            });
+            it('should return the correct first day of the semantic month', function() {
+                var nextMonth = Moment().tz('Europe/Zurich').add(1, 'months').startOf('month').toISOString();
+                expect(date.parseFirstDayOfMonth('next-month')).to.be.equal(nextMonth);
             });
         });
         describe('Invalid month strings', function() {
-            it('should return null for random string', function() {
-                expect(date.parseFirstDayOfMonth('asdf')).to.be.null;
+            it('should return current month for random string', function() {
+                var currentMonth = Moment().tz('Europe/Zurich').startOf('month').toISOString();
+                expect(date.parseFirstDayOfMonth('asdf')).to.be.equal(currentMonth);
             });
-            it('should return null for incomplete date', function() {
-                expect(date.parseFirstDayOfMonth('08-2018')).to.be.null;
+            it('should return current month for incomplete date', function() {
+                var currentMonth = Moment().tz('Europe/Zurich').startOf('month').toISOString();
+                expect(date.parseFirstDayOfMonth('08-2018')).to.be.equal(currentMonth);
             });
         });
     });

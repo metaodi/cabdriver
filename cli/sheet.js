@@ -20,7 +20,7 @@ class SheetCli extends Cli {
 
     printSheet() {
         var me = this;
-        var startDate = date.parseFirstDayOfMonth(me.options.month);
+        var startDate = date.parseFirstDayOfMonth(me.options.month, me.options.year);
         var firstDay = Moment.tz(startDate, 'Europe/Zurich');
         console.log('# taxi file for ' + firstDay.format('MM.Y') + "\n");
 

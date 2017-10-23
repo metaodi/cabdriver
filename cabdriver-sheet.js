@@ -7,7 +7,8 @@ var pkg = require('./package.json');
 
 Program
   .version(pkg.version)
-  .option('-m, --month <month>', 'month to print the sheet [this-month]', 'this-month')
+  .option('-m, --month <month>', 'month of sheet to print (defaults to current month)', '')
+  .option('-y, --year <year>', 'year of sheet to print (defaults to current year)', '')
   .option('-T, --test', 'for internal use only [false]', false)
   .parse(process.argv);
 

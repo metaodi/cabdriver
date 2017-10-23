@@ -18,7 +18,7 @@ describe('CLI Sheet', function() {
             //setup mocks
             stdMocks.use();
 
-            var cli = new SheetCli({'month': '2017-09'});
+            var cli = new SheetCli({'month': '09', 'year': '2017'});
             cli.printSheet();
             var output = stdMocks.flush().stdout;
             stdMocks.restore();
