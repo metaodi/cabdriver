@@ -117,8 +117,8 @@ class FetchCli extends Cli {
             _.assignIn(options, me.config.defaults, me.programOpts);
         }
 
-        var noSourcesInOptions = _.every(options, function(value, key) {
-            return sourceKeys.indexOf(key) < 0 || !value;
+        var noSourcesInOptions = _.some(options, function(value, key) {
+            return sourceKeys.indexOf(key) >= 0 && value;
         });
 
         if (noSourcesInOptions) {
