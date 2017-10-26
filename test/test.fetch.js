@@ -94,10 +94,9 @@ describe('CLI Fetch', function() {
 
                         var output = stdMocks.flush().stderr;
                         stdMocks.restore();
-                        expect(output).to.deep.equal([
-                            "\n",
+                        expect(output).to.include(
                             "mail source failed: Could not fetch mails\n"
-                        ]);
+                        );
                         done();
                     } catch (err) {
                         done(err);
@@ -136,38 +135,58 @@ describe('CLI Fetch', function() {
             expect(output).to.deep.equal(expectedOutput);
         });
     });
-    describe('getOptions', function() {
+    describe('sourcesInOptions', function() {
+        it('should find sources in options', function() {
+            var sources = {'test': '', 'jira': ''};
+            var cli = new FetchCli(null, null, sources);
+            
+            var optionsWithOneSource = {'test': true, 'hallo': 'velo'};
+            expect(cli.sourcesInOptions(optionsWithOneSource)).to.be.true;
+
+            var optionsWithMultipleSources = {'test': 'blubb', 'hallo': 'velo', 'jira': true};
+            expect(cli.sourcesInOptions(optionsWithMultipleSources)).to.be.true;
+
+            var optionsWithoutSource = {'hallo': 'velo', 'bla': 'blubb'};
+            expect(cli.sourcesInOptions(optionsWithoutSource)).to.be.false;
+        });
+        it('should not find any sources if there are none', function() {
+            var sources = {};
+            var cli = new FetchCli(null, null, sources);
+            
+            var options = {'test': true, 'hallo': 'velo'};
+            expect(cli.sourcesInOptions(options)).to.be.false;
+        });
+    });
+    describe('updateOptions', function() {
         it('should combine config values with cli arguments', function() {
-            stdMocks.use();
             //setup mocks
-            var config = {
-                'defaults': {
-                    'jira': false,
-                    'slack': true,
-                    'logbot': false,
-                    'calendar': 'primary',
-                    'zebra': false,
-                    'git': false,
-                    'gitlab': true,
-                    'github': true,
-                    'mail': false,
-                    'pie': false,
-                    'hours': false,
-                    'number': 1000
-                }
-            };
+            var ymlContent = 'defaults:\n' +
+                    '   jira: false\n' +
+                    '   slack: true\n' +
+                    '   logbot: false\n' +
+                    "   calendar: 'primary'\n" +
+                    '   zebra: false\n' +
+                    '   git: false\n' +
+                    '   gitlab: true\n' +
+                    '   github: true\n' +
+                    '   mail: false\n' +
+                    '   pie: false\n' +
+                    '   hours: false\n' +
+                    '   number: 1000';
+            MockFs({
+              '/home/testuser/.cabdriver/cabdriver.yml': ymlContent 
+            });
             var opts = {
                 'date': '02.12.2017',
                 'jira': true,
                 'verbose': true,
                 'hours': true
             };
-            var cli = new FetchCli(opts);
-            cli.config = config;
-            stdMocks.flush().stdout;
+            stdMocks.use();
+            var cli = new FetchCli(opts, '/home/testuser/.cabdriver/cabdriver.yml');
 
-            cli.getOptions();
             var output = stdMocks.flush().stdout;
+            var err = stdMocks.flush().stderr;
             stdMocks.restore();
             var expectedOutput = [
                 "Start date: 02.12.2017\n",
@@ -187,6 +206,7 @@ describe('CLI Fetch', function() {
                 "Config: undefined\n",
             ];
             expect(output).to.deep.equal(expectedOutput);
+            expect(1).to.equal(1);
         });
     });
     describe('loadConfig', function() {
@@ -205,8 +225,6 @@ describe('CLI Fetch', function() {
               '/home/testuser/.cabdriver/cabdriver.yml': ymlContent 
             });
 
-            console.log("test");
-            
             var config = cli.loadConfig('/home/testuser/.cabdriver/cabdriver.yml');
             expect(config).to.deep.equal({
                 'defaults': {
@@ -233,7 +251,7 @@ describe('CLI Fetch', function() {
 
             var output = stdMocks.flush().stderr;
             stdMocks.restore();
-            expect(output).to.deep.equal(["Config file has no 'defaults' key\n"]);
+            expect(output).to.include("Config file has no 'defaults' key\n");
         });
     });
 });

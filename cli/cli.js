@@ -7,13 +7,16 @@ var fs = require('fs');
 class Cli {
     constructor(programOpts, configPath) {
         this.programOpts = programOpts;
-        var configPath = configPath || this.getConfigPath();
+        configPath = configPath || this.getConfigPath();
         if (programOpts && programOpts['config']) {
             configPath = programOpts['config'];
         }
         this.config = this.loadConfig(configPath);
         this.options = this.getOptions();
         this.options.cmdName = this.getCmdName();
+    }
+
+    run() {
         if (this.options.test) {
             console.log(JSON.stringify(this.options));
             process.exit(0);

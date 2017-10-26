@@ -42,9 +42,11 @@ class FetchCli extends Cli {
             logbot: { source: Logbot, auth: SlackAuth },
             zebra: { source: Zebra, auth: ZebraAuth }
         };
+        this.updateOptions(this.options);
     }
 
     run() {
+        super.run();
         var me = this;
 
         me.querySources(function(err, results) {
@@ -103,25 +105,19 @@ class FetchCli extends Cli {
         return sources;
     }
 
-    getOptions() {
+    updateOptions(options) {
         var me = this;
-        var options = {};
-        var sourceKeys = _.keys(me.sources);
+        options = options || {};
 
-        var calledWithoutSources = _.every(me.programOpts, function(value, key) {
-            return sourceKeys.indexOf(key) < 0 || !value;
-        });
-        if (calledWithoutSources) {
-            _.assignIn(options, me.programOpts, me.config.defaults);
-        } else {
+        var calledWithSources = me.sourcesInOptions(me.programOpts);
+        if (calledWithSources) {
             _.assignIn(options, me.config.defaults, me.programOpts);
+        } else {
+            _.assignIn(options, me.programOpts, me.config.defaults);
         }
 
-        var noSourcesInOptions = _.some(options, function(value, key) {
-            return sourceKeys.indexOf(key) >= 0 && value;
-        });
-
-        if (noSourcesInOptions) {
+        var sourcesInOptions = me.sourcesInOptions(options);
+        if (!sourcesInOptions) {
             options.calendar = true;
         }
 
@@ -155,6 +151,14 @@ class FetchCli extends Cli {
         }
 
         return options;
+    }
+
+    sourcesInOptions(opts) {
+        var me = this;
+        var sourceKeys = _.keys(me.sources);
+        return _.some(opts, function(value, key) {
+            return sourceKeys.indexOf(key) >= 0 && value;
+        });
     }
 
 

@@ -1,7 +1,6 @@
 /*jshint expr: true*/
 var Sinon = require('sinon');
 var expect = require('chai').expect;
-var MockFs = require('mock-fs');
 var CliTest = require('command-line-test');
 
 var path = require('path');
@@ -12,6 +11,8 @@ var cabdriver = path.resolve(__dirname, '..', pkg.bin['cabdriver']);
 var cabdriverFetch = path.resolve(__dirname, '..', pkg.bin['cabdriver-fetch']);
 var cabdriverSheet = path.resolve(__dirname, '..', pkg.bin['cabdriver-sheet']);
 
+var test_config = path.resolve(__dirname, 'test_cabdriver.yml');
+
 var sandbox = Sinon.sandbox.create();
 
 describe('CLI', function() {
@@ -20,7 +21,6 @@ describe('CLI', function() {
 
     afterEach(function () {
         sandbox.restore();
-        MockFs.restore();
     });
 
     describe('CLI commands', function() {
@@ -90,27 +90,21 @@ describe('CLI', function() {
                 });
         });
     });
-    // describe('CLI with config file', function() {
-    //     it('`cabdriver` should query all defaults from the config', function() {
-    //         //setup mocks
-    //         var ymlContent = 'defaults:\n' +
-    //             '   jira: true\n' +
-    //             '   slack: true\n' +
-    //             '   calendar: primary\n' +
-    //             '   zebra: false\n' +
-    //             '   logbot: true\n' +
-    //             '   git: /home/testuser\n' +
-    //             '   hours: true';
-    //         MockFs({
-    //           '/home/testuser/.cabdriver/cabdriver.yml': ymlContent 
-    //         });
-    //         var cliTest = new CliTest();
-    //         return cliTest.execFile(cabdriver, ['--test'], {})
-    //             .then(function(res) {
-    //                 var options = JSON.parse(res.stdout);
-    //                 expect(options.github).to.be.true;
-    //             });
-    //     });
-    // });
+    describe('CLI with config file', function() {
+        it('`cabdriver` should query all defaults from the config', function() {
+            var cliTest = new CliTest();
+            return cliTest.execFile(cabdriver, ['--config', test_config, '--test'], {})
+                .then(function(res) {
+                    var options = JSON.parse(res.stdout);
+                    expect(options.jira).to.be.true;
+                    expect(options.slack).to.be.true;
+                    expect(options.calendar).to.be.equal('primary');
+                    expect(options.zebra).to.be.false;
+                    expect(options.logbot).to.be.true;
+                    expect(options.hours).to.be.true;
+                    expect(options.git).to.be.equal('/home/testuser');
+                });
+        });
+    });
 });
 

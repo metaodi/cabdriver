@@ -10,6 +10,7 @@ Moment.suppressDeprecationWarnings = true;
 
 class SheetCli extends Cli {
     run() {
+        super.run();
         var me = this;
         me.printSheet();
     }
