@@ -1,6 +1,6 @@
 {
   "name": "cabdriver",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Helps you to fill in your hours with taxi",
   "main": "cabdriver.js",
   "scripts": {

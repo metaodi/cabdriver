@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased][unreleased]
 
+## 1.1.1 - 2017-10-28
+### Fixed
+- Automatic deployment via Travis CI to NPM
+
 ## 1.1.0 - 2017-10-28
 ### Added
 - Add `cab` as short command to the cli (instead of having to type `cabdriver`)
