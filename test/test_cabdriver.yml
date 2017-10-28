@@ -1,0 +1,8 @@
+defaults:
+   jira: true
+   slack: true
+   calendar: primary
+   zebra: false
+   logbot: true
+   git: /home/testuser
+   hours: true

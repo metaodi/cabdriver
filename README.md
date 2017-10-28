@@ -32,7 +32,29 @@ Install `cabdriver` globally:
 npm install -g cabdriver
 ```
 
+By installing cabdriver globally, you get both `cabdriver` and the shorter `cab` command to call this tool.
+
 ### Usage
+
+cabdriver has several commands available, `fetch` is the default command.
+
+```
+$ cabdriver <command> [options]
+```
+
+Example: 
+
+```
+$ cabdriver fetch -d today
+```
+
+Or shorter:
+
+```
+$ cab -d today
+```
+
+### `fetch` command
 
 ```bash
 $ cabdriver -n 10 -d yesterday
@@ -164,7 +186,7 @@ Find entries from [Logbot](https://github.com/metaodi/logbot):
 $ cabdriver -l
 ```
 
-### Options
+#### Options
 
 For a complete help run `cabdriver --help`.
 
@@ -195,6 +217,27 @@ For a complete help run `cabdriver --help`.
 * `-p --pie` generate pie chart instead of text (currently only for slack and zebra)
 * `-H --hours` prefer output in hours instead of start/end date
 * `-v --verbose` verbose output
+
+### `sheet` command
+
+To generate empty taxi files (e.g. at the beginning of the month), you can use the `sheet` command:
+
+```
+$ cabdriver sheet
+```
+
+Without any options, a sheet for the current month is generated.
+
+To generate sheet for other months, use the `-m` (month) and/or `-y` (year) options:
+
+```
+$ cabdriver sheet -m this-month # current month
+$ cabdriver sheet -m next-month # next month
+$ cabdriver sheet -m 3 # March of current year
+$ cabdriver sheet -m feb # February of current year
+$ cabdriver sheet -m 13 # January of next year, numbers >12 will overflow to the following year
+$ cabdriver sheet -m 6 -y 2019 # June of 2019
+```
 
 ## Configuration File
 

@@ -6,10 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [Unreleased][unreleased]
 ### Added
 - Add `cab` as short command to the cli (instead of having to type `cabdriver`)
+- Split cabdriver into different commands (backwards-compatible), i.e. `fetch` is the default command to get entries, `sheet is a new command to generate empty taxi files
 
 ### Changed
 - Updated all npm dependencies
 - Usage of GitLab API v4 (i.e. GitLab >= 9.0 is now required)
+
+### Fixed
+- Bugfix for detecting sources in CLI options (in some cases this detection didn't work correctly)
 
 ## 1.0.0 - 2017-07-19
 ### Security
