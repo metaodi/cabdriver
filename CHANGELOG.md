@@ -12,6 +12,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Updated all npm dependencies
 - Usage of GitLab API v4 (i.e. GitLab >= 9.0 is now required)
 
+### Fixed
+- Bugfix for detecting sources in CLI options (in some cases this detection didn't work correctly)
+
 ## 1.0.0 - 2017-07-19
 ### Security
 - Make sure the minimum node version is 4.8.4 due to a vulnerability in node (see https://nodejs.org/en/blog/vulnerability/july-2017-security-releases/)
