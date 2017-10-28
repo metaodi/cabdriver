@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+
+## 1.1.0 - 2017-10-28
 ### Added
 - Add `cab` as short command to the cli (instead of having to type `cabdriver`)
 - Split cabdriver into different commands (backwards-compatible), i.e. `fetch` is the default command to get entries, `sheet is a new command to generate empty taxi files
