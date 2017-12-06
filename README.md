@@ -19,7 +19,7 @@ It currently support various sources to get entries in a taxi-friendly format:
 
 ## Installation
 
-Make sure you have [Node.js](https://nodejs.org/en/) >= 4.0.0 installed.
+Make sure you have [Node.js](https://nodejs.org/en/) >= 6.11.0 installed.
 
 To check the node version number, use the following command:
 
