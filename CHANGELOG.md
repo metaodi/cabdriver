@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+### Changed
+- BC-break: Due to updated dependencies, now at least node 6.11.0 is required
+- Updated npm dependencies
 
 ## 1.1.1 - 2017-10-28
 ### Fixed
