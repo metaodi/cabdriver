@@ -16,6 +16,7 @@ var sandbox = Sinon.sandbox.create();
 describe('CLI Fetch', function() {
     afterEach(function () {
         sandbox.restore();
+        stdMocks.flush();
         stdMocks.restore();
         MockFs.restore();
     });
@@ -151,6 +152,24 @@ describe('CLI Fetch', function() {
             expect(result[1].project).to.equal('xxx');
             expect(result[2].project).to.equal('_internal');
             expect(result[3].project).to.equal('_internal');
+        });
+        it('should map entries to first defined project', function() {
+            var test_config = path.resolve(__dirname, 'test_mapping.yml');
+            var cli = new FetchCli(null, test_config);
+
+            var msgs = [
+                {
+                        'project': 'open-source',
+                        'time': '1',
+                        'text': 'Ticket 1',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'jira'
+                }
+            ];
+            var result = cli.postProcess(msgs);
+
+            expect(result[0].project).to.equal('acme_dev');
         });
         it('should comment out entries mapped to `__comment__`', function() {
             var test_config = path.resolve(__dirname, 'test_mapping.yml');
