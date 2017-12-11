@@ -54,10 +54,81 @@ class FetchCli extends Cli {
                 console.error("Error occured: ", err);
                 return;
             }
-            me.printResults(results);
-            process.exit(0);
+            try {
+                results = me.postProcess(results);
+                me.printResults(results);
+                process.exit(0);
+            } catch (e) {
+                console.error("Error occured: ", e);
+                process.exit(1);
+            }
         });
     }
+
+    postProcess(results) {
+        var me = this;
+
+        // map results to user-defined projects
+        results = _.map(results, function(msg) {
+            return me.mapProjects(msg);
+        });
+
+        // remove `null` entries
+        results = _.filter(results, function(msg) {
+            return !_.isNull(msg);
+        });
+        return results;
+    }
+
+    mapProjects(msg) {
+        var me = this;
+        var mapping = me.getMapping();
+
+        if (mapping) {
+            _.forEach(mapping, function(patterns, key) {
+                var result = _.some(patterns, function(pattern) {
+                    var re = new RegExp(pattern, 'i');
+                    return re.test(msg.project) || re.test(msg.text);
+                });
+                if (result && ['__comment__', '__remove__'].indexOf(key) === -1) {
+                    msg.project = key;
+                    return false;
+                }
+            });
+            if (mapping['__comment__']) {
+                var result = _.some(mapping['__comment__'], function(pattern) {
+                    var re = new RegExp(pattern, 'i');
+                    return re.test(msg.project) || re.test(msg.text);
+                });
+                if (result) {
+                    msg.comment = true;
+                }
+            }
+            if (mapping['__remove__']) {
+                var result = _.some(mapping['__remove__'], function(pattern) {
+                    var re = new RegExp(pattern, 'i');
+                    return re.test(msg.project) || re.test(msg.text);
+                });
+                if (result && me.options.verbose) {
+                    msg.comment = true;
+                    msg.text = msg.text + ' [REMOVED]';
+                } else if (result) {
+                    msg = null;
+                }
+            }
+        }
+        return msg;
+    }
+
+    getMapping() {
+        var me = this;
+
+        if (this.config.mapping) {
+            return me.config.mapping;
+        }
+        return {};
+    }
+
 
     getCmdName() {
         return 'fetch';

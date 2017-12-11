@@ -1,0 +1,17 @@
+defaults:
+   jira: true
+   slack: true
+   calendar: primary
+   zebra: false
+   logbot: true
+   git: /home/testuser
+   hours: true
+mapping:
+    _internal:
+        - 'Team Meeting'
+        - '.*Internal.*'
+        - 'company'
+    __comment__:
+        - 'Lunch'
+    __remove__:
+        - 'Hours!'
