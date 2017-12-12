@@ -171,6 +171,48 @@ describe('CLI Fetch', function() {
 
             expect(result[0].project).to.equal('acme_dev');
         });
+        it('should not change any entries if no mapping is defined', function() {
+            var test_config = path.resolve(__dirname, 'test_cabdriver.yml');
+            var cli = new FetchCli(null, test_config);
+
+            var msgs = [
+                {
+                        'project': 'xxx',
+                        'time': '1',
+                        'text': 'Team Meeting',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'calendar'
+                },
+                {
+                        'project': 'xxx',
+                        'time': '1',
+                        'text': 'Meeting',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'calendar'
+                },
+                {
+                        'project': 'xxx',
+                        'time': '1',
+                        'text': 'important internal stuff',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'calendar'
+                },
+                {
+                        'project': 'company',
+                        'time': '2',
+                        'text': 'Something important',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'git'
+                }
+            ];
+            var result = cli.postProcess(msgs);
+
+            expect(result).to.deep.equal(msgs);
+        });
         it('should comment out entries mapped to `__comment__`', function() {
             var test_config = path.resolve(__dirname, 'test_mapping.yml');
             var cli = new FetchCli(null, test_config);

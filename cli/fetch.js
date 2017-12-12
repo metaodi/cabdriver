@@ -84,37 +84,39 @@ class FetchCli extends Cli {
         var me = this;
         var mapping = me.getMapping();
 
-        if (mapping) {
-            _.forEach(mapping, function(patterns, key) {
-                var result = _.some(patterns, function(pattern) {
-                    var re = new RegExp(pattern, 'i');
-                    return re.test(msg.project) || re.test(msg.text);
-                });
-                if (result && ['__comment__', '__remove__'].indexOf(key) === -1) {
-                    msg.project = key;
-                    return false;
-                }
+        if (!mapping) {
+            return msg;
+        }
+
+        _.forEach(mapping, function(patterns, key) {
+            var projectMatch = _.some(patterns, function(pattern) {
+                var re = new RegExp(pattern, 'i');
+                return re.test(msg.project) || re.test(msg.text);
             });
-            if (mapping['__comment__']) {
-                var result = _.some(mapping['__comment__'], function(pattern) {
-                    var re = new RegExp(pattern, 'i');
-                    return re.test(msg.project) || re.test(msg.text);
-                });
-                if (result) {
-                    msg.comment = true;
-                }
+            if (projectMatch && ['__comment__', '__remove__'].indexOf(key) === -1) {
+                msg.project = key;
+                return false;
             }
-            if (mapping['__remove__']) {
-                var result = _.some(mapping['__remove__'], function(pattern) {
-                    var re = new RegExp(pattern, 'i');
-                    return re.test(msg.project) || re.test(msg.text);
-                });
-                if (result && me.options.verbose) {
-                    msg.comment = true;
-                    msg.text = msg.text + ' [REMOVED]';
-                } else if (result) {
-                    msg = null;
-                }
+        });
+        if (mapping['__comment__']) {
+            var commentMatch = _.some(mapping['__comment__'], function(pattern) {
+                var re = new RegExp(pattern, 'i');
+                return re.test(msg.project) || re.test(msg.text);
+            });
+            if (commentMatch) {
+                msg.comment = true;
+            }
+        }
+        if (mapping['__remove__']) {
+            var removeMatch = _.some(mapping['__remove__'], function(pattern) {
+                var re = new RegExp(pattern, 'i');
+                return re.test(msg.project) || re.test(msg.text);
+            });
+            if (removeMatch && me.options.verbose) {
+                msg.comment = true;
+                msg.text = msg.text + ' [REMOVED]';
+            } else if (removeMatch) {
+                msg = null;
             }
         }
         return msg;
