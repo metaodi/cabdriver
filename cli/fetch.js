@@ -54,10 +54,83 @@ class FetchCli extends Cli {
                 console.error("Error occured: ", err);
                 return;
             }
-            me.printResults(results);
-            process.exit(0);
+            try {
+                results = me.postProcess(results);
+                me.printResults(results);
+                process.exit(0);
+            } catch (e) {
+                console.error("Error occured: ", e);
+                process.exit(1);
+            }
         });
     }
+
+    postProcess(results) {
+        var me = this;
+
+        // map results to user-defined projects
+        results = _.map(results, function(msg) {
+            return me.mapProjects(msg);
+        });
+
+        // remove `null` entries
+        results = _.filter(results, function(msg) {
+            return !_.isNull(msg);
+        });
+        return results;
+    }
+
+    mapProjects(msg) {
+        var me = this;
+        var mapping = me.getMapping();
+
+        if (!mapping) {
+            return msg;
+        }
+
+        _.forEach(mapping, function(patterns, key) {
+            var projectMatch = _.some(patterns, function(pattern) {
+                var re = new RegExp(pattern, 'i');
+                return re.test(msg.project) || re.test(msg.text);
+            });
+            if (projectMatch && ['__comment__', '__remove__'].indexOf(key) === -1) {
+                msg.project = key;
+                return false;
+            }
+        });
+        if (mapping['__comment__']) {
+            var commentMatch = _.some(mapping['__comment__'], function(pattern) {
+                var re = new RegExp(pattern, 'i');
+                return re.test(msg.project) || re.test(msg.text);
+            });
+            if (commentMatch) {
+                msg.comment = true;
+            }
+        }
+        if (mapping['__remove__']) {
+            var removeMatch = _.some(mapping['__remove__'], function(pattern) {
+                var re = new RegExp(pattern, 'i');
+                return re.test(msg.project) || re.test(msg.text);
+            });
+            if (removeMatch && me.options.verbose) {
+                msg.comment = true;
+                msg.text = msg.text + ' [REMOVED]';
+            } else if (removeMatch) {
+                msg = null;
+            }
+        }
+        return msg;
+    }
+
+    getMapping() {
+        var me = this;
+
+        if (this.config.mapping) {
+            return me.config.mapping;
+        }
+        return {};
+    }
+
 
     getCmdName() {
         return 'fetch';

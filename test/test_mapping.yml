@@ -1,0 +1,20 @@
+defaults:
+   jira: true
+   slack: true
+   calendar: primary
+   zebra: false
+   logbot: true
+   git: /home/testuser
+   hours: true
+mapping:
+    acme_dev:
+        - 'open-source'
+    _internal:
+        - 'Team Meeting'
+        - '.*Internal.*'
+        - 'company'
+        - 'open-source'
+    __comment__:
+        - 'Lunch'
+    __remove__:
+        - 'Hours!'

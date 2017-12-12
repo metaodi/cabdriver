@@ -241,8 +241,12 @@ $ cabdriver sheet -m 6 -y 2019 # June of 2019
 
 ## Configuration File
 
-Instead of typing all options, you can specify your default options in a YAML file, which must be in your home directory under `~/.cabdriver/cabdriver.yml`.
-The file looks like this:
+The config file is a YAML file, which by default is in your home directory under `~/.cabdriver/cabdriver.yml`.
+You can use the `-C`/`--config` CLI argument to specify a non-default location of the config file.
+
+### Default values (`defaults`)
+
+Instead of typing all options, you can specify your default options in the config file. The file looks like this:
 
 ```yaml
 defaults:
@@ -260,7 +264,42 @@ You can use all comand line options in config file, simply use their long name.
 
 **NOTE: if you specify a source on the command line, the config file is not used, e.g. with `cabdriver -z` will only list zebra entries**
 
-The config file is really just meant as a place to write down your default values.
+The `defaults` key in the config file is really just meant as a place to write down your default values.
+
+### Custom project mapping (`mapping`)
+
+cabdriver extracts the project name/alias for each source (e.g. the repository name for the `git` source, or project name for `jira`).
+In many cases it's not easily possible to extract the correct alias from the source.
+Instead of manually fixing all those entries, you can define a mapping in the config file.
+
+Here is an example:
+
+```yaml
+mapping:
+    acme_dev:
+        - 'dev'
+    _internal:
+        - 'Meeting'
+        - 'Internal'
+        - 'dev'
+    _liiptalk:
+        - 'Liip.*Talk'
+    __comment__:
+        - 'Lunch'
+    __remove__:
+        - 'Hours!'
+```
+
+As you can see, you can define a list of patterns (acutally a [regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)) for each alias.
+In the above example, entries with "Meeting" or "Internal" in the project or text field will be mapped to `_internal`.
+
+Some notes:
+- all matches are done _case-insensitive_ (using the [`i` flag of RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp))
+- list as many patterns as you want, if _any_ matches, the project will be mapped
+- Each entry will only be mapped **once** (except for the special keys mention below), i.e. if one match was found, no further matches will be searched (in the example above: entires that match `dev` will be mapped to `acme_dev` and never to `_internal`). So place more specific patterns on top and more general patterns on the bottom.
+- The special key `__comment__` is used to match entries that will be commented out in the final output (by prefixing them with a `#` character) 
+- The special key `__remove__` is used to match entries that will be removed from the final output. In the `--verbose` mode, these entries will be commented out and marked with `[REMOVED]`
+- Consider all keys starting and ending with a double underscore to be special
 
 ## Tests
 

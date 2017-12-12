@@ -3,6 +3,7 @@ var Sinon = require('sinon');
 var stdMocks = require('std-mocks');
 var MockFs = require('mock-fs');
 var expect = require('chai').expect;
+var path = require('path');
 
 var GoogleAuth = require('../lib/google_auth');
 var GoogleCalendar = require('../lib/calendar');
@@ -15,6 +16,7 @@ var sandbox = Sinon.sandbox.create();
 describe('CLI Fetch', function() {
     afterEach(function () {
         sandbox.restore();
+        stdMocks.flush();
         stdMocks.restore();
         MockFs.restore();
     });
@@ -103,6 +105,212 @@ describe('CLI Fetch', function() {
                     }
                 });
             });
+        });
+    });
+    describe('postProcess', function() {
+        it('should map entries to defined projects', function() {
+            var test_config = path.resolve(__dirname, 'test_mapping.yml');
+            var cli = new FetchCli(null, test_config);
+
+            var msgs = [
+                {
+                        'project': 'xxx',
+                        'time': '1',
+                        'text': 'Team Meeting',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'calendar'
+                },
+                {
+                        'project': 'xxx',
+                        'time': '1',
+                        'text': 'Meeting',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'calendar'
+                },
+                {
+                        'project': 'xxx',
+                        'time': '1',
+                        'text': 'important internal stuff',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'calendar'
+                },
+                {
+                        'project': 'company',
+                        'time': '2',
+                        'text': 'Something important',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'git'
+                }
+            ];
+            var result = cli.postProcess(msgs);
+
+            expect(result[0].project).to.equal('_internal');
+            expect(result[1].project).to.equal('xxx');
+            expect(result[2].project).to.equal('_internal');
+            expect(result[3].project).to.equal('_internal');
+        });
+        it('should map entries to first defined project', function() {
+            var test_config = path.resolve(__dirname, 'test_mapping.yml');
+            var cli = new FetchCli(null, test_config);
+
+            var msgs = [
+                {
+                        'project': 'open-source',
+                        'time': '1',
+                        'text': 'Ticket 1',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'jira'
+                }
+            ];
+            var result = cli.postProcess(msgs);
+
+            expect(result[0].project).to.equal('acme_dev');
+        });
+        it('should not change any entries if no mapping is defined', function() {
+            var test_config = path.resolve(__dirname, 'test_cabdriver.yml');
+            var cli = new FetchCli(null, test_config);
+
+            var msgs = [
+                {
+                        'project': 'xxx',
+                        'time': '1',
+                        'text': 'Team Meeting',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'calendar'
+                },
+                {
+                        'project': 'xxx',
+                        'time': '1',
+                        'text': 'Meeting',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'calendar'
+                },
+                {
+                        'project': 'xxx',
+                        'time': '1',
+                        'text': 'important internal stuff',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'calendar'
+                },
+                {
+                        'project': 'company',
+                        'time': '2',
+                        'text': 'Something important',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'git'
+                }
+            ];
+            var result = cli.postProcess(msgs);
+
+            expect(result).to.deep.equal(msgs);
+        });
+        it('should comment out entries mapped to `__comment__`', function() {
+            var test_config = path.resolve(__dirname, 'test_mapping.yml');
+            var cli = new FetchCli(null, test_config);
+
+            var msgs = [
+                {
+                        'project': 'xxx',
+                        'time': '1',
+                        'text': 'Meeting',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'calendar'
+                },
+                {
+                        'project': 'xxx',
+                        'time': '1',
+                        'text': 'Lunch',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'calendar'
+                }
+            ];
+            var result = cli.postProcess(msgs);
+
+            expect(result[0].comment).to.be.false;
+            expect(result[1].comment).to.be.true;
+        });
+        it('should remove entries mapped to `__remove__`', function() {
+            var test_config = path.resolve(__dirname, 'test_mapping.yml');
+            var cli = new FetchCli(null, test_config);
+
+            var msgs = [
+                {
+                        'project': 'xxx',
+                        'time': '1',
+                        'text': 'Meeting',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'calendar'
+                },
+                {
+                        'project': 'xxx',
+                        'time': '1',
+                        'text': 'Hours!',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'calendar'
+                },
+                {
+                        'project': 'xxx',
+                        'time': '1',
+                        'text': 'Important Meeting',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'calendar'
+                }
+            ];
+            var result = cli.postProcess(msgs);
+
+            expect(result.length).to.equal(2);
+        });
+        it('should comment out entries mapped to `__remove__` when using --verbose', function() {
+            var test_config = path.resolve(__dirname, 'test_mapping.yml');
+            stdMocks.use();
+            var cli = new FetchCli({'verbose': true}, test_config);
+            stdMocks.restore();
+
+            var msgs = [
+                {
+                        'project': 'xxx',
+                        'time': '1',
+                        'text': 'Meeting',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'calendar'
+                },
+                {
+                        'project': 'xxx',
+                        'time': '1',
+                        'text': 'Hours!',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'calendar'
+                },
+                {
+                        'project': 'xxx',
+                        'time': '1',
+                        'text': 'Hours!',
+                        'timestamp': 123,
+                        'comment': false,
+                        'type': 'calendar'
+                }
+            ];
+            var result = cli.postProcess(msgs);
+
+            expect(result.length).to.equal(3);
+            expect(result[1].comment).to.be.true;
+            expect(result[1].text).to.include('[REMOVED]');
         });
     });
     describe('printResults', function() {
@@ -206,7 +414,6 @@ describe('CLI Fetch', function() {
                 "Config: undefined\n",
             ];
             expect(output).to.deep.equal(expectedOutput);
-            expect(1).to.equal(1);
         });
     });
     describe('loadConfig', function() {

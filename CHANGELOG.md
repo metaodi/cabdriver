@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+### Added
+- New feature to map entries to projects using regular expressions (matching against the `text` and the `project` fields of the entry)
+
 ### Changed
 - BC-break: Due to updated dependencies, now at least node 6.11.0 is required
 - Updated npm dependencies
