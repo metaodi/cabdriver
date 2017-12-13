@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var Yaml = require('js-yaml');
 var fs = require('fs');
+var Cache = require('persistent-cache');
 
 class Cli {
     constructor(programOpts, configPath) {
@@ -14,6 +15,11 @@ class Cli {
         this.config = this.loadConfig(configPath);
         this.options = this.getOptions();
         this.options.cmdName = this.getCmdName();
+        this.options.cache = Cache({
+            base: this.getCacheBase(),
+            name: 'cache',
+            duration: 1000 * 3600 * this.getCacheHours()
+        });
     }
 
     run() {
@@ -46,6 +52,27 @@ class Cli {
         var configDir = (process.env.HOME || process.env.HOMEPATH ||
                      process.env.USERPROFILE) + '/.cabdriver/';
         return configDir + 'cabdriver.yml';
+    }
+
+    getCacheBase() {
+        var me = this;
+        var cabdriverDir = (process.env.HOME || process.env.HOMEPATH ||
+                     process.env.USERPROFILE) + '/.cabdriver/';
+
+        if (me.config.cache && me.config.cache.path) {
+            return me.config.cache.path;
+        }
+
+        return cabdriverDir;
+    }
+
+    getCacheHours() {
+        var me = this;
+
+        if (me.config.cache && me.config.cache.hours) {
+            return me.config.cache.hours;
+        }
+        return 1;
     }
 
     getOptions() {

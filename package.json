@@ -59,6 +59,7 @@
     "moment-timezone": "^0.5.14",
     "oauth": "^0.9.15",
     "pad": "^2.0.3",
+    "persistent-cache": "^1.1.1",
     "promise-async": "^0.2.0",
     "prompt-promise": "^1.0.3",
     "semantic-date": "^0.2.1",
