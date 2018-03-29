@@ -1,6 +1,6 @@
 {
   "name": "cabdriver",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Helps you to fill in your hours with taxi",
   "main": "cabdriver.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "preferGlobal": true,
   "engines": {
-    "node": "=>6.11.0"
+    "node": "6.11.x"
   },
   "bin": {
     "cabdriver": "cabdriver.js",
