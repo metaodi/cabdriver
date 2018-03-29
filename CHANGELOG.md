@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+
+## 2.0.1 - 2018-03-29
 ### Fixed
 - Always use start of day for calendar source, before entries during the day would not show up
 
