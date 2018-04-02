@@ -32,7 +32,11 @@ describe('Git', function() {
             var options = {
                 'startDate': '2017-03-28',
                 'endDate': '2017-03-30',
-                'git': '/path/to/repo'
+                'git': '/path/to/repo',
+                'cache': {
+                    getSync: sandbox.stub(),
+                    putSync: sandbox.stub()
+                }
             };
             var auth = new NullAuth();
             var git = new Git(options, auth, logStub, configStub);
@@ -45,17 +49,14 @@ describe('Git', function() {
                         number: 1000,
                         author: 'Test User',
                         all: true,
-                        after: '2017-03-28',
+                        after: '2017-03-27T21:59:59.999Z',
                         before: '2017-03-30',
                         fields: [
                             'abbrevHash',
                             'subject',
                             'authorName',
                             'authorDate'
-                        ],
-                        execOptions: {
-                            maxBuffer: 1024000
-                        }
+                        ]
                     });
                     expect(result).to.deep.equal([{
                         project: 'test',
@@ -95,7 +96,11 @@ describe('Git', function() {
                 'startDate': '2017-03-28',
                 'endDate': '2017-03-30',
                 'git': '/path/to/',
-                'verbose': true
+                'verbose': true,
+                'cache': {
+                    getSync: sandbox.stub(),
+                    putSync: sandbox.stub()
+                }
             };
             var auth = new NullAuth();
             var git = new Git(options, auth, logStub, configStub);
