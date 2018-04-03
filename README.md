@@ -308,7 +308,7 @@ It's possible to tweak the cache settings in the config file:
 
 ```yaml
 cache:
-    hours: 24
+    hours: 2
     path: /home/myuser/cache
 ```
 
