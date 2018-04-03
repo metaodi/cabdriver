@@ -301,6 +301,20 @@ Some notes:
 - The special key `__remove__` is used to match entries that will be removed from the final output. In the `--verbose` mode, these entries will be commented out and marked with `[REMOVED]`
 - Consider all keys starting and ending with a double underscore to be special
 
+### Cache
+
+Some intermediate results are cached locally to improve the overall performance of cabdriver.
+It's possible to tweak the cache settings in the config file:
+
+```yaml
+cache:
+    hours: 2
+    path: /home/myuser/cache
+```
+
+The `hours` option specifies the amount of hours the results are cached (default: `1`).
+With the `path` option, the location of the cache files can be changed (default: `~/.cabdriver/cache`)
+
 ## Tests
 
 To run the tests use the following command:

@@ -7,6 +7,7 @@ var expect = require('chai').expect;
 var sandbox = Sinon.sandbox.create();
 
 var Git = require('../lib/git');
+var Cache = require('persistent-cache');
 var NullAuth = require('../lib/null_auth');
 
 describe('Git', function() {
@@ -28,11 +29,13 @@ describe('Git', function() {
                 authorDate: '2017-03-29T14:45:28.000Z',
                 subject: 'Test Commit'
             }]);
+            var cache = Cache({'persist': false});
 
             var options = {
                 'startDate': '2017-03-28',
                 'endDate': '2017-03-30',
-                'git': '/path/to/repo'
+                'git': '/path/to/repo',
+                'cache': cache
             };
             var auth = new NullAuth();
             var git = new Git(options, auth, logStub, configStub);
@@ -45,17 +48,14 @@ describe('Git', function() {
                         number: 1000,
                         author: 'Test User',
                         all: true,
-                        after: '2017-03-28',
+                        after: '2017-03-27T21:59:59.999Z',
                         before: '2017-03-30',
                         fields: [
                             'abbrevHash',
                             'subject',
                             'authorName',
                             'authorDate'
-                        ],
-                        execOptions: {
-                            maxBuffer: 1024000
-                        }
+                        ]
                     });
                     expect(result).to.deep.equal([{
                         project: 'test',
@@ -90,12 +90,14 @@ describe('Git', function() {
                 authorDate: '2017-03-29T14:45:28.000Z',
                 subject: 'Test Commit'
             }]);
+            var cache = Cache({'persist': false});
 
             var options = {
                 'startDate': '2017-03-28',
                 'endDate': '2017-03-30',
                 'git': '/path/to/',
-                'verbose': true
+                'verbose': true,
+                'cache': cache
             };
             var auth = new NullAuth();
             var git = new Git(options, auth, logStub, configStub);
@@ -105,6 +107,57 @@ describe('Git', function() {
                     expect(output).to.deep.equal(
                         ["Error accessing path /path/to/unreadable/readable-child\n"]
                     );
+            });
+        });
+        it('generates entries based on cached paths', function() {
+            MockFs({
+                '/path/to/repo/test-not-in-cache/.git': {},
+                '/path/to/repo/test-in-cache/.git': {}
+            });
+            var configStub = sandbox.stub().yields(null, {
+                'user': {'name': 'Test User'}
+            });
+            var logStub = sandbox.stub().resolves([{
+                authorDate: '2017-03-29T14:45:28.000Z',
+                subject: 'Test Commit'
+            }]);
+            var cache = Cache({'persist': false});
+            cache.putSync('git-repo-paths', ['/path/to/repo/test-in-cache']);
+
+            var options = {
+                'startDate': '2017-03-28',
+                'endDate': '2017-03-30',
+                'git': '/path/to/repo',
+                'cache': cache
+            };
+            var auth = new NullAuth();
+            var git = new Git(options, auth, logStub, configStub);
+            return git.getEntries()
+                .then(function(result) {
+                    Sinon.assert.called(configStub);
+                    Sinon.assert.called(logStub);
+                    Sinon.assert.calledWith(logStub, {
+                        repo: '/path/to/repo/test-in-cache',
+                        number: 1000,
+                        author: 'Test User',
+                        all: true,
+                        after: '2017-03-27T21:59:59.999Z',
+                        before: '2017-03-30',
+                        fields: [
+                            'abbrevHash',
+                            'subject',
+                            'authorName',
+                            'authorDate'
+                        ]
+                    });
+                    expect(result).to.deep.equal([{
+                        project: 'test-in-cache',
+                        time: '',
+                        text: 'Test Commit',
+                        timestamp: '1490738400',
+                        comment: false,
+                        type: 'git'
+                    }]);
             });
         });
     });
