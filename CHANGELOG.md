@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+
+## 2.1.0 - 2018-04-03
 ### Added
 - A local persistent cache is provided for various sources to improve the overall performance of cabdriver (check the README for details about the caching)
 
