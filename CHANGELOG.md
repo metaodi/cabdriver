@@ -6,9 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [Unreleased][unreleased]
 ### Added
 - A local persistent cache is provided for various sources to improve the overall performance of cabdriver (check the README for details about the caching)
+
 ### Changed
 - The github events response is cached locally when running cabdriver for github multiple times
 - The paths to local git repositories are cached locally
+- Google mails are cached locally (helps to reduce API calls)
 
 ## 2.0.2 - 2018-03-29
 ### Fixed
