@@ -1,5 +1,6 @@
 /*jshint expr: true*/
 var expect = require('chai').expect;
+var tk = require('timekeeper');
 var Moment = require('moment-timezone');
 
 var date = require('../lib/date');
@@ -25,7 +26,20 @@ describe('Date', function() {
         });
 
         describe('Date string with semantic date', function() {
+            before(function() {
+                // Mon 09 Apr 2018 01:32:31 UTC+0200 (CEST)
+                // Sun 08 Apr 2018 23:32:31 UTC+0000 (UTC)
+                var time = new Date(1523230351000); 
+                tk.freeze(time);
+            });
+            after(function() {
+                tk.reset();
+            });
             it('should return object with start and end date based on CET timezone', function() {
+                expect(date.getStartAndEndDate('today')).to.be.deep.equal({
+                    "startDate": "2018-04-09T21:59:59.999Z",
+                    "endDate": "2018-04-09T21:59:59.999Z"
+                });
                 var today = Moment().tz('Europe/Zurich');
                 expect(date.getStartAndEndDate('today')).to.be.deep.equal({
                     "startDate": today.endOf('day').toISOString(),
