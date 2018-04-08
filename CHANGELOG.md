@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+
+## 2.2.0 - 2018-04-09
 ### Added
 - Pagination for calendar source (necessary if you have lots of events to fetch)
 
