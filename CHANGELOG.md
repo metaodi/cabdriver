@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased][unreleased]
 
+## 2.2.1 - 2018-04-18
+### Fixed
+- Fixed test that always failed at midnight due to stupid timezone bug
+
 ## 2.2.0 - 2018-04-09
 ### Added
 - Pagination for calendar source (necessary if you have lots of events to fetch)
