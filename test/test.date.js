@@ -25,7 +25,7 @@ describe('Date', function() {
             });
         });
 
-        describe('Date string with semantic date', function() {
+        describe('Date string with semantic date (today)', function() {
             before(function() {
                 // Mon 09 Apr 2018 01:32:31 UTC+0200 (CEST)
                 // Sun 08 Apr 2018 23:32:31 UTC+0000 (UTC)
@@ -44,6 +44,29 @@ describe('Date', function() {
                 expect(date.getStartAndEndDate('today')).to.be.deep.equal({
                     "startDate": today.endOf('day').toISOString(),
                     "endDate": today.endOf('day').toISOString()
+                });
+            });
+        });
+
+        describe('Date string with semantic date (yesterday)', function() {
+            before(function() {
+                // Mon 09 Apr 2018 01:32:31 UTC+0200 (CEST)
+                // Sun 08 Apr 2018 23:32:31 UTC+0000 (UTC)
+                var time = new Date(1523230351000); 
+                tk.freeze(time);
+            });
+            after(function() {
+                tk.reset();
+            });
+            it('should return object with start and end date based on CET timezone', function() {
+                expect(date.getStartAndEndDate('yesterday')).to.be.deep.equal({
+                    "startDate": "2018-04-08T21:59:59.999Z",
+                    "endDate": "2018-04-09T21:59:59.999Z"
+                });
+                var yesterday = Moment().subtract(1, 'd').tz('Europe/Zurich');
+                expect(date.getStartAndEndDate('yesterday')).to.be.deep.equal({
+                    "startDate": yesterday.endOf('day').toISOString(),
+                    "endDate": yesterday.add(1, 'd').endOf('day').toISOString()
                 });
             });
         });
