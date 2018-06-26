@@ -8,7 +8,7 @@ var sandbox = Sinon.sandbox.create();
 
 var Git = require('../lib/git');
 var Cache = require('persistent-cache');
-var NullAuth = require('../lib/null_auth');
+var NullAuth = require('../lib/auth/null_auth');
 
 describe('Git', function() {
     afterEach(function () {

@@ -7,13 +7,13 @@ var _ = require('lodash');
 
 var fs = require('fs');
 
-var GoogleAuth = require('../lib/google_auth');
-var SlackAuth = require('../lib/slack_auth');
-var JiraAuth = require('../lib/jira_auth');
-var ZebraAuth = require('../lib/zebra_auth');
-var GithubAuth = require('../lib/github_auth');
-var GitlabAuth = require('../lib/gitlab_auth');
-var NullAuth = require('../lib/null_auth');
+var GoogleAuth = require('../lib/auth/google_auth');
+var SlackAuth = require('../lib/auth/slack_auth');
+var JiraAuth = require('../lib/auth/jira_auth');
+var ZebraAuth = require('../lib/auth/zebra_auth');
+var GithubAuth = require('../lib/auth/github_auth');
+var GitlabAuth = require('../lib/auth/gitlab_auth');
+var NullAuth = require('../lib/auth/null_auth');
 var GoogleCalendar = require('../lib/calendar');
 var GoogleMail = require('../lib/mail');
 var Slack = require('../lib/slack');

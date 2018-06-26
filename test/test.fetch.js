@@ -5,7 +5,7 @@ var MockFs = require('mock-fs');
 var expect = require('chai').expect;
 var path = require('path');
 
-var GoogleAuth = require('../lib/google_auth');
+var GoogleAuth = require('../lib/auth/google_auth');
 var GoogleCalendar = require('../lib/calendar');
 var GoogleMail = require('../lib/mail');
 
