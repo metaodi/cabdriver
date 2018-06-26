@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+
+## 2.2.3 - 2018-06-26
 ### Fixed
 - Add `cab-*` sub-commands to bin in package.json (fixes #74)
 
