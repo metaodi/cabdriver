@@ -14,7 +14,9 @@
     "cabdriver": "cabdriver.js",
     "cabdriver-fetch": "cabdriver-fetch.js",
     "cabdriver-sheet": "cabdriver-sheet.js",
-    "cab": "cabdriver.js"
+    "cab": "cabdriver.js",
+    "cab-fetch": "cabdriver-fetch.js",
+    "cab-sheet": "cabdriver-sheet.js"
   },
   "repository": {
     "type": "git",
