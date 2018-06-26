@@ -31,14 +31,12 @@ describe('Git', function() {
             }]);
             var cache = Cache({'persist': false});
 
-            var fs = require('fs');
             var options = {
                 'startDate': '2017-03-28',
                 'endDate': '2017-03-30',
                 'git': '/path/to/repo',
                 'cache': cache,
                 'verbose': true,
-                'fs': fs
             };
             var auth = new NullAuth();
             var git = new Git(options, auth, logStub, configStub);
