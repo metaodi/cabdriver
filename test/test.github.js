@@ -85,7 +85,7 @@ describe('Github', function() {
             var cache = Cache({'persist': false});
             cache.putSync('github-username', 'githubcacheuser');
 
-            var events = {
+            var events = [{
                 'actor': {
                     'login': 'githubcacheuser'
                 },
@@ -101,7 +101,7 @@ describe('Github', function() {
                         'title': 'Test pull request'
                     }
                 }
-            };
+            }];
             cache.putSync('github-events', events);
 
             var apiStub = { 
