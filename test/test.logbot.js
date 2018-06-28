@@ -5,7 +5,7 @@ var expect = require('chai').expect;
 
 var sandbox = Sinon.sandbox.create();
 
-var Logbot = require('../lib/logbot');
+var Logbot = require('../lib/source/logbot');
 
 describe('Logbot', function() {
     afterEach(function () {

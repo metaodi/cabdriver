@@ -6,8 +6,8 @@ var expect = require('chai').expect;
 var path = require('path');
 
 var GoogleAuth = require('../lib/auth/google_auth');
-var GoogleCalendar = require('../lib/calendar');
-var GoogleMail = require('../lib/mail');
+var GoogleCalendar = require('../lib/source/calendar');
+var GoogleMail = require('../lib/source/mail');
 
 var FetchCli = require('../cli/fetch');
 

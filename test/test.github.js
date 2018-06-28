@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 var Moment = require('moment-timezone');
 var Cache = require('persistent-cache');
 
-var Github = require('../lib/github');
+var Github = require('../lib/source/github');
 var GithubApi = require('github');
 
 var sandbox = Sinon.sandbox.create();

@@ -5,7 +5,7 @@ var expect = require('chai').expect;
 
 var sandbox = Sinon.sandbox.create();
 
-var Zebra = require('../lib/zebra');
+var Zebra = require('../lib/source/zebra');
 
 describe('Zebra', function() {
     afterEach(function () {

@@ -3,7 +3,7 @@ var Promise = require('bluebird');
 var Sinon = require('sinon');
 var expect = require('chai').expect;
 
-var GoogleCalendar = require('../lib/calendar');
+var GoogleCalendar = require('../lib/source/calendar');
 var Google = require('googleapis');
 
 var sandbox = Sinon.sandbox.create();

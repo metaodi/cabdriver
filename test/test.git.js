@@ -6,7 +6,7 @@ var expect = require('chai').expect;
 
 var sandbox = Sinon.sandbox.create();
 
-var Git = require('../lib/git');
+var Git = require('../lib/source/git');
 var Cache = require('persistent-cache');
 var NullAuth = require('../lib/auth/null_auth');
 

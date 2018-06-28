@@ -2,7 +2,7 @@
 var Sinon = require('sinon');
 var expect = require('chai').expect;
 
-var GoogleMail = require('../lib/mail');
+var GoogleMail = require('../lib/source/mail');
 var Google = require('googleapis');
 var Cache = require('persistent-cache');
 

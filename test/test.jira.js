@@ -8,7 +8,7 @@ var JiraApi = require('jira-client');
 
 var sandbox = Sinon.sandbox.create();
 
-var Jira = require('../lib/jira');
+var Jira = require('../lib/source/jira');
 
 describe('Jira', function() {
     afterEach(function () {

@@ -2,7 +2,7 @@
 var Sinon = require('sinon');
 var expect = require('chai').expect;
 
-var Slack = require('../lib/slack');
+var Slack = require('../lib/source/slack');
 
 var sandbox = Sinon.sandbox.create();
 

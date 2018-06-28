@@ -3,7 +3,7 @@ var Sinon = require('sinon');
 var Nock = require('nock');
 var expect = require('chai').expect;
 
-var Gitlab = require('../lib/gitlab');
+var Gitlab = require('../lib/source/gitlab');
 
 var sandbox = Sinon.sandbox.create();
 
