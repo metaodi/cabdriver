@@ -4,7 +4,7 @@ var Sinon = require('sinon');
 var expect = require('chai').expect;
 
 var GoogleCalendar = require('../lib/source/calendar');
-var Google = require('googleapis');
+const {google} = require('googleapis');
 
 var sandbox = Sinon.sandbox.create();
 
@@ -16,19 +16,20 @@ describe('Calendar', function() {
     describe('generateEntries', function() {
         it('returns the correct msgs with hour option', function() {
             //setup stubs
-            var listStub = sandbox.stub().yields(
-                null,
+            var listStub = sandbox.stub().resolves(
                 {
-                    'items': [
-                        {
-                            'start': {'dateTime': '2017-05-17T13:45:00Z'},
-                            'end': {'dateTime': '2017-05-17T14:00:00Z'},
-                            'summary': 'Test Event',
-                        }
-                    ]
+                    'data': {
+                        'items': [
+                            {
+                                'start': {'dateTime': '2017-05-17T13:45:00Z'},
+                                'end': {'dateTime': '2017-05-17T14:00:00Z'},
+                                'summary': 'Test Event',
+                            }
+                        ]
+                    }
                 }
             );
-            var googleStub = sandbox.stub(Google, 'calendar').returns({'events': {'list': listStub}});
+            var googleStub = sandbox.stub(google, 'calendar').returns({'events': {'list': listStub}});
             
             var options = {
                 'count': 11,
@@ -55,19 +56,20 @@ describe('Calendar', function() {
         it('returns the correct msgs without hour option', function() {
             //setup stubs
             var callback = sandbox.spy();
-            var listStub = sandbox.stub().yields(
-                null,
+            var listStub = sandbox.stub().resolves(
                 {
-                    'items': [
-                        {
-                            'start': {'dateTime': '2017-05-17T13:45:00Z'},
-                            'end': {'dateTime': '2017-05-17T14:00:00Z'},
-                            'summary': 'Test Event',
-                        }
-                    ]
+                    'data': {
+                        'items': [
+                            {
+                                'start': {'dateTime': '2017-05-17T13:45:00Z'},
+                                'end': {'dateTime': '2017-05-17T14:00:00Z'},
+                                'summary': 'Test Event',
+                            }
+                        ]
+                    }
                 }
             );
-            var googleStub = sandbox.stub(Google, 'calendar').returns({'events': {'list': listStub}});
+            var googleStub = sandbox.stub(google, 'calendar').returns({'events': {'list': listStub}});
             
             var options = {
                 'count': 11,
@@ -94,32 +96,34 @@ describe('Calendar', function() {
             //setup stubs
             var callback = sandbox.spy();
             var listStub = sandbox.stub();
-            listStub.onCall(0).yields(
-                null,
+            listStub.onCall(0).resolves(
                 {
                     'nextPageToken': 'aaabbbcccddd',
-                    'items': [
-                        {
-                            'start': {'dateTime': '2017-05-17T13:45:00Z'},
-                            'end': {'dateTime': '2017-05-17T14:00:00Z'},
-                            'summary': 'Test Event',
-                        }
-                    ]
+                    'data': {
+                        'items': [
+                            {
+                                'start': {'dateTime': '2017-05-17T13:45:00Z'},
+                                'end': {'dateTime': '2017-05-17T14:00:00Z'},
+                                'summary': 'Test Event',
+                            }
+                        ]
+                    }
                 }
             );
-            listStub.onCall(1).yields(
-                null,
+            listStub.onCall(1).resolves(
                 {
-                    'items': [
-                        {
-                            'start': {'dateTime': '2017-05-17T15:45:00Z'},
-                            'end': {'dateTime': '2017-05-17T16:00:00Z'},
-                            'summary': 'Test Event Page 2',
-                        }
-                    ]
+                    'data': {
+                        'items': [
+                            {
+                                'start': {'dateTime': '2017-05-17T15:45:00Z'},
+                                'end': {'dateTime': '2017-05-17T16:00:00Z'},
+                                'summary': 'Test Event Page 2',
+                            }
+                        ]
+                    }
                 }
             );
-            var googleStub = sandbox.stub(Google, 'calendar').returns({'events': {'list': listStub}});
+            var googleStub = sandbox.stub(google, 'calendar').returns({'events': {'list': listStub}});
             
             var options = {
                 'count': 11,

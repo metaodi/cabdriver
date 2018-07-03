@@ -3,7 +3,7 @@ var Sinon = require('sinon');
 var expect = require('chai').expect;
 
 var GoogleMail = require('../lib/source/mail');
-var Google = require('googleapis');
+const {google} = require('googleapis');
 var Cache = require('persistent-cache');
 
 var sandbox = Sinon.sandbox.create();
@@ -16,25 +16,27 @@ describe('Mail', function() {
     describe('generateEntries', function() {
         it('returns the correct msgs', function() {
             var callback = sandbox.spy();
-            var listStub = sandbox.stub().yields(
-                null,
+            var listStub = sandbox.stub().resolves(
                 {
-                    'messages': [{'id': 12345}]
-                }
-            );
-            var getStub = sandbox.stub().yields(
-                null,
-                {
-                    'internalDate': '1497088800000',
-                    'payload': {
-                        'headers': [
-                            {'name': 'Subject', 'value': 'Test Email'},
-                            {'name': 'From', 'value': 'test@example.com'},
-                        ]
+                    'data': {
+                        'messages': [{'id': 12345}]
                     }
                 }
             );
-            var googleStub = sandbox.stub(Google, 'gmail').returns({
+            var getStub = sandbox.stub().resolves(
+                {
+                    'data': {
+                        'internalDate': '1497088800000',
+                        'payload': {
+                            'headers': [
+                                {'name': 'Subject', 'value': 'Test Email'},
+                                {'name': 'From', 'value': 'test@example.com'},
+                            ]
+                        }
+                    }
+                }
+            );
+            var googleStub = sandbox.stub(google, 'gmail').returns({
                 'users': 
                     {
                         'messages': {
@@ -72,10 +74,11 @@ describe('Mail', function() {
         it('returns the correct msg based on the cache', function() {
             var cache = Cache({'persist': false});
             var callback = sandbox.spy();
-            var listStub = sandbox.stub().yields(
-                null,
+            var listStub = sandbox.stub().resolves(
                 {
-                    'messages': [{'id': 12348}]
+                    'data': {
+                        'messages': [{'id': 12348}]
+                    }
                 }
             );
             var mailData = {
@@ -89,7 +92,7 @@ describe('Mail', function() {
             };
             cache.putSync('gmail-msg-12348', mailData);
 
-            var googleStub = sandbox.stub(Google, 'gmail').returns({
+            var googleStub = sandbox.stub(google, 'gmail').returns({
                 'users': 
                     {
                         'messages': {
