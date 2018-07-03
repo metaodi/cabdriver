@@ -11,11 +11,9 @@ var GoogleMail = require('../lib/source/mail');
 
 var FetchCli = require('../cli/fetch');
 
-var sandbox = Sinon.sandbox.create();
-
 describe('CLI Fetch', function() {
     afterEach(function () {
-        sandbox.restore();
+        Sinon.restore();
         stdMocks.flush();
         stdMocks.restore();
         MockFs.restore();
@@ -35,7 +33,7 @@ describe('CLI Fetch', function() {
                 };
                 var sourceStub = function() {
                     return {
-                        'getEntries': sandbox.stub().resolves([expectedMsg])
+                        'getEntries': Sinon.stub().resolves([expectedMsg])
                     };
                 };
                 var sourceConfig = {
@@ -77,7 +75,7 @@ describe('CLI Fetch', function() {
                 stdMocks.use();
                 var sourceStub = function() {
                     return {
-                        'getEntries': sandbox.stub().rejects('Could not fetch mails')
+                        'getEntries': Sinon.stub().rejects('Could not fetch mails')
                     };
                 };
 

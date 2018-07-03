@@ -4,16 +4,14 @@ var expect = require('chai').expect;
 
 var Slack = require('../lib/source/slack');
 
-var sandbox = Sinon.sandbox.create();
-
 describe('Slack', function() {
     afterEach(function () {
-        sandbox.restore();
+        Sinon.restore();
     });
 
     describe('getEntries', function() {
         it('returns the correct entries for public msgs', function() {
-            var searchStub = sandbox.stub().resolves(
+            var searchStub = Sinon.stub().resolves(
                 {
                     'messages': {
                         'matches': [{
@@ -24,7 +22,7 @@ describe('Slack', function() {
                     }
                 }
             );
-            var channelStub = sandbox.stub().resolves(
+            var channelStub = Sinon.stub().resolves(
                 {
                     'channel': {'name': 'testchannel'}
                 }
@@ -38,7 +36,7 @@ describe('Slack', function() {
                 }
             };
             var authStub = {
-                'getAuth': sandbox.stub().resolves('1234')
+                'getAuth': Sinon.stub().resolves('1234')
             };
             
             var options = {
@@ -62,7 +60,7 @@ describe('Slack', function() {
                 });
         });
         it('returns the correct entries for private msgs', function() {
-            var searchStub = sandbox.stub().resolves(
+            var searchStub = Sinon.stub().resolves(
                 {
                     'messages': {
                         'matches': [
@@ -80,7 +78,7 @@ describe('Slack', function() {
                     }
                 }
             );
-            var channelStub = sandbox.stub().resolves(
+            var channelStub = Sinon.stub().resolves(
                 {
                     'user': {'name': 'testuser'}
                 }
@@ -94,7 +92,7 @@ describe('Slack', function() {
                 }
             };
             var authStub = {
-                'getAuth': sandbox.stub().resolves('1234')
+                'getAuth': Sinon.stub().resolves('1234')
             };
             
             var options = {
@@ -118,7 +116,7 @@ describe('Slack', function() {
                 });
         });
         it('generates pie based on msgs', function() {
-            var searchStub = sandbox.stub().resolves(
+            var searchStub = Sinon.stub().resolves(
                 {
                     'messages': {
                         'matches': [{
@@ -129,7 +127,7 @@ describe('Slack', function() {
                     }
                 }
             );
-            var channelStub = sandbox.stub().resolves(
+            var channelStub = Sinon.stub().resolves(
                 {
                     'channel': {'name': 'testchannel'}
                 }
@@ -143,7 +141,7 @@ describe('Slack', function() {
                 }
             };
             var authStub = {
-                'getAuth': sandbox.stub().resolves('1234')
+                'getAuth': Sinon.stub().resolves('1234')
             };
             
             var options = {

@@ -4,15 +4,13 @@ var MockFs = require('mock-fs');
 var stdMocks = require('std-mocks');
 var expect = require('chai').expect;
 
-var sandbox = Sinon.sandbox.create();
-
 var Git = require('../lib/source/git');
 var Cache = require('persistent-cache');
 var NullAuth = require('../lib/auth/null_auth');
 
 describe('Git', function() {
     afterEach(function () {
-        sandbox.restore();
+        Sinon.restore();
         MockFs.restore();
         stdMocks.restore();
     });
@@ -22,10 +20,10 @@ describe('Git', function() {
             MockFs({
                 '/path/to/repo/test/.git': {}
             });
-            var configStub = sandbox.stub().yields(null, {
+            var configStub = Sinon.stub().yields(null, {
                 'user': {'name': 'Test User'}
             });
-            var logStub = sandbox.stub().resolves([{
+            var logStub = Sinon.stub().resolves([{
                 authorDate: '2017-03-29T14:45:28.000Z',
                 subject: 'Test Commit'
             }]);
@@ -84,10 +82,10 @@ describe('Git', function() {
                     }
                 })
             });
-            var configStub = sandbox.stub().yields(null, {
+            var configStub = Sinon.stub().yields(null, {
                 'user': {'name': 'Test User'}
             });
-            var logStub = sandbox.stub().resolves([{
+            var logStub = Sinon.stub().resolves([{
                 authorDate: '2017-03-29T14:45:28.000Z',
                 subject: 'Test Commit'
             }]);
@@ -115,10 +113,10 @@ describe('Git', function() {
                 '/path/to/repo/test-not-in-cache/.git': {},
                 '/path/to/repo/test-in-cache/.git': {}
             });
-            var configStub = sandbox.stub().yields(null, {
+            var configStub = Sinon.stub().yields(null, {
                 'user': {'name': 'Test User'}
             });
-            var logStub = sandbox.stub().resolves([{
+            var logStub = Sinon.stub().resolves([{
                 authorDate: '2017-03-29T14:45:28.000Z',
                 subject: 'Test Commit'
             }]);

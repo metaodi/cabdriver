@@ -3,13 +3,11 @@ var Sinon = require('sinon');
 var Nock = require('nock');
 var expect = require('chai').expect;
 
-var sandbox = Sinon.sandbox.create();
-
 var Zebra = require('../lib/source/zebra');
 
 describe('Zebra', function() {
     afterEach(function () {
-        sandbox.restore();
+        Sinon.restore();
     });
 
     describe('getEntries', function() {
@@ -29,7 +27,7 @@ describe('Zebra', function() {
                     }
                 });
             var authStub = {
-                'getAuth': sandbox.stub().resolves('abcd')
+                'getAuth': Sinon.stub().resolves('abcd')
             };
 
             var options = {
@@ -70,7 +68,7 @@ describe('Zebra', function() {
                     }
                 });
             var authStub = {
-                'getAuth': sandbox.stub().resolves('abcd')
+                'getAuth': Sinon.stub().resolves('abcd')
             };
 
 

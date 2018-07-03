@@ -6,23 +6,21 @@ var expect = require('chai').expect;
 
 var JiraApi = require('jira-client');
 
-var sandbox = Sinon.sandbox.create();
-
 var Jira = require('../lib/source/jira');
 
 describe('Jira', function() {
     afterEach(function () {
-        sandbox.restore();
+        Sinon.restore();
         stdMocks.restore();
     });
 
     describe('getEntries', function() {
         it('generates entries based on Jira history', function() {
-            var currentUserStub = sandbox.stub(JiraApi.prototype, 'getCurrentUser')
+            var currentUserStub = Sinon.stub(JiraApi.prototype, 'getCurrentUser')
                 .resolves({'key': 'testuser'});
-            var searchJiraStub = sandbox.stub(JiraApi.prototype, 'searchJira')
+            var searchJiraStub = Sinon.stub(JiraApi.prototype, 'searchJira')
                 .resolves({'issues': [{'key': 'TEST-123'}]});
-            var findIssueStub = sandbox.stub(JiraApi.prototype, 'findIssue')
+            var findIssueStub = Sinon.stub(JiraApi.prototype, 'findIssue')
                 .resolves({
                     'key': 'TEST-123',
                     'changelog': {
@@ -51,7 +49,7 @@ describe('Jira', function() {
                 'access_token_secret': 'secret'
             };
             var authStub = {
-                'getAuth': sandbox.stub().resolves(auth)
+                'getAuth': Sinon.stub().resolves(auth)
             };
             var jira = new Jira(options, authStub);
             return jira.getEntries()
@@ -67,11 +65,11 @@ describe('Jira', function() {
                 });
         });
         it('generates entries based on Jira comments', function() {
-            var currentUserStub = sandbox.stub(JiraApi.prototype, 'getCurrentUser')
+            var currentUserStub = Sinon.stub(JiraApi.prototype, 'getCurrentUser')
                 .resolves({'key': 'testuser'});
-            var searchJiraStub = sandbox.stub(JiraApi.prototype, 'searchJira')
+            var searchJiraStub = Sinon.stub(JiraApi.prototype, 'searchJira')
                 .resolves({'issues': [{'key': 'TEST-124'}]});
-            var findIssueStub = sandbox.stub(JiraApi.prototype, 'findIssue')
+            var findIssueStub = Sinon.stub(JiraApi.prototype, 'findIssue')
                 .resolves({
                     'key': 'TEST-123',
                     'changelog': {
@@ -113,7 +111,7 @@ describe('Jira', function() {
                 'access_token_secret': 'secret'
             };
             var authStub = {
-                'getAuth': sandbox.stub().resolves(auth)
+                'getAuth': Sinon.stub().resolves(auth)
             };
             var jira = new Jira(options, authStub);
             return jira.getEntries()
@@ -131,11 +129,11 @@ describe('Jira', function() {
                 });
         });
         it('generates entries based on Jira worklog', function() {
-            var currentUserStub = sandbox.stub(JiraApi.prototype, 'getCurrentUser')
+            var currentUserStub = Sinon.stub(JiraApi.prototype, 'getCurrentUser')
                 .resolves({'key': 'testuser'});
-            var searchJiraStub = sandbox.stub(JiraApi.prototype, 'searchJira')
+            var searchJiraStub = Sinon.stub(JiraApi.prototype, 'searchJira')
                 .resolves({'issues': [{'key': 'TEST-124'}]});
-            var findIssueStub = sandbox.stub(JiraApi.prototype, 'findIssue')
+            var findIssueStub = Sinon.stub(JiraApi.prototype, 'findIssue')
                 .resolves({
                     'key': 'TEST-123',
                     'changelog': {
@@ -171,7 +169,7 @@ describe('Jira', function() {
                 'access_token_secret': 'secret'
             };
             var authStub = {
-                'getAuth': sandbox.stub().resolves(auth)
+                'getAuth': Sinon.stub().resolves(auth)
             };
             var jira = new Jira(options, authStub);
             return jira.getEntries()
@@ -189,7 +187,7 @@ describe('Jira', function() {
                 });
         });
         it('returns nice error message if JIRA fails', function() {
-            var currentUserStub = sandbox.stub(JiraApi.prototype, 'getCurrentUser')
+            var currentUserStub = Sinon.stub(JiraApi.prototype, 'getCurrentUser')
                 .rejects({
                     'name': 'StatusCodeError',
                     'statusCode': 500,
@@ -209,7 +207,7 @@ describe('Jira', function() {
                 'access_token_secret': 'secret'
             };
             var authStub = {
-                'getAuth': sandbox.stub().resolves(auth)
+                'getAuth': Sinon.stub().resolves(auth)
             };
             var jira = new Jira(options, authStub);
             return jira.getEntries()
@@ -222,11 +220,11 @@ describe('Jira', function() {
         });
         it('generate entries for successful issue requests, print error otherwise', function() {
             stdMocks.use();
-            var currentUserStub = sandbox.stub(JiraApi.prototype, 'getCurrentUser')
+            var currentUserStub = Sinon.stub(JiraApi.prototype, 'getCurrentUser')
                 .resolves({'key': 'testuser'});
-            var searchJiraStub = sandbox.stub(JiraApi.prototype, 'searchJira')
+            var searchJiraStub = Sinon.stub(JiraApi.prototype, 'searchJira')
                 .resolves({'issues': [{'key': 'TEST-124'},{'key': 'FAIL-666'}]});
-            var findIssueStub = sandbox.stub(JiraApi.prototype, 'findIssue')
+            var findIssueStub = Sinon.stub(JiraApi.prototype, 'findIssue')
                 .onFirstCall().resolves({
                     'key': 'TEST-123',
                     'changelog': {
@@ -267,7 +265,7 @@ describe('Jira', function() {
                 'access_token_secret': 'secret'
             };
             var authStub = {
-                'getAuth': sandbox.stub().resolves(auth)
+                'getAuth': Sinon.stub().resolves(auth)
             };
             var jira = new Jira(options, authStub);
             return jira.getEntries()

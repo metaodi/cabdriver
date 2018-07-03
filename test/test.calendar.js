@@ -6,17 +6,15 @@ var expect = require('chai').expect;
 var GoogleCalendar = require('../lib/source/calendar');
 const {google} = require('googleapis');
 
-var sandbox = Sinon.sandbox.create();
-
 describe('Calendar', function() {
     afterEach(function () {
-        sandbox.restore();
+        Sinon.restore();
     });
 
     describe('generateEntries', function() {
         it('returns the correct msgs with hour option', function() {
             //setup stubs
-            var listStub = sandbox.stub().resolves(
+            var listStub = Sinon.stub().resolves(
                 {
                     'data': {
                         'items': [
@@ -29,7 +27,7 @@ describe('Calendar', function() {
                     }
                 }
             );
-            var googleStub = sandbox.stub(google, 'calendar').returns({'events': {'list': listStub}});
+            var googleStub = Sinon.stub(google, 'calendar').returns({'events': {'list': listStub}});
             
             var options = {
                 'count': 11,
@@ -37,7 +35,7 @@ describe('Calendar', function() {
                 'calendar': 'events',
                 'hours': true
             };
-            var authStub = {'getAuth': sandbox.stub().resolves('1234')};
+            var authStub = {'getAuth': Sinon.stub().resolves('1234')};
 
             var calendar = new GoogleCalendar(options, authStub);
             return calendar.getEntries()
@@ -55,8 +53,8 @@ describe('Calendar', function() {
         });
         it('returns the correct msgs without hour option', function() {
             //setup stubs
-            var callback = sandbox.spy();
-            var listStub = sandbox.stub().resolves(
+            var callback = Sinon.spy();
+            var listStub = Sinon.stub().resolves(
                 {
                     'data': {
                         'items': [
@@ -69,14 +67,14 @@ describe('Calendar', function() {
                     }
                 }
             );
-            var googleStub = sandbox.stub(google, 'calendar').returns({'events': {'list': listStub}});
+            var googleStub = Sinon.stub(google, 'calendar').returns({'events': {'list': listStub}});
             
             var options = {
                 'count': 11,
                 'startDate': '2017-05-17',
                 'calendar': 'events',
             };
-            var authStub = {'getAuth': sandbox.stub().resolves('1234')};
+            var authStub = {'getAuth': Sinon.stub().resolves('1234')};
             var calendar = new GoogleCalendar(options, authStub);
 
             return calendar.getEntries()
@@ -94,8 +92,8 @@ describe('Calendar', function() {
         });
         it('returns the correct msgs with pagination', function() {
             //setup stubs
-            var callback = sandbox.spy();
-            var listStub = sandbox.stub();
+            var callback = Sinon.spy();
+            var listStub = Sinon.stub();
             listStub.onCall(0).resolves(
                 {
                     'nextPageToken': 'aaabbbcccddd',
@@ -123,14 +121,14 @@ describe('Calendar', function() {
                     }
                 }
             );
-            var googleStub = sandbox.stub(google, 'calendar').returns({'events': {'list': listStub}});
+            var googleStub = Sinon.stub(google, 'calendar').returns({'events': {'list': listStub}});
             
             var options = {
                 'count': 11,
                 'startDate': '2017-05-17',
                 'calendar': 'events',
             };
-            var authStub = {'getAuth': sandbox.stub().resolves('1234')};
+            var authStub = {'getAuth': Sinon.stub().resolves('1234')};
             var calendar = new GoogleCalendar(options, authStub);
 
             return calendar.getEntries()
