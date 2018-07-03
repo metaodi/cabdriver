@@ -5,11 +5,9 @@ var expect = require('chai').expect;
 
 var SheetCli = require('../cli/sheet');
 
-var sandbox = Sinon.sandbox.create();
-
 describe('CLI Sheet', function() {
     afterEach(function () {
-        sandbox.restore();
+        Sinon.restore();
         stdMocks.restore();
     });
 

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+### Changed
+- Update all npm dependencies
+- Move `auth` classes in their own directory
+- Move `source` classes in their own directory
 
 ## 2.2.3 - 2018-06-26
 ### Fixed

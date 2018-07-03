@@ -4,25 +4,22 @@ var expect = require('chai').expect;
 var Moment = require('moment-timezone');
 var Cache = require('persistent-cache');
 
-var Github = require('../lib/github');
-var GithubApi = require('github');
-
-var sandbox = Sinon.sandbox.create();
+var Github = require('../lib/source/github');
 
 describe('Github', function() {
     afterEach(function () {
-        sandbox.restore();
+        Sinon.restore();
     });
 
     describe('getEntries', function() {
         it('returns the correct entry for a PullRequestEvent', function() {
             // setup stubs  
-            var userStub = sandbox.stub().resolves({
+            var userStub = Sinon.stub().resolves({
                 'data': {
                     'login': 'githubtestuser'
                 }
             });
-            var eventStub = sandbox.stub().resolves({
+            var eventStub = Sinon.stub().resolves({
                 'data': [{
                     'actor': {
                         'login': 'githubtestuser'
@@ -42,13 +39,13 @@ describe('Github', function() {
                 }]
             });
             var apiStub = { 
-                'authenticate': sandbox.stub(),
-                'hasNextPage': sandbox.stub().returns(false),
+                'authenticate': Sinon.stub(),
+                'hasNextPage': Sinon.stub().returns(false),
                 'users': {'get': userStub},
                 'activity': {'getEventsForUser': eventStub}
             };
             var authStub = {
-                'getAuth': sandbox.stub().resolves('1234')
+                'getAuth': Sinon.stub().resolves('1234')
             };
             var cache = Cache({'persist': false});
 
@@ -105,11 +102,11 @@ describe('Github', function() {
             cache.putSync('github-events', events);
 
             var apiStub = { 
-                'authenticate': sandbox.stub(),
-                'activity': {'getEventsForUser': sandbox.stub()}
+                'authenticate': Sinon.stub(),
+                'activity': {'getEventsForUser': Sinon.stub()}
             };
             var authStub = {
-                'getAuth': sandbox.stub().resolves('1234')
+                'getAuth': Sinon.stub().resolves('1234')
             };
 
             // call the function

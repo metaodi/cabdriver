@@ -3,13 +3,11 @@ var Sinon = require('sinon');
 var Nock = require('nock');
 var expect = require('chai').expect;
 
-var sandbox = Sinon.sandbox.create();
-
-var Logbot = require('../lib/logbot');
+var Logbot = require('../lib/source/logbot');
 
 describe('Logbot', function() {
     afterEach(function () {
-        sandbox.restore();
+        Sinon.restore();
     });
 
     describe('getEntries', function() {
@@ -26,7 +24,7 @@ describe('Logbot', function() {
                     ]
                 });
             var authStub = {
-                'getAuth': sandbox.stub().resolves('abcd')
+                'getAuth': Sinon.stub().resolves('abcd')
             };
 
             var options = {

@@ -13,14 +13,12 @@ var cabdriverSheet = path.resolve(__dirname, '..', pkg.bin['cabdriver-sheet']);
 
 var test_config = path.resolve(__dirname, 'test_cabdriver.yml');
 
-var sandbox = Sinon.sandbox.create();
-
 describe('CLI', function() {
     //cli invokation might take some time, increase timeout to 5s
     this.timeout(5000);
 
     afterEach(function () {
-        sandbox.restore();
+        Sinon.restore();
     });
 
     describe('CLI commands', function() {

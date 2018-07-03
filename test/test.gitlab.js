@@ -3,13 +3,11 @@ var Sinon = require('sinon');
 var Nock = require('nock');
 var expect = require('chai').expect;
 
-var Gitlab = require('../lib/gitlab');
-
-var sandbox = Sinon.sandbox.create();
+var Gitlab = require('../lib/source/gitlab');
 
 describe('Gitlab', function() {
     afterEach(function () {
-        sandbox.restore();
+        Sinon.restore();
     });
 
     describe('generateEntries', function() {
@@ -33,7 +31,7 @@ describe('Gitlab', function() {
                 'endDate': '2017-03-30',
                 'gitlab': true
             };
-            var authStub = {getAuth: sandbox.stub().resolves('1234')};
+            var authStub = {getAuth: Sinon.stub().resolves('1234')};
             var gitlab = new Gitlab(options, authStub);
             return gitlab.getEntries()
                 .then(function(entries) {
@@ -85,7 +83,7 @@ describe('Gitlab', function() {
                 'endDate': '2017-03-30',
                 'gitlab': true
             };
-            var authStub = {getAuth: sandbox.stub().resolves('1234')};
+            var authStub = {getAuth: Sinon.stub().resolves('1234')};
             var gitlab = new Gitlab(options, authStub);
             return gitlab.getEntries()
                 .then(function(result) {
