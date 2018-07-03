@@ -43,6 +43,7 @@
   },
   "homepage": "https://github.com/metaodi/cabdriver",
   "dependencies": {
+    "@octokit/rest": "^15.9.4",
     "async": "^2.6.0",
     "bluebird": "^3.5.1",
     "cli-pie": "^2.4.0",
@@ -50,7 +51,6 @@
     "findit2": "^2.2.3",
     "fs-extra": "^6.0.1",
     "git-config": "0.0.7",
-    "github": "^12.1.0",
     "gitlog": "^3.1.2",
     "google-auth-library": "^1.6.1",
     "googleapis": "^32.0.0",

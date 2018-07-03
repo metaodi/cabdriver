@@ -33,8 +33,7 @@ describe('Git', function() {
                 'startDate': '2017-03-28',
                 'endDate': '2017-03-30',
                 'git': '/path/to/repo',
-                'cache': cache,
-                'verbose': true,
+                'cache': cache
             };
             var auth = new NullAuth();
             var git = new Git(options, auth, logStub, configStub);

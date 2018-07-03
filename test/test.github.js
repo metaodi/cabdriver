@@ -5,7 +5,6 @@ var Moment = require('moment-timezone');
 var Cache = require('persistent-cache');
 
 var Github = require('../lib/source/github');
-var GithubApi = require('github');
 
 describe('Github', function() {
     afterEach(function () {
