@@ -125,12 +125,11 @@ class FetchCli extends Cli {
     getMapping() {
         var me = this;
 
-        if (this.config.mapping) {
+        if (me.config.mapping) {
             return me.config.mapping;
         }
         return {};
     }
-
 
     getCmdName() {
         return 'fetch';
@@ -144,7 +143,7 @@ class FetchCli extends Cli {
             sources,
             function(source) {
                 return function(callback) {
-                    source.getEntries()
+                    source.getEntries(me.config)
                         .then(function(entries) {
                             callback(null, entries);
                         })
@@ -153,19 +152,23 @@ class FetchCli extends Cli {
             }
        );
 
-        Async.parallel(
-            Async.reflectAll(sourceEntries),
-            function(err, allResults) {
-                var results = [];
-                _.each(allResults, function(result, key) {
-                    if (result.value) {
-                        results = results.concat(result.value);
-                    } else {
-                        console.error('');
-                        console.error(key + ' source failed: ' + result.error);
-                    }
-                });
-                exitCallback(null, results);
+       Async.parallel(
+           Async.reflectAll(sourceEntries),
+           function(err, allResults) {
+               if (err) {
+                   exitCallback(err);
+                   return;
+               }
+               var results = [];
+               _.each(allResults, function(result, key) {
+                   if (result.value) {
+                       results = results.concat(result.value);
+                   } else {
+                       console.error('');
+                       console.error(key + ' source failed: ' + result.error);
+                   }
+               });
+               exitCallback(null, results);
         });
     }
 

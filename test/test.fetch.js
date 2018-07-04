@@ -23,6 +23,18 @@ describe('CLI Fetch', function() {
         describe('Calendar option', function() {
             it('should call Google Calendar', function(done) {
                 //setup stubs
+                var expectedConfig = {
+                    'defaults': {
+                        'calendar': 'primary',
+                        'git': '/home/testuser',
+                        'hours': true,
+                        'mail': 'primary'
+                    },
+                    'mail': {
+                        'exclude': ['Notification', 'Newsletter'],
+                        'query': '-to:team@liip.ch'
+                    }
+                };
                 var expectedMsg = {
                     'project': 'xxx',
                     'time': '1',
@@ -31,9 +43,10 @@ describe('CLI Fetch', function() {
                     'comment': false,
                     'type': 'calendar'
                 };
+                var getEntriesStub = Sinon.stub().resolves([expectedMsg]);
                 var sourceStub = function() {
                     return {
-                        'getEntries': Sinon.stub().resolves([expectedMsg])
+                        'getEntries': getEntriesStub
                     };
                 };
                 var sourceConfig = {
@@ -44,12 +57,18 @@ describe('CLI Fetch', function() {
                     'date': 'today',
                     'calendar': 'primary',
                 };
-                var cli = new FetchCli(options, null, sourceConfig);
+                var test_config = path.resolve(__dirname, 'test_mail.yml');
+                var cli = new FetchCli(options, test_config, sourceConfig);
 
                 cli.querySources(function(err, results) {
-                    expect(err).to.not.exist;
-                    expect(results).to.be.deep.equal([expectedMsg]);
-                    done();
+                    try {
+                        expect(err).to.not.exist;
+                        expect(results).to.be.deep.equal([expectedMsg]);
+                        expect(getEntriesStub.calledWith(expectedConfig)).to.be.true;
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
                 });
             });
             it('should return an empty list if argument is not set', function(done) {

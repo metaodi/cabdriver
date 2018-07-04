@@ -1,0 +1,10 @@
+defaults:
+   calendar: primary
+   git: /home/testuser
+   hours: true
+   mail: primary
+mail:
+   exclude:
+       - Notification
+       - Newsletter
+   query: "-to:team@liip.ch"
