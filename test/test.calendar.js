@@ -96,8 +96,8 @@ describe('Calendar', function() {
             var listStub = Sinon.stub();
             listStub.onCall(0).resolves(
                 {
-                    'nextPageToken': 'aaabbbcccddd',
                     'data': {
+                        'nextPageToken': 'aaabbbcccddd',
                         'items': [
                             {
                                 'start': {'dateTime': '2017-05-17T13:45:00Z'},
