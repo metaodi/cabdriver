@@ -64,6 +64,7 @@
     "persistent-cache": "^1.1.1",
     "promise-async": "^0.2.0",
     "prompt-promise": "^1.0.3",
+    "request": "^2.87.0",
     "semantic-date": "^0.2.1",
     "slack-api": "^0.1.14",
     "superagent": "^3.8.2"
