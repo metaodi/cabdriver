@@ -5,17 +5,24 @@ cabdriver
 =========
 
 cabdriver is a small helper application that helps you to fill in your hours in [taxi](https://github.com/sephii/taxi).
-It currently support various sources to get entries in a taxi-friendly format:
+It currently support various sources (see below) to get entries in a taxi-friendly format.
 
-* [Google Calendar](#google-calendar) (default)
-* [Google Mail](#google-mail)
-* [Slack](#slack)
-* [Jira](#jira)
-* [Local git repositories](#git)
-* [Github](#github)
-* [Gitlab](#gitlab)
-* [Zebra](#zebra)
-* [Logbot](#logbot)
+## Content
+
+* [Installation](#installation)
+* [Usage](#usage)
+   * [Google Calendar](#google-calendar) (default)
+   * [Google Mail](#google-mail)
+   * [Slack](#slack)
+   * [Jira](#jira)
+   * [Local git repositories](#git)
+   * [Github](#github)
+   * [Gitlab](#gitlab)
+   * [Zebra](#zebra)
+   * [Logbot](#logbot)
+* [Configuration File](#configuration-file)
+* [Tests](#tests)
+* [Release](#release)
 
 ## Installation
 
@@ -34,7 +41,7 @@ npm install -g cabdriver
 
 By installing cabdriver globally, you get both `cabdriver` and the shorter `cab` command to call this tool.
 
-### Usage
+## Usage
 
 cabdriver has several commands available, `fetch` is the default command.
 
@@ -82,12 +89,12 @@ xxx    1    Sprint 3 Planning 2
 ```
 
 
-#### Entries from 01.03.2016 until 05.03.2016, max. 100 results
+### Entries from 01.03.2016 until 05.03.2016, max. 100 results
 ```bash
 $ cabdriver -d 01.03.2016-05.03.2016 -n 100
 ```
 
-#### Google Calendar
+### Google Calendar
 
 ```bash
 $ cabdriver --calendar
@@ -101,7 +108,7 @@ But you can specify another one, if you want (check the "Calendar ID" on the set
 $ cabdriver --calendar private@example.com
 ```
 
-#### Google Mail
+### Google Mail
 
 ```bash
 $ cabdriver --mail
@@ -109,7 +116,7 @@ $ cabdriver --mail
 
 To configure the output of the mail source, [see the section below how to tweak the mail query in the config file](#configure-query-and-labels-for-mails).
 
-#### Slack
+### Slack
 
 Text entries:
 ```bash
@@ -122,7 +129,7 @@ $ cabdriver --slack --pie
 ```
 [![cabdriver with slack pie chart](http://i.imgur.com/KcPgjcU.png)](#)
 
-#### Jira
+### Jira
 
 Note: the Liip-specific Jira instance is pre-defined as host.
 
@@ -133,7 +140,7 @@ $ cabdriver --jira
 Unfortunately the JIRA API does not provide the activitiy stream of a user, so that the issue search is used to find recently updated issues, that are related to the logged in user.
 In those issues the changelog and worklog are evaluated to generate taxi entries.
 
-#### Git
+### Git
 
 Find my commits in all git repositories in `/home/odi/projects`:
 ```bash
@@ -148,7 +155,7 @@ You can use `--verbose` to get an indicator of the progress.
 $ cabdriver -g --verbose
 ```
 
-#### Zebra
+### Zebra
 
 Find zebra entries that you've already committed:
 ```bash
@@ -163,7 +170,7 @@ $ cabdriver -z -p
 This might be helpful to get a double check of the entries that are already in Zebra and to see if something is missing or to update your local taxi file with entries that you made on the web interface of Zebra.
 Because all those entries were already commited to zebra, they are commted out by default.
 
-#### Github
+### Github
 
 Generate entries based on GitHub activity this week:
 
@@ -171,7 +178,7 @@ Generate entries based on GitHub activity this week:
 $ cabdriver --github -d this-week
 ```
 
-#### Gitlab
+### Gitlab
 
 Generate entries based on GitLab activity:
 
@@ -181,14 +188,14 @@ $ cabdriver --gitlab
 
 Note: GitLab API v4 is required (prefered API version since GitLab 9.0)
 
-#### Logbot
+### Logbot
 
 Find entries from [Logbot](https://github.com/metaodi/logbot):
 ```
 $ cabdriver -l
 ```
 
-#### Options
+### Options
 
 For a complete help run `cabdriver --help`.
 
