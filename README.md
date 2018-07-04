@@ -107,6 +107,8 @@ $ cabdriver --calendar private@example.com
 $ cabdriver --mail
 ```
 
+To configure the output of the mail source, [see the section below how to tweak the mail query in the config file](#configure-query-and-labels-for-mails).
+
 #### Slack
 
 Text entries:
@@ -314,6 +316,32 @@ cache:
 
 The `hours` option specifies the amount of hours the results are cached (default: `1`).
 With the `path` option, the location of the cache files can be changed (default: `~/.cabdriver/cache`)
+
+
+### Configure query and labels for mails
+
+Gmail, which is used as the mail source of cabdriver, allows assign labels to mails and further has [fairly powerful query language](https://support.google.com/mail/answer/7190?hl=en) to search for emails.
+By default, `cabdriver` will simply return all emails in the specified time range.
+In the config file you can change this behavior using 3 different method (they can be combined):
+
+* **`include`**: Define a list of labels that should be searched. Note that if you specify labels here, only emails having those labels will be returned
+* **`exclude`**: Define a list of labels that should be excluded from the results, so only mails that do not have these labels will be returned
+* **`query`**: This is a string to define your own custom query (e.g. `is:unread` to only return unread emails).
+
+Here is a complete example of a mail configuration:
+
+```yaml
+mail:
+    include:
+        - Jira
+        - Education
+    exclude:
+        - Notification
+        - Newsletter
+    query: -to:team@liip.ch
+```
+
+It's possible to omit keys that are not needed (i.e. only use `exclude`) or combine them. The above example would return all emails that have the label "Jira" or "Education", but not the label "Notification" or "Newsletter", mails sent to `team@liip.ch` would be excluded as well.
 
 ## Tests
 
