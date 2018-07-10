@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+
+## 2.3.3 - 2018-07-10
 ### Fixed
 - Handle empty pages in pagination for mail and calendar source
 
