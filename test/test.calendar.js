@@ -111,6 +111,7 @@ describe('Calendar', function() {
             listStub.onCall(1).resolves(
                 {
                     'data': {
+                        'nextPageToken': 'aaabbbcccdddeee',
                         'items': [
                             {
                                 'start': {'dateTime': '2017-05-17T15:45:00Z'},
@@ -121,6 +122,7 @@ describe('Calendar', function() {
                     }
                 }
             );
+            listStub.onCall(2).resolves({'data': {}});
             var googleStub = Sinon.stub(google, 'calendar').returns({'events': {'list': listStub}});
             
             var options = {
@@ -157,6 +159,15 @@ describe('Calendar', function() {
                         "maxResults": 11,
                         "orderBy": "startTime",
                         "pageToken": "aaabbbcccddd",
+                        "singleEvents": true,
+                        "timeMin": "2017-05-16T22:00:00.000Z"
+					}); 
+                    Sinon.assert.calledWith(listStub, {
+                        "auth": "1234",
+                        "calendarId": "events",
+                        "maxResults": 11,
+                        "orderBy": "startTime",
+                        "pageToken": "aaabbbcccdddeee",
                         "singleEvents": true,
                         "timeMin": "2017-05-16T22:00:00.000Z"
 					}); 
