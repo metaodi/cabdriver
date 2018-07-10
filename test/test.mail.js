@@ -13,7 +13,6 @@ describe('Mail', function() {
 
     describe('generateEntries', function() {
         it('returns the correct msgs', function() {
-            var callback = Sinon.spy();
             var listStub = Sinon.stub().resolves(
                 {
                     'data': {
@@ -70,7 +69,6 @@ describe('Mail', function() {
                 });
         });
         it('generates the correct args based on the config', function() {
-            var callback = Sinon.spy();
             var listStub = Sinon.stub().resolves({'data': {'messages': []}});
             var googleStub = Sinon.stub(google, 'gmail').returns({
                 'users': 
@@ -111,7 +109,6 @@ describe('Mail', function() {
         });
         it('returns the correct msg based on the cache', function() {
             var cache = Cache({'persist': false});
-            var callback = Sinon.spy();
             var listStub = Sinon.stub().resolves(
                 {
                     'data': {
@@ -161,6 +158,109 @@ describe('Mail', function() {
                         'type': 'mail'
                     };
                     expect(results).to.be.deep.equal([msg]);
+                });
+        });
+        it('returns the correct msgs with pagination', function() {
+            //setup stubs
+            var listStub = Sinon.stub();
+            listStub.onCall(0).resolves(
+                {
+                    'data': {
+                        'nextPageToken': 'aaabbbcccddd',
+                        'messages': [{'id': 12348}]
+                    }
+                }
+            );
+            listStub.onCall(1).resolves(
+                {
+                    'data': {
+                        'nextPageToken': 'aaabbbcccdddeee',
+                        'messages': [{'id': 98767}]
+                    }
+                }
+            );
+            listStub.onCall(2).resolves({'data': {}});
+
+            var getStub = Sinon.stub();
+            getStub.onCall(0).resolves(
+                {
+                    'data': {
+                        'internalDate': '1531205917000',
+                        'payload': {
+                            'headers': [
+                                {'name': 'Subject', 'value': 'Test Email 1'},
+                                {'name': 'From', 'value': 'test1@example.com'},
+                            ]
+                        }
+                    }
+                }
+            );
+            getStub.onCall(1).resolves(
+                {
+                    'data': {
+                        'internalDate': '1531205917000',
+                        'payload': {
+                            'headers': [
+                                {'name': 'Subject', 'value': 'Test Email 2'},
+                                {'name': 'From', 'value': 'test2@example.com'},
+                            ]
+                        }
+                    }
+                }
+            );
+            var googleStub = Sinon.stub(google, 'gmail').returns({
+                'users': 
+                    {
+                        'messages': {
+                            'list': listStub,
+                            'get': getStub,
+                        }
+                    }
+            });
+            var cache = Cache({'persist': false});
+
+            var options = {
+                'count': 11,
+                'startDate': '2018-07-10',
+                'mail': 'true',
+                'cache': cache
+            };
+            var authStub = {'getAuth': Sinon.stub().resolves('1234')};
+            var mail = new GoogleMail(options, authStub);
+
+            return mail.getEntries()
+                .then(function(results) {
+                    var msgs = [
+                        {
+                            'project': 'xxx',
+                            'time': '08:58',
+                            'text': 'Test Email 2 (From: test2@example.com)',
+                            'timestamp': "1531173600",
+                            'comment': false,
+                            'type': 'mail'
+                        },
+                        {
+                            'project': 'xxx',
+                            'time': '08:58',
+                            'text': 'Test Email 1 (From: test1@example.com)',
+                            'timestamp': "1531173600",
+                            'comment': false,
+                            'type': 'mail'
+                        }
+                    ];
+                    Sinon.assert.calledWith(listStub, {
+                        "userId": "me",
+                        "maxResults": 11,
+                        "q": " after:1531173599",
+                        "pageToken": "aaabbbcccddd",
+					}); 
+                    Sinon.assert.calledWith(listStub, {
+                        "userId": "me",
+                        "maxResults": 11,
+                        "q": " after:1531173599",
+                        "pageToken": "aaabbbcccdddeee",
+					}); 
+                    expect(results).to.be.deep.equal(msgs);
                 });
         });
     });
