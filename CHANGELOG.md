@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+
+## 2.3.4 - 2018-07-18
 ### Fixed
 - In between check in jira module did not work for "today", apply startOf()/endOf() to fix this
 
