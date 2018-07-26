@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 - Display of `zebra` time was wrong, now everything should be properly aligned and spaced
 
+### Changed
+- Add default time (1 hour) to `mail` and `git` source
+- Change display of mail source (shorter subject, extract name from header)
+
 ## 2.3.4 - 2018-07-18
 ### Fixed
 - In between check in jira module did not work for "today", apply startOf()/endOf() to fix this

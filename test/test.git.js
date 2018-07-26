@@ -57,7 +57,7 @@ describe('Git', function() {
                     });
                     expect(result).to.deep.equal([{
                         project: 'test',
-                        time: '',
+                        time: '1',
                         text: 'Test Commit',
                         timestamp: '1490738400',
                         comment: false,
@@ -150,7 +150,7 @@ describe('Git', function() {
                     });
                     expect(result).to.deep.equal([{
                         project: 'test-in-cache',
-                        time: '',
+                        time: '1',
                         text: 'Test Commit',
                         timestamp: '1490738400',
                         comment: false,

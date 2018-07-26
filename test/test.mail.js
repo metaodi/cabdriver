@@ -59,8 +59,8 @@ describe('Mail', function() {
                 .then(function(results) {
                     var msg = {
                         'project': 'xxx',
-                        'time': '12:00',
-                        'text': 'Test Email (From: test@example.com)',
+                        'time': '1',
+                        'text': 'Test Email (test@example.com, 12:00)',
                         'timestamp': "1497045600",
                         'comment': false,
                         'type': 'mail'
@@ -151,8 +151,8 @@ describe('Mail', function() {
                 .then(function(results) {
                     var msg = {
                         'project': 'xxx',
-                        'time': '16:08',
-                        'text': 'Test Email (From: test@example.com)',
+                        'time': '1',
+                        'text': 'Test Email (test@example.com, 16:08)',
                         'timestamp': "1465200",
                         'comment': false,
                         'type': 'mail'
@@ -202,7 +202,7 @@ describe('Mail', function() {
                         'payload': {
                             'headers': [
                                 {'name': 'Subject', 'value': 'Test Email 2'},
-                                {'name': 'From', 'value': 'test2@example.com'},
+                                {'name': 'From', 'value': 'Jane Doe <test2@example.com>'},
                             ]
                         }
                     }
@@ -233,16 +233,16 @@ describe('Mail', function() {
                     var msgs = [
                         {
                             'project': 'xxx',
-                            'time': '08:58',
-                            'text': 'Test Email 2 (From: test2@example.com)',
+                            'time': '1',
+                            'text': 'Test Email 2 (Jane Doe, 08:58)',
                             'timestamp': "1531173600",
                             'comment': false,
                             'type': 'mail'
                         },
                         {
                             'project': 'xxx',
-                            'time': '08:58',
-                            'text': 'Test Email 1 (From: test1@example.com)',
+                            'time': '1',
+                            'text': 'Test Email 1 (test1@example.com, 08:58)',
                             'timestamp': "1531173600",
                             'comment': false,
                             'type': 'mail'
