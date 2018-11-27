@@ -36,7 +36,7 @@ node --version
 
 Install `cabdriver` globally:
 ```bash
-npm install -g cabdriver
+sudo npm install -g cabdriver
 ```
 
 By installing cabdriver globally, you get both `cabdriver` and the shorter `cab` command to call this tool.
