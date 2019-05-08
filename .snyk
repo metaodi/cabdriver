@@ -1,0 +1,14 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.3
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-AXIOS-174505:
+    - google-auth-library > axios:
+        patched: '2019-05-08T22:47:08.254Z'
+    - google-auth-library > gcp-metadata > axios:
+        patched: '2019-05-08T22:47:08.254Z'
+    - googleapis > google-auth-library > axios:
+        patched: '2019-05-08T22:47:08.254Z'
+    - googleapis > google-auth-library > gcp-metadata > axios:
+        patched: '2019-05-08T22:47:08.254Z'
