@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased][unreleased]
 
+## 2.5.0 - 2019-10-07
+### Fixed
+- Re-created google authentication so that people can create new tokens and login again
+
 ## 2.4.0 - 2018-07-26
 ### Fixed
 - Display of `zebra` time was wrong, now everything should be properly aligned and spaced
