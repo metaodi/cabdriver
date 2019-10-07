@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased][unreleased]
 
+## 2.5.1 - 2019-10-07
+### Fixed
+- Hotfix for google authentication
+
 ## 2.5.0 - 2019-10-07
 ### Fixed
 - Re-created google authentication so that people can create new tokens and login again
