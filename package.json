@@ -4,7 +4,9 @@
   "description": "Helps you to fill in your hours with taxi",
   "main": "cabdriver.js",
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha"
+    "test": "node_modules/mocha/bin/mocha",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "preferGlobal": true,
   "engines": {
@@ -67,7 +69,8 @@
     "request": "^2.87.0",
     "semantic-date": "^0.2.1",
     "slack-api": "^0.1.14",
-    "superagent": "^3.8.2"
+    "superagent": "^3.8.2",
+    "snyk": "^1.231.1"
   },
   "devDependencies": {
     "blanket": "^1.2.3",
@@ -98,5 +101,6 @@
         "test"
       ]
     }
-  }
+  },
+  "snyk": true
 }
