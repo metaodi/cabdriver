@@ -42,7 +42,7 @@ describe('Github', function() {
                 'authenticate': Sinon.stub(),
                 'hasNextPage': Sinon.stub().returns(false),
                 'users': {'get': userStub},
-                'activity': {'getEventsForUser': eventStub}
+                'activity': {'listEventsForUser': eventStub}
             };
             var authStub = {
                 'getAuth': Sinon.stub().resolves('1234')
@@ -103,7 +103,7 @@ describe('Github', function() {
 
             var apiStub = { 
                 'authenticate': Sinon.stub(),
-                'activity': {'getEventsForUser': Sinon.stub()}
+                'activity': {'listEventsForUser': Sinon.stub()}
             };
             var authStub = {
                 'getAuth': Sinon.stub().resolves('1234')
