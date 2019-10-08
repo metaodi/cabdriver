@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Fixed Before-after-hook warning (#106), thanks @stefina #102
 
 ### Changed
-- BC-break: Due to updated dependencies, now at least node 8 is required
+- **BC-break:** Due to updated dependencies, now at least node 8.10.0 is required
 - Updated npm dependencies
 
 ## 2.5.1 - 2019-10-07

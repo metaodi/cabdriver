@@ -26,7 +26,7 @@ It currently support various sources (see below) to get entries in a taxi-friend
 
 ## Installation
 
-Make sure you have [Node.js](https://nodejs.org/en/) >= 6.11.0 installed.
+Make sure you have [Node.js](https://nodejs.org/en/) >= 8.10.0 installed.
 
 To check the node version number, use the following command:
 
