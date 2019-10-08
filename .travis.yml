@@ -1,7 +1,6 @@
 language: node_js
 node_js:
 - "node"
-- "6"
 - "8"
 - "10"
 before_script:
@@ -25,5 +24,5 @@ deploy:
     on:
       tags: true
       all_branches: true
-      node_js: 6
+      node_js: 8
       repo: metaodi/cabdriver

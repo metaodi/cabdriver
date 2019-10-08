@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+### Fixed
+- Fixed Before-after-hook warning (#106), thanks @stefina #102
+
+### Changed
+- BC-break: Due to updated dependencies, now at least node 8 is required
+- Updated npm dependencies
 
 ## 2.5.1 - 2019-10-07
 ### Fixed
