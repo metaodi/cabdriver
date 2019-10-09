@@ -27,12 +27,12 @@ gulp.task('test', function(cb) {
 });
 
 gulp.task('testcoverage', function(cb) {
-    exec('rm -rf coverage && node_modules/.bin/istanbul cover --report lcov --report html node_modules/mocha/bin/_mocha -- --reporter dot', function(err, stdout, stderr) {
+    exec('rm -rf coverage && node_modules/.bin/nyc cover --report lcov --report html node_modules/mocha/bin/_mocha -- --reporter dot', function(err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         cb(err);
     });
 });
 
-gulp.task('default', [ 'lint' ]);
-gulp.task('travis', [ 'lint', 'test' ]);
+gulp.task('default', gulp.series('lint'));
+gulp.task('travis', gulp.series('lint', 'test'));
