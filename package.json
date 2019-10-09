@@ -4,7 +4,8 @@
   "description": "Helps you to fill in your hours with taxi",
   "main": "cabdriver.js",
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha"
+    "test": "node_modules/.bin/nyc node_modules/mocha/bin/mocha",
+    "coverage": "node_modules/.bin/nyc report --reporter=text-lcov | coveralls"
   },
   "preferGlobal": true,
   "engines": {
@@ -77,13 +78,13 @@
     "gulp": "^4.0.2",
     "gulp-jscs": "^4.1.0",
     "gulp-jshint": "^2.1.0",
-    "istanbul": "^0.4.5",
     "jshint": "^2.10.2",
     "jshint-stylish": "^2.2.1",
     "mocha": "~6.2.1",
     "mocha-lcov-reporter": "^1.3.0",
     "mock-fs": "^4.10.1",
     "nock": "^11.4.0",
+    "nyc": "^14.1.1",
     "sinon": "^7.5.0",
     "std-mocks": "^1.0.1",
     "timekeeper": "^2.2.0"

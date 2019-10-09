@@ -27,7 +27,7 @@ gulp.task('test', function(cb) {
 });
 
 gulp.task('testcoverage', function(cb) {
-    exec('rm -rf coverage && node_modules/.bin/nyc cover --report lcov --report html node_modules/mocha/bin/_mocha -- --reporter dot', function(err, stdout, stderr) {
+    exec('npm coverage', function(err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         cb(err);
