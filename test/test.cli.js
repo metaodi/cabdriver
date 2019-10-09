@@ -1,4 +1,4 @@
-/*jshint expr: true*/
+/*global describe it afterEach*/
 var Sinon = require('sinon');
 var expect = require('chai').expect;
 var CliTest = require('command-line-test');

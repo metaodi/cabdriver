@@ -1,4 +1,4 @@
-/*jshint expr: true*/
+/*global describe it afterEach*/
 var Sinon = require('sinon');
 var expect = require('chai').expect;
 
@@ -51,8 +51,8 @@ describe('Slack', function() {
                         'project': 'xxx',
                         'time': '',
                         'text': '1 messages in #testchannel',
-                        'graph': { 'label': "testchannel - 1", 'value': 1 },
-                        'timestamp': "1497045538800",
+                        'graph': { 'label': 'testchannel - 1', 'value': 1 },
+                        'timestamp': '1497045538800',
                         'comment': false,
                         'type': 'slack'
                     };
@@ -107,8 +107,8 @@ describe('Slack', function() {
                         'project': 'xxx',
                         'time': '',
                         'text': '2 messages with testuser',
-                        'graph': { 'label': "testuser - 2", 'value': 2 },
-                        'timestamp': "1497045884400",
+                        'graph': { 'label': 'testuser - 2', 'value': 2 },
+                        'timestamp': '1497045884400',
                         'comment': false,
                         'type': 'slack'
                     };

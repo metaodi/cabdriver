@@ -1,4 +1,4 @@
-/*jshint expr: true*/
+/*global describe it afterEach*/
 var Promise = require('bluebird');
 var Sinon = require('sinon');
 var expect = require('chai').expect;
@@ -44,7 +44,7 @@ describe('Calendar', function() {
                         'project': 'xxx',
                         'time': '0.25',
                         'text': 'Test Event',
-                        'timestamp': "1494972000",
+                        'timestamp': '1494972000',
                         'comment': false,
                         'type': 'calendar'
                     };
@@ -83,7 +83,7 @@ describe('Calendar', function() {
                         'project': 'xxx',
                         'time': '15:45-16:00',
                         'text': 'Test Event',
-                        'timestamp': "1494972000",
+                        'timestamp': '1494972000',
                         'comment': false,
                         'type': 'calendar'
                     };
@@ -140,7 +140,7 @@ describe('Calendar', function() {
                             'project': 'xxx',
                             'time': '15:45-16:00',
                             'text': 'Test Event',
-                            'timestamp': "1494972000",
+                            'timestamp': '1494972000',
                             'comment': false,
                             'type': 'calendar'
                         },
@@ -148,29 +148,29 @@ describe('Calendar', function() {
                             'project': 'xxx',
                             'time': '17:45-18:00',
                             'text': 'Test Event Page 2',
-                            'timestamp': "1494972000",
+                            'timestamp': '1494972000',
                             'comment': false,
                             'type': 'calendar'
                         }
                     ];
                     Sinon.assert.calledWith(listStub, {
-                        "auth": "1234",
-                        "calendarId": "events",
-                        "maxResults": 11,
-                        "orderBy": "startTime",
-                        "pageToken": "aaabbbcccddd",
-                        "singleEvents": true,
-                        "timeMin": "2017-05-16T22:00:00.000Z"
-					}); 
+                        'auth': '1234',
+                        'calendarId': 'events',
+                        'maxResults': 11,
+                        'orderBy': 'startTime',
+                        'pageToken': 'aaabbbcccddd',
+                        'singleEvents': true,
+                        'timeMin': '2017-05-16T22:00:00.000Z'
+                    }); 
                     Sinon.assert.calledWith(listStub, {
-                        "auth": "1234",
-                        "calendarId": "events",
-                        "maxResults": 11,
-                        "orderBy": "startTime",
-                        "pageToken": "aaabbbcccdddeee",
-                        "singleEvents": true,
-                        "timeMin": "2017-05-16T22:00:00.000Z"
-					}); 
+                        'auth': '1234',
+                        'calendarId': 'events',
+                        'maxResults': 11,
+                        'orderBy': 'startTime',
+                        'pageToken': 'aaabbbcccdddeee',
+                        'singleEvents': true,
+                        'timeMin': '2017-05-16T22:00:00.000Z'
+                    }); 
                     expect(results).to.be.deep.equal(msgs);
                 });
         });

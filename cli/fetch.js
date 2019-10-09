@@ -1,11 +1,9 @@
-"use strict";
+'use strict';
 
 var Async = require('async');
 var Moment = require('moment-timezone');
 var Pad = require('pad');
 var _ = require('lodash');
-
-var fs = require('fs');
 
 var GoogleAuth = require('../lib/auth/google_auth');
 var SlackAuth = require('../lib/auth/slack_auth');
@@ -51,7 +49,7 @@ class FetchCli extends Cli {
 
         me.querySources(function(err, results) {
             if (err) {
-                console.error("Error occured: ", err);
+                console.error('Error occured: ', err);
                 return;
             }
             try {
@@ -59,7 +57,7 @@ class FetchCli extends Cli {
                 me.printResults(results);
                 process.exit(0);
             } catch (e) {
-                console.error("Error occured: ", e);
+                console.error('Error occured: ', e);
                 process.exit(1);
             }
         });
@@ -98,6 +96,12 @@ class FetchCli extends Cli {
                 return false;
             }
         });
+        msg = me.handleComments(msg, mapping);
+        msg = me.handleRemove(msg, mapping);
+        return msg;
+    }
+
+    handleComments(msg, mapping) {
         if (mapping['__comment__']) {
             var commentMatch = _.some(mapping['__comment__'], function(pattern) {
                 var re = new RegExp(pattern, 'i');
@@ -107,6 +111,11 @@ class FetchCli extends Cli {
                 msg.comment = true;
             }
         }
+        return msg;
+    }
+
+    handleRemove(msg, mapping) {
+        var me = this;
         if (mapping['__remove__']) {
             var removeMatch = _.some(mapping['__remove__'], function(pattern) {
                 var re = new RegExp(pattern, 'i');
@@ -139,37 +148,26 @@ class FetchCli extends Cli {
         var me = this;
 
         var sources = me.getSources();
-        var sourceEntries = _.mapValues(
-            sources,
-            function(source) {
-                return function(callback) {
-                    source.getEntries(me.config)
-                        .then(function(entries) {
-                            callback(null, entries);
-                        })
-                        .catch(callback);
-                };
-            }
-       );
+        var sourceEntries = me.getSourceEntries(sources);
 
-       Async.parallel(
-           Async.reflectAll(sourceEntries),
-           function(err, allResults) {
-               if (err) {
-                   exitCallback(err);
-                   return;
-               }
-               var results = [];
-               _.each(allResults, function(result, key) {
-                   if (result.value) {
-                       results = results.concat(result.value);
-                   } else {
-                       console.error('');
-                       console.error(key + ' source failed: ' + result.error);
-                   }
-               });
-               exitCallback(null, results);
-        });
+        Async.parallel(
+            Async.reflectAll(sourceEntries),
+            function(err, allResults) {
+                if (err) {
+                    exitCallback(err);
+                    return;
+                }
+                var results = [];
+                _.each(allResults, function(result, key) {
+                    if (result.value) {
+                        results = results.concat(result.value);
+                    } else {
+                        console.error('');
+                        console.error(key + ' source failed: ' + result.error);
+                    }
+                });
+                exitCallback(null, results);
+            });
     }
 
     getSources() {
@@ -181,6 +179,24 @@ class FetchCli extends Cli {
         return sources;
     }
 
+    getSourceEntries(sources) {
+        var me = this;
+        var sourceEntries = _.mapValues(
+            sources,
+            function(source) {
+                return function(callback) {
+                    source.getEntries(me.config)
+                        .then(function(entries) {
+                            callback(null, entries);
+                        })
+                        .catch(callback);
+                };
+            }
+        );
+        return sourceEntries;
+    }
+
+    // eslint-disable-next-line max-lines-per-function
     updateOptions(options) {
         var me = this;
         options = options || {};
@@ -197,16 +213,9 @@ class FetchCli extends Cli {
             options.calendar = true;
         }
 
-        var dates = date.getStartAndEndDate(options.date);
-
-        Moment.suppressDeprecationWarnings = true;
-        if (!Moment(dates['endDate']).isValid() || !Moment(dates['startDate']).isValid()) {
-            console.error("Please enter a valid date range");
-            process.exit(1);
-        } else {
-            options['startDate'] = dates['startDate'];
-            options['endDate'] = dates['endDate'];
-        }
+        const {startDate, endDate} = me.validateDate(options.date);
+        options['startDate'] = startDate;
+        options['endDate'] = endDate;
 
         if (options.verbose) {
             console.log('Start date: %s', Moment.tz(options['startDate'], 'Europe/Zurich').format('DD.MM.YYYY'));
@@ -229,6 +238,16 @@ class FetchCli extends Cli {
         return options;
     }
 
+    validateDate(dateStr) {
+        var dates = date.getStartAndEndDate(dateStr);
+        Moment.suppressDeprecationWarnings = true;
+        if (!Moment(dates['endDate']).isValid() || !Moment(dates['startDate']).isValid()) {
+            console.error('Please enter a valid date range');
+            process.exit(1);
+        }
+        return dates;
+    }
+
     sourcesInOptions(opts) {
         var me = this;
         var sourceKeys = _.keys(me.sources);
@@ -243,54 +262,61 @@ class FetchCli extends Cli {
         var orderedResults = me.groupByAndSort(results);
 
         //print a section for each day separated by type
-        _.each(orderedResults, function(msgs, timestamp) {
-            var day = Moment.unix(timestamp).tz('Europe/Zurich');
+        _.each(orderedResults, me.printResultDay.bind(me));
+    }
 
-            var allProjects = _.keys(_.groupBy(msgs, 'project'));
-            var maxProjectLength = allProjects.reduce(function (a, b) { return a.length > b.length ? a : b; }).length;
-            var projectPadding = Math.max(5, maxProjectLength + 1);
+    printResultDay(msgs, timestamp) {
+        var me = this;
+        var day = Moment.unix(timestamp).tz('Europe/Zurich');
 
-            var allTimes = _.keys(_.groupBy(msgs, 'time'));
-            var maxTimeLength = allTimes.reduce(function (a, b) { return a.length > b.length ? a : b; }).length;
-            var timePadding = Math.max(2, maxTimeLength + 1);
+        var allProjects = _.keys(_.groupBy(msgs, 'project'));
+        var maxProjectLength = allProjects.reduce(function (a, b) { return a.length > b.length ? a : b; }).length;
+        var projectPadding = Math.max(5, maxProjectLength + 1);
 
-            msgs = _.groupBy(msgs, 'type');
-            console.log('');
-            console.log('%s # %s', day.format('DD/MM/YYYY'), day.format('dddd'));
-            _.each(msgs, function(msgs, type) {
-                var total = _.reduce(msgs, function(sum, msg) {
-                   var time = util.filterFloat(msg.time);
-                   if (_.isNaN(time)) {
-                       time = date.parseTimeRange(msg.time);
-                   }
-                   return sum + (_.isNaN(time) ? 0 : time);
-                }, 0);
-                total = total.toFixed(2);
-                console.log('');
-                process.stdout.write('# ' + type);
-                if (total > 0) {
-                    process.stdout.write(' (Total: ' + total + 'h)');
+        var allTimes = _.keys(_.groupBy(msgs, 'time'));
+        var maxTimeLength = allTimes.reduce(function (a, b) { return a.length > b.length ? a : b; }).length;
+        var timePadding = Math.max(2, maxTimeLength + 1);
+
+        msgs = _.groupBy(msgs, 'type');
+        console.log('');
+        console.log('%s # %s', day.format('DD/MM/YYYY'), day.format('dddd'));
+        _.each(msgs, me.printResultType(projectPadding, timePadding));
+    }
+
+    printResultType(projectPadding, timePadding) {
+        return function(msgs, type) {
+            var total = _.reduce(msgs, function(sum, msg) {
+                var time = util.filterFloat(msg.time);
+                if (_.isNaN(time)) {
+                    time = date.parseTimeRange(msg.time);
                 }
-                process.stdout.write('\n');
+                return sum + (_.isNaN(time) ? 0 : time);
+            }, 0);
+            total = total.toFixed(2);
+            console.log('');
+            process.stdout.write('# ' + type);
+            if (total > 0) {
+                process.stdout.write(' (Total: ' + total + 'h)');
+            }
+            process.stdout.write('\n');
 
-                console.log('#------------------');
-                _.each(msgs, function(msg) {
-                    if (_.has(msg, 'raw') && msg.raw) {
-                        console.log(msg.raw);
-                    } else {
-                        var text = Pad(msg.project, projectPadding);
-                        if (msg.time) {
-                            text += Pad(msg.time, timePadding);
-                        }
-                        text += msg.text;
-                        if (msg.comment) {
-                            text = '# ' + text;
-                        }
-                        console.log(text);
+            console.log('#------------------');
+            _.each(msgs, function(msg) {
+                if (_.has(msg, 'raw') && msg.raw) {
+                    console.log(msg.raw);
+                } else {
+                    var text = Pad(msg.project, projectPadding);
+                    if (msg.time) {
+                        text += Pad(msg.time, timePadding);
                     }
-                });
+                    text += msg.text;
+                    if (msg.comment) {
+                        text = '# ' + text;
+                    }
+                    console.log(text);
+                }
             });
-        });
+        };
     }
 
     groupByAndSort(results) {
@@ -298,7 +324,7 @@ class FetchCli extends Cli {
         results = _.groupBy(results, 'timestamp');
         var orderedResults = {};
         Object.keys(results).sort().forEach(function(key) {
-              orderedResults[key] = results[key];
+            orderedResults[key] = results[key];
         });
         return orderedResults;
     }

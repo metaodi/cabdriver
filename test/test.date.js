@@ -1,4 +1,4 @@
-/*jshint expr: true*/
+/*global describe it after before afterEach beforeEach*/
 var expect = require('chai').expect;
 var tk = require('timekeeper');
 var Moment = require('moment-timezone');
@@ -10,8 +10,8 @@ describe('Date', function() {
         describe('Date string with single date', function() {
             it('should return object with the given date based on CET timezone', function() {
                 expect(date.getStartAndEndDate('01.02.2016')).to.be.deep.equal({
-                    "startDate": "2016-01-31T23:00:00.000Z",
-                    "endDate": "2016-02-01T22:59:59.999Z",
+                    'startDate': '2016-01-31T23:00:00.000Z',
+                    'endDate': '2016-02-01T22:59:59.999Z',
                 });
             });
         });
@@ -19,8 +19,8 @@ describe('Date', function() {
         describe('Date string with start and end date', function() {
             it('should return object with the given dates based on CET timezone', function() {
                 expect(date.getStartAndEndDate('01.02.2016-02.02.2016')).to.be.deep.equal({
-                    "startDate": "2016-01-31T23:00:00.000Z",
-                    "endDate": "2016-02-01T23:00:00.000Z"
+                    'startDate': '2016-01-31T23:00:00.000Z',
+                    'endDate': '2016-02-01T23:00:00.000Z'
                 });
             });
         });
@@ -37,13 +37,13 @@ describe('Date', function() {
             });
             it('should return object with start and end date based on CET timezone', function() {
                 expect(date.getStartAndEndDate('today')).to.be.deep.equal({
-                    "startDate": "2018-04-09T21:59:59.999Z",
-                    "endDate": "2018-04-09T21:59:59.999Z"
+                    'startDate': '2018-04-09T21:59:59.999Z',
+                    'endDate': '2018-04-09T21:59:59.999Z'
                 });
                 var today = Moment().tz('Europe/Zurich');
                 expect(date.getStartAndEndDate('today')).to.be.deep.equal({
-                    "startDate": today.endOf('day').toISOString(),
-                    "endDate": today.endOf('day').toISOString()
+                    'startDate': today.endOf('day').toISOString(),
+                    'endDate': today.endOf('day').toISOString()
                 });
             });
         });
@@ -64,13 +64,13 @@ describe('Date', function() {
             });
             it('should return object with start and end date based on CET timezone', function() {
                 expect(date.getStartAndEndDate('yesterday')).to.be.deep.equal({
-                    "startDate": "2018-04-17T21:59:59.999Z",
-                    "endDate": "2018-04-18T21:59:59.999Z"
+                    'startDate': '2018-04-17T21:59:59.999Z',
+                    'endDate': '2018-04-18T21:59:59.999Z'
                 });
                 var yesterday = Moment().subtract(1, 'd').tz('Europe/Zurich');
                 expect(date.getStartAndEndDate('yesterday')).to.be.deep.equal({
-                    "startDate": yesterday.endOf('day').toISOString(),
-                    "endDate": yesterday.add(1, 'd').endOf('day').toISOString()
+                    'startDate': yesterday.endOf('day').toISOString(),
+                    'endDate': yesterday.add(1, 'd').endOf('day').toISOString()
                 });
             });
         });

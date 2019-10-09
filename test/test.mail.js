@@ -1,4 +1,4 @@
-/*jshint expr: true*/
+/*global describe it afterEach*/
 var Sinon = require('sinon');
 var expect = require('chai').expect;
 
@@ -61,7 +61,7 @@ describe('Mail', function() {
                         'project': 'xxx',
                         'time': '1',
                         'text': 'Test Email (test@example.com, 12:00)',
-                        'timestamp': "1497045600",
+                        'timestamp': '1497045600',
                         'comment': false,
                         'type': 'mail'
                     };
@@ -92,10 +92,10 @@ describe('Mail', function() {
             var mail = new GoogleMail(options, authStub);
 
             var testConfig = {'mail': {
-                    'include': ['include1', 'include2'],
-                    'exclude': ['exclude1', 'exclude2', 'exclude3'],
-                    'query': 'is:unread'
-                }
+                'include': ['include1', 'include2'],
+                'exclude': ['exclude1', 'exclude2', 'exclude3'],
+                'query': 'is:unread'
+            }
             };
 
             return mail.getEntries(testConfig)
@@ -153,7 +153,7 @@ describe('Mail', function() {
                         'project': 'xxx',
                         'time': '1',
                         'text': 'Test Email (test@example.com, 16:08)',
-                        'timestamp': "1465200",
+                        'timestamp': '1465200',
                         'comment': false,
                         'type': 'mail'
                     };
@@ -235,7 +235,7 @@ describe('Mail', function() {
                             'project': 'xxx',
                             'time': '1',
                             'text': 'Test Email 2 (Jane Doe, 08:58)',
-                            'timestamp': "1531173600",
+                            'timestamp': '1531173600',
                             'comment': false,
                             'type': 'mail'
                         },
@@ -243,23 +243,23 @@ describe('Mail', function() {
                             'project': 'xxx',
                             'time': '1',
                             'text': 'Test Email 1 (test1@example.com, 08:58)',
-                            'timestamp': "1531173600",
+                            'timestamp': '1531173600',
                             'comment': false,
                             'type': 'mail'
                         }
                     ];
                     Sinon.assert.calledWith(listStub, {
-                        "userId": "me",
-                        "maxResults": 11,
-                        "q": " after:1531173599",
-                        "pageToken": "aaabbbcccddd",
-					}); 
+                        'userId': 'me',
+                        'maxResults': 11,
+                        'q': ' after:1531173599',
+                        'pageToken': 'aaabbbcccddd',
+                    }); 
                     Sinon.assert.calledWith(listStub, {
-                        "userId": "me",
-                        "maxResults": 11,
-                        "q": " after:1531173599",
-                        "pageToken": "aaabbbcccdddeee",
-					}); 
+                        'userId': 'me',
+                        'maxResults': 11,
+                        'q': ' after:1531173599',
+                        'pageToken': 'aaabbbcccdddeee',
+                    }); 
                     expect(results).to.be.deep.equal(msgs);
                 });
         });

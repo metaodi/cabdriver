@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var Moment = require('moment-timezone');
 
@@ -23,12 +23,12 @@ class SheetCli extends Cli {
         var me = this;
         var startDate = date.parseFirstDayOfMonth(me.options.month, me.options.year);
         var firstDay = Moment.tz(startDate, 'Europe/Zurich');
-        console.log('# taxi file for ' + firstDay.format('MM.Y') + "\n");
+        console.log('# taxi file for ' + firstDay.format('MM.Y') + '\n');
 
         var day;
         var currentDay = firstDay.clone();
         for (day = 1; day <= firstDay.daysInMonth(); day++) {
-            console.log(currentDay.format('DD/MM/YYYY') + ' # ' + currentDay.format('dddd') + "\n");
+            console.log(currentDay.format('DD/MM/YYYY') + ' # ' + currentDay.format('dddd') + '\n');
             currentDay.add(1, 'd');
         }
     }

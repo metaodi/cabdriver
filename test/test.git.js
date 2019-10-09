@@ -1,4 +1,4 @@
-/*jshint expr: true*/
+/*global describe it afterEach*/
 var Sinon = require('sinon');
 var MockFs = require('mock-fs');
 var stdMocks = require('std-mocks');
@@ -63,7 +63,7 @@ describe('Git', function() {
                         comment: false,
                         type: 'git'
                     }]);
-            });
+                });
         });
         it('generates error msg for not-accessible directory', function() {
             stdMocks.use();
@@ -77,7 +77,7 @@ describe('Git', function() {
                         'readable-child': MockFs.file({
                             mode: parseInt('0777', 8),
                             content: 'read, write, and execute'
-                         })
+                        })
                     }
                 })
             });
@@ -103,9 +103,9 @@ describe('Git', function() {
                 .then(function(result) {
                     var output = stdMocks.flush().stderr;
                     expect(output).to.deep.equal(
-                        ["Error accessing path /path/to/unreadable/readable-child\n"]
+                        ['Error accessing path /path/to/unreadable/readable-child\n']
                     );
-            });
+                });
         });
         it('generates entries based on cached paths', function() {
             MockFs({
@@ -156,7 +156,7 @@ describe('Git', function() {
                         comment: false,
                         type: 'git'
                     }]);
-            });
+                });
         });
     });
 });

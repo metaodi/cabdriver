@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var _ = require('lodash');
 var Yaml = require('js-yaml');
@@ -34,13 +34,12 @@ class Cli {
     }
 
     loadConfig(configPath) {
-        var me = this;
         var config;
         try {
             config = Yaml.safeLoad(fs.readFileSync(configPath, 'utf8'));
             if (!_.has(config, 'defaults')) {
-                console.error("Config file has no 'defaults' key");
-                throw "malformated config";
+                console.error('Config file has no \'defaults\' key');
+                throw 'malformated config';
             }
         } catch (e) {
             config = {'defaults': {}};

@@ -1,4 +1,4 @@
-/*jshint expr: true*/
+/*global describe it afterEach*/
 var Sinon = require('sinon');
 var expect = require('chai').expect;
 var Moment = require('moment-timezone');
@@ -81,7 +81,7 @@ describe('Github', function() {
                         'project': 'test-repo',
                         'time': '1',
                         'text': '#1337: Test pull request, pull request created',
-                        'timestamp': "1498168800",
+                        'timestamp': '1498168800',
                         'comment': false,
                         'type': 'github'
                     };
@@ -133,7 +133,7 @@ describe('Github', function() {
                         'project': 'cache-repo',
                         'time': '1',
                         'text': '#1338: Test pull request, pull request created',
-                        'timestamp': "1535407200",
+                        'timestamp': '1535407200',
                         'comment': false,
                         'type': 'github'
                     };
