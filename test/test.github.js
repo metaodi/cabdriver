@@ -19,7 +19,26 @@ describe('Github', function() {
                     'login': 'githubtestuser'
                 }
             });
-            var eventStub = Sinon.stub().resolves({
+            var eventStub = Sinon.stub().resolves([
+                {
+                    'actor': {
+                        'login': 'githubtestuser'
+                    },
+                    'created_at': '2017-06-23',
+                    'repo': {
+                        'name': 'githubtestuser/test-repo'
+                    },
+                    'type': 'PullRequestEvent',
+                    'payload': {
+                        'action': 'created',
+                        'pull_request': {
+                            'number': '1337',
+                            'title': 'Test pull request'
+                        }
+                    }
+                }
+            ]);
+            var eventsStub = Sinon.stub().resolves({
                 'data': [{
                     'actor': {
                         'login': 'githubtestuser'
@@ -39,10 +58,9 @@ describe('Github', function() {
                 }]
             });
             var apiStub = { 
-                'authenticate': Sinon.stub(),
-                'hasNextPage': Sinon.stub().returns(false),
-                'users': {'get': userStub},
-                'activity': {'listEventsForUser': eventStub}
+                'paginate': eventStub,
+                'users': {'getAuthenticated': userStub},
+                'activity': {'listEventsForUser': {'endpoint': { 'merge': eventsStub}}}
             };
             var authStub = {
                 'getAuth': Sinon.stub().resolves('1234')
@@ -59,13 +77,6 @@ describe('Github', function() {
             var github = new Github(options, authStub, apiStub);
             return github.getEntries()
                 .then(function(result) {
-                    Sinon.assert.calledWith(
-                        apiStub.authenticate,
-                        {
-                            type: 'oauth',
-                            token: '1234'
-                        }
-                    );
                     var msg = {
                         'project': 'test-repo',
                         'time': '1',
@@ -102,8 +113,7 @@ describe('Github', function() {
             cache.putSync('github-events', events);
 
             var apiStub = { 
-                'authenticate': Sinon.stub(),
-                'activity': {'listEventsForUser': Sinon.stub()}
+                'activity': {'listEventsForUser': {'endpoint': { 'merge': Sinon.stub()}}}
             };
             var authStub = {
                 'getAuth': Sinon.stub().resolves('1234')
@@ -119,13 +129,6 @@ describe('Github', function() {
             var github = new Github(options, authStub, apiStub);
             return github.getEntries()
                 .then(function(result) {
-                    Sinon.assert.calledWith(
-                        apiStub.authenticate,
-                        {
-                            type: 'oauth',
-                            token: '1234'
-                        }
-                    );
                     var msg = {
                         'project': 'cache-repo',
                         'time': '1',
