@@ -1,4 +1,4 @@
-/*jshint expr: true*/
+/*global describe it afterEach*/
 var Sinon = require('sinon');
 var stdMocks = require('std-mocks');
 var MockFs = require('mock-fs');
@@ -114,7 +114,7 @@ describe('CLI Fetch', function() {
                         var output = stdMocks.flush().stderr;
                         stdMocks.restore();
                         expect(output).to.include(
-                            "mail source failed: Could not fetch mails\n"
+                            'mail source failed: Could not fetch mails\n'
                         );
                         done();
                     } catch (err) {
@@ -131,36 +131,36 @@ describe('CLI Fetch', function() {
 
             var msgs = [
                 {
-                        'project': 'xxx',
-                        'time': '1',
-                        'text': 'Team Meeting',
-                        'timestamp': 123,
-                        'comment': false,
-                        'type': 'calendar'
+                    'project': 'xxx',
+                    'time': '1',
+                    'text': 'Team Meeting',
+                    'timestamp': 123,
+                    'comment': false,
+                    'type': 'calendar'
                 },
                 {
-                        'project': 'xxx',
-                        'time': '1',
-                        'text': 'Meeting',
-                        'timestamp': 123,
-                        'comment': false,
-                        'type': 'calendar'
+                    'project': 'xxx',
+                    'time': '1',
+                    'text': 'Meeting',
+                    'timestamp': 123,
+                    'comment': false,
+                    'type': 'calendar'
                 },
                 {
-                        'project': 'xxx',
-                        'time': '1',
-                        'text': 'important internal stuff',
-                        'timestamp': 123,
-                        'comment': false,
-                        'type': 'calendar'
+                    'project': 'xxx',
+                    'time': '1',
+                    'text': 'important internal stuff',
+                    'timestamp': 123,
+                    'comment': false,
+                    'type': 'calendar'
                 },
                 {
-                        'project': 'company',
-                        'time': '2',
-                        'text': 'Something important',
-                        'timestamp': 123,
-                        'comment': false,
-                        'type': 'git'
+                    'project': 'company',
+                    'time': '2',
+                    'text': 'Something important',
+                    'timestamp': 123,
+                    'comment': false,
+                    'type': 'git'
                 }
             ];
             var result = cli.postProcess(msgs);
@@ -176,12 +176,12 @@ describe('CLI Fetch', function() {
 
             var msgs = [
                 {
-                        'project': 'open-source',
-                        'time': '1',
-                        'text': 'Ticket 1',
-                        'timestamp': 123,
-                        'comment': false,
-                        'type': 'jira'
+                    'project': 'open-source',
+                    'time': '1',
+                    'text': 'Ticket 1',
+                    'timestamp': 123,
+                    'comment': false,
+                    'type': 'jira'
                 }
             ];
             var result = cli.postProcess(msgs);
@@ -194,36 +194,36 @@ describe('CLI Fetch', function() {
 
             var msgs = [
                 {
-                        'project': 'xxx',
-                        'time': '1',
-                        'text': 'Team Meeting',
-                        'timestamp': 123,
-                        'comment': false,
-                        'type': 'calendar'
+                    'project': 'xxx',
+                    'time': '1',
+                    'text': 'Team Meeting',
+                    'timestamp': 123,
+                    'comment': false,
+                    'type': 'calendar'
                 },
                 {
-                        'project': 'xxx',
-                        'time': '1',
-                        'text': 'Meeting',
-                        'timestamp': 123,
-                        'comment': false,
-                        'type': 'calendar'
+                    'project': 'xxx',
+                    'time': '1',
+                    'text': 'Meeting',
+                    'timestamp': 123,
+                    'comment': false,
+                    'type': 'calendar'
                 },
                 {
-                        'project': 'xxx',
-                        'time': '1',
-                        'text': 'important internal stuff',
-                        'timestamp': 123,
-                        'comment': false,
-                        'type': 'calendar'
+                    'project': 'xxx',
+                    'time': '1',
+                    'text': 'important internal stuff',
+                    'timestamp': 123,
+                    'comment': false,
+                    'type': 'calendar'
                 },
                 {
-                        'project': 'company',
-                        'time': '2',
-                        'text': 'Something important',
-                        'timestamp': 123,
-                        'comment': false,
-                        'type': 'git'
+                    'project': 'company',
+                    'time': '2',
+                    'text': 'Something important',
+                    'timestamp': 123,
+                    'comment': false,
+                    'type': 'git'
                 }
             ];
             var result = cli.postProcess(msgs);
@@ -236,20 +236,20 @@ describe('CLI Fetch', function() {
 
             var msgs = [
                 {
-                        'project': 'xxx',
-                        'time': '1',
-                        'text': 'Meeting',
-                        'timestamp': 123,
-                        'comment': false,
-                        'type': 'calendar'
+                    'project': 'xxx',
+                    'time': '1',
+                    'text': 'Meeting',
+                    'timestamp': 123,
+                    'comment': false,
+                    'type': 'calendar'
                 },
                 {
-                        'project': 'xxx',
-                        'time': '1',
-                        'text': 'Lunch',
-                        'timestamp': 123,
-                        'comment': false,
-                        'type': 'calendar'
+                    'project': 'xxx',
+                    'time': '1',
+                    'text': 'Lunch',
+                    'timestamp': 123,
+                    'comment': false,
+                    'type': 'calendar'
                 }
             ];
             var result = cli.postProcess(msgs);
@@ -263,28 +263,28 @@ describe('CLI Fetch', function() {
 
             var msgs = [
                 {
-                        'project': 'xxx',
-                        'time': '1',
-                        'text': 'Meeting',
-                        'timestamp': 123,
-                        'comment': false,
-                        'type': 'calendar'
+                    'project': 'xxx',
+                    'time': '1',
+                    'text': 'Meeting',
+                    'timestamp': 123,
+                    'comment': false,
+                    'type': 'calendar'
                 },
                 {
-                        'project': 'xxx',
-                        'time': '1',
-                        'text': 'Hours!',
-                        'timestamp': 123,
-                        'comment': false,
-                        'type': 'calendar'
+                    'project': 'xxx',
+                    'time': '1',
+                    'text': 'Hours!',
+                    'timestamp': 123,
+                    'comment': false,
+                    'type': 'calendar'
                 },
                 {
-                        'project': 'xxx',
-                        'time': '1',
-                        'text': 'Important Meeting',
-                        'timestamp': 123,
-                        'comment': false,
-                        'type': 'calendar'
+                    'project': 'xxx',
+                    'time': '1',
+                    'text': 'Important Meeting',
+                    'timestamp': 123,
+                    'comment': false,
+                    'type': 'calendar'
                 }
             ];
             var result = cli.postProcess(msgs);
@@ -299,28 +299,28 @@ describe('CLI Fetch', function() {
 
             var msgs = [
                 {
-                        'project': 'xxx',
-                        'time': '1',
-                        'text': 'Meeting',
-                        'timestamp': 123,
-                        'comment': false,
-                        'type': 'calendar'
+                    'project': 'xxx',
+                    'time': '1',
+                    'text': 'Meeting',
+                    'timestamp': 123,
+                    'comment': false,
+                    'type': 'calendar'
                 },
                 {
-                        'project': 'xxx',
-                        'time': '1',
-                        'text': 'Hours!',
-                        'timestamp': 123,
-                        'comment': false,
-                        'type': 'calendar'
+                    'project': 'xxx',
+                    'time': '1',
+                    'text': 'Hours!',
+                    'timestamp': 123,
+                    'comment': false,
+                    'type': 'calendar'
                 },
                 {
-                        'project': 'xxx',
-                        'time': '1',
-                        'text': 'Hours!',
-                        'timestamp': 123,
-                        'comment': false,
-                        'type': 'calendar'
+                    'project': 'xxx',
+                    'time': '1',
+                    'text': 'Hours!',
+                    'timestamp': 123,
+                    'comment': false,
+                    'type': 'calendar'
                 }
             ];
             var result = cli.postProcess(msgs);
@@ -348,14 +348,14 @@ describe('CLI Fetch', function() {
             var output = stdMocks.flush().stdout;
             stdMocks.restore();
             var expectedOutput = [
-                "\n",
-                "01/01/1970 # Thursday\n",
-                "\n",
-                "# calendar",
-                " (Total: 1.00h)",
-                "\n",
-                "#------------------\n",
-                "xxx  1 Test Entry\n"
+                '\n',
+                '01/01/1970 # Thursday\n',
+                '\n',
+                '# calendar',
+                ' (Total: 1.00h)',
+                '\n',
+                '#------------------\n',
+                'xxx  1 Test Entry\n'
             ];
             expect(output).to.deep.equal(expectedOutput);
         });
@@ -389,7 +389,7 @@ describe('CLI Fetch', function() {
                     '   jira: false\n' +
                     '   slack: true\n' +
                     '   logbot: false\n' +
-                    "   calendar: 'primary'\n" +
+                    '   calendar: \'primary\'\n' +
                     '   zebra: false\n' +
                     '   git: false\n' +
                     '   gitlab: true\n' +
@@ -399,7 +399,7 @@ describe('CLI Fetch', function() {
                     '   hours: false\n' +
                     '   number: 1000';
             MockFs({
-              '/home/testuser/.cabdriver/cabdriver.yml': ymlContent 
+                '/home/testuser/.cabdriver/cabdriver.yml': ymlContent 
             });
             var opts = {
                 'date': '02.12.2017',
@@ -414,21 +414,21 @@ describe('CLI Fetch', function() {
             var err = stdMocks.flush().stderr;
             stdMocks.restore();
             var expectedOutput = [
-                "Start date: 02.12.2017\n",
-                "End date: 02.12.2017\n",
-                "Calendar: primary\n",
-                "Mail: false\n",
-                "Slack: true\n",
-                "Logbot: false\n",
-                "Jira: true\n",
-                "Zebra: false\n",
-                "Git: false\n",
-                "Github: true\n",
-                "Gitlab: true\n",
-                "Pie chart: false\n",
-                "Hours: true\n",
-                "Count: 1000\n",
-                "Config: undefined\n",
+                'Start date: 02.12.2017\n',
+                'End date: 02.12.2017\n',
+                'Calendar: primary\n',
+                'Mail: false\n',
+                'Slack: true\n',
+                'Logbot: false\n',
+                'Jira: true\n',
+                'Zebra: false\n',
+                'Git: false\n',
+                'Github: true\n',
+                'Gitlab: true\n',
+                'Pie chart: false\n',
+                'Hours: true\n',
+                'Count: 1000\n',
+                'Config: undefined\n',
             ];
             expect(output).to.deep.equal(expectedOutput);
         });
@@ -446,7 +446,7 @@ describe('CLI Fetch', function() {
                 '   git: /home/testuser\n' +
                 '   hours: true';
             MockFs({
-              '/home/testuser/.cabdriver/cabdriver.yml': ymlContent 
+                '/home/testuser/.cabdriver/cabdriver.yml': ymlContent 
             });
 
             var config = cli.loadConfig('/home/testuser/.cabdriver/cabdriver.yml');
@@ -465,7 +465,7 @@ describe('CLI Fetch', function() {
         it('should default to empty config on error', function() {
             //setup mocks
             MockFs({
-              '/home/testuser/.cabdriver/cabdriver.yml': 'test: badconfig'
+                '/home/testuser/.cabdriver/cabdriver.yml': 'test: badconfig'
             });
             
             var cli = new FetchCli();
@@ -475,7 +475,7 @@ describe('CLI Fetch', function() {
 
             var output = stdMocks.flush().stderr;
             stdMocks.restore();
-            expect(output).to.include("Config file has no 'defaults' key\n");
+            expect(output).to.include('Config file has no \'defaults\' key\n');
         });
     });
 });

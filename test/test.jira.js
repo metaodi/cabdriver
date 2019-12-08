@@ -1,4 +1,4 @@
-/*jshint expr: true*/
+/*global describe it afterEach*/
 var Sinon = require('sinon');
 var Nock = require('nock');
 var stdMocks = require('std-mocks');
@@ -212,7 +212,7 @@ describe('Jira', function() {
             var jira = new Jira(options, authStub);
             return jira.getEntries()
                 .then(function(result) {
-                    throw new Error("we should never get here");
+                    throw new Error('we should never get here');
                 })
                 .catch(function(err) {
                     expect(err.message).to.equal('The JIRA API returned an error: 500 - {"errorMessages":["Internal server error"],"errors":{}}');
@@ -282,8 +282,8 @@ describe('Jira', function() {
                     ]);
                     var output = stdMocks.flush().stderr;
                     stdMocks.restore();
-                    expect(output).to.deep.equal(['Error fetching issue FAIL-666: 500 - {"errorMessages":["Internal server error"],"errors":{}}' + "\n"]);
+                    expect(output).to.deep.equal(['Error fetching issue FAIL-666: 500 - {"errorMessages":["Internal server error"],"errors":{}}' + '\n']);
                 });
         });
-   });
+    });
 });
