@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Changed
 - **BC-break:** Due to updated dependencies, now at least node 8.10.0 is required
-- Updated npm dependencies
+- Updated npm dependencies #107
 
 ## 2.5.1 - 2019-10-07
 ### Fixed
