@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var Yaml = require('js-yaml');
 var fs = require('fs');
-var path = require('path')
+var path = require('path');
 var Cache = require('persistent-cache');
 
 class Cli {
@@ -58,7 +58,7 @@ class Cli {
             baseDir = process.env.USERPROFILE;
         }
         if (!baseDir) {
-            console.error('Unable to find home directory (check env variables HOME, HOMEDRIVE, HOMEPATH and USERPROFILE)');
+            console.error('Unable to find home directory (check env vars HOME, HOMEDRIVE, HOMEPATH and USERPROFILE)');
             throw 'home directory not found';
         }
 
