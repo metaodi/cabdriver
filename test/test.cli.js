@@ -1,7 +1,10 @@
-/*global describe it afterEach*/
+/*global describe it afterEach beforeEach*/
+/* eslint no-useless-escape: "off" */
 var Sinon = require('sinon');
+var MockFs = require('mock-fs');
 var expect = require('chai').expect;
 var CliTest = require('command-line-test');
+var Cli = require('../cli/cli');
 
 var path = require('path');
 var pkg = require('../package.json');
@@ -102,6 +105,55 @@ describe('CLI', function() {
                     expect(options.hours).to.be.true;
                     expect(options.git).to.be.equal('/home/testuser');
                 });
+        });
+    });
+    describe('CLI module - cabdriver path', function() {
+        var env;
+
+        beforeEach(function () {
+            env = process.env;
+        });
+
+        it('should get get correct directory (HOME)', function() {          
+            MockFs({'/home/test': {}});
+            process.env = { 'HOME': '/home/test'};
+            var cli = new Cli();
+            expect(cli.getCabdriverPath()).to.be.equal('/home/test/.cabdriver');
+        });
+
+        it('should get get correct directory (HOMEDRIVE/HOMEPATH)', function() {
+            MockFs({'H:/': {}});
+            process.env = { 'HOMEDRIVE': 'H:', 'HOMEPATH': '\\', 'USERPROFILE': '/home/test/userprofile'};
+            var cli = new Cli();
+            expect(cli.getCabdriverPath()).to.be.equal('H:/\\/.cabdriver');
+        });
+
+        it('should get get correct directory (USERPROFILE)', function() {
+            MockFs({'/my/userprofile': {}});           
+            process.env = { 'USERPROFILE': '/my/userprofile' };
+            var cli = new Cli();
+            expect(cli.getCabdriverPath()).to.be.equal('/my/userprofile/.cabdriver');
+        });
+
+        it('should get get correct directory (prefer HOME)', function() {
+            MockFs({
+                '/home/testhome': {},
+                'H:/': {},
+                '/home/test/userprofile': {}
+            });        
+            process.env = {
+                'HOME': '/home/testhome',
+                'HOMEDRIVE': 'H:',
+                'HOMEPATH': '\\', 
+                'USERPROFILE': '/home/test/userprofile'
+            };
+            var cli = new Cli();
+            expect(cli.getCabdriverPath()).to.be.equal('/home/testhome/.cabdriver');
+        });
+
+        afterEach(function () {
+            process.env = env;
+            MockFs.restore();
         });
     });
 });
