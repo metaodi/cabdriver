@@ -52,7 +52,7 @@
     "findit2": "^2.2.3",
     "fs-extra": "^8.1.0",
     "git-config": "0.0.7",
-    "gitlog": "^3.1.2",
+    "gitlog": "^4.0.3",
     "google-auth-library": "^5.6.1",
     "googleapis": "^45.0.0",
     "jira-client": "^6.14.0",
