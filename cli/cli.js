@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var Yaml = require('js-yaml');
 var fs = require('fs');
+var path = require('path');
 var Cache = require('persistent-cache');
 
 class Cli {
@@ -47,16 +48,32 @@ class Cli {
         return config;
     }
 
+    getCabdriverPath() {
+        var baseDir = '';
+        if (process.env.HOME) {
+            baseDir = process.env.HOME;
+        } else if (process.env.HOMEDRIVE && process.env.HOMEPATH) {
+            baseDir = path.join(process.env.HOMEDRIVE, process.env.HOMEPATH);
+        } else if (process.env.USERPROFILE) {
+            baseDir = process.env.USERPROFILE;
+        }
+        if (!baseDir) {
+            console.error('Unable to find home directory (check env vars HOME, HOMEDRIVE, HOMEPATH and USERPROFILE)');
+            throw 'home directory not found';
+        }
+
+        return path.join(baseDir, '.cabdriver');
+    }
+
     getConfigPath() {
-        var configDir = (process.env.HOME || process.env.HOMEPATH ||
-                     process.env.USERPROFILE) + '/.cabdriver/';
-        return configDir + 'cabdriver.yml';
+        var me = this;
+        var cabdriverDir = me.getCabdriverPath();
+        return cabdriverDir + 'cabdriver.yml';
     }
 
     getCacheBase() {
         var me = this;
-        var cabdriverDir = (process.env.HOME || process.env.HOMEPATH ||
-                     process.env.USERPROFILE) + '/.cabdriver/';
+        var cabdriverDir = me.getCabdriverPath();
 
         if (me.config.cache && me.config.cache.path) {
             return me.config.cache.path;
