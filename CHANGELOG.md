@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Fixed gitlog error see #112
 
 ### Changed
+- **BC-break:** Due to updated dependencies, now at least node v12.0.0 is required
 - Updated a bunch of dependencies
 
 ## 3.0.0 - 2019-12-08
