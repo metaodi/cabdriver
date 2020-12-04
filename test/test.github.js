@@ -60,7 +60,7 @@ describe('Github', function() {
             var apiStub = { 
                 'paginate': eventStub,
                 'users': {'getAuthenticated': userStub},
-                'activity': {'listEventsForUser': {'endpoint': { 'merge': eventsStub}}}
+                'activity': {'listEventsForAuthenticatedUser': {'endpoint': { 'merge': eventsStub}}}
             };
             var authStub = {
                 'getAuth': Sinon.stub().resolves('1234')
@@ -113,7 +113,7 @@ describe('Github', function() {
             cache.putSync('github-events', events);
 
             var apiStub = { 
-                'activity': {'listEventsForUser': {'endpoint': { 'merge': Sinon.stub()}}}
+                'activity': {'listEventsForAuthenticatedUser': {'endpoint': { 'merge': Sinon.stub()}}}
             };
             var authStub = {
                 'getAuth': Sinon.stub().resolves('1234')

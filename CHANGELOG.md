@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 - Check HOMEDRIVE and HOMEPATH for cabdriver directory #109
 - Fixed gitlog error see #112
+- Fixed deprecation warnings from octokit
 
 ### Changed
 - **BC-break:** Due to updated dependencies, now at least node v12.0.0 is required

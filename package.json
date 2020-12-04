@@ -45,7 +45,7 @@
   },
   "homepage": "https://github.com/metaodi/cabdriver",
   "dependencies": {
-    "@octokit/rest": "^16.35.0",
+    "@octokit/rest": "^18.0.12",
     "async": "^3.2.0",
     "bluebird": "^3.7.2",
     "cli-pie": "^2.4.2",
