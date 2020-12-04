@@ -365,4 +365,4 @@ To create a new release follow these steps:
 1. Update the version number in `package.json`
 1. Update the `CHANGELOG.md`
 1. Create a [new release/tag on GitHub](https://github.com/metaodi/cabdriver/releases)
-1. The tagged release will automatically be published on NPM by Travis CI (to do it manually, run `npm publish`)
+1. The tagged release will automatically be published on NPM by the GitHub Actions workflow (to do it manually, run `npm publish`)
