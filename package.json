@@ -5,7 +5,8 @@
   "main": "cabdriver.js",
   "scripts": {
     "test": "node_modules/.bin/nyc node_modules/mocha/bin/mocha",
-    "coverage": "node_modules/.bin/nyc report --reporter=text-lcov | coveralls"
+    "coverage": "node_modules/.bin/nyc report --reporter=text-lcov | coveralls",
+    "lint": "eslint './**/*.js'"
   },
   "preferGlobal": true,
   "engines": {

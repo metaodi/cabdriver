@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/metaodi/cabdriver.svg?branch=master)](https://travis-ci.org/metaodi/cabdriver)
-[![Coverage Status](https://coveralls.io/repos/github/metaodi/cabdriver/badge.svg?branch=master)](https://coveralls.io/github/metaodi/cabdriver?branch=master)
+[![Build cabdriver](https://github.com/metaodi/cabdriver/workflows/Build%20cabdriver/badge.svg)](https://github.com/metaodi/cabdriver/actions?query=workflow%3A%22Build+cabdriver%22)
 
 cabdriver
 =========
@@ -365,4 +364,4 @@ To create a new release follow these steps:
 1. Update the version number in `package.json`
 1. Update the `CHANGELOG.md`
 1. Create a [new release/tag on GitHub](https://github.com/metaodi/cabdriver/releases)
-1. The tagged release will automatically be published on NPM by Travis CI (to do it manually, run `npm publish`)
+1. The tagged release will automatically be published on NPM by the GitHub Actions workflow (to do it manually, run `npm publish`)
