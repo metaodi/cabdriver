@@ -103,7 +103,7 @@ describe('Git', function() {
                 .then(function(result) {
                     var output = stdMocks.flush().stderr;
                     expect(output).to.deep.equal(
-                        ['Error accessing path /path/to/unreadable/readable-child\n']
+                        ['Error accessing path /path/to/unreadable\n']
                     );
                 });
         });
