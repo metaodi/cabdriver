@@ -13,6 +13,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - **BC-break:** Due to updated dependencies, now at least node v12.0.0 is required
 - Updated a bunch of dependencies
 
+### Removed
+- Removed gulp + gulpfile as a dependency
+
 ## 3.0.0 - 2019-12-08
 ### Fixed
 - Fixed Before-after-hook warning (#106), thanks @stefina #102
