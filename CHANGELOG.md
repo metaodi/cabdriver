@@ -4,13 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+
+## 4.0.0 - 2020-12-05
 ### Fixed
 - Check HOMEDRIVE and HOMEPATH for cabdriver directory #109
 - Fixed gitlog error see #112
 - Fixed deprecation warnings from octokit
 
 ### Changed
-- **BC-break:** Due to updated dependencies, now at least node v12.0.0 is required
+- **BC-break:** Due to updated dependencies, now at least node 12.0.0 is required
 - Updated a bunch of dependencies
 
 ### Removed
