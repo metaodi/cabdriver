@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project follows [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
+
+## 4.0.1 - 2020-12-07
 ### Fixed
 - Make sure to correctly join the config path #121
 - For git source: check the error message in property or the error itself #122
