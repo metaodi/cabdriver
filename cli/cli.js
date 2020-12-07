@@ -68,7 +68,7 @@ class Cli {
     getConfigPath() {
         var me = this;
         var cabdriverDir = me.getCabdriverPath();
-        return cabdriverDir + 'cabdriver.yml';
+        return path.join(cabdriverDir, 'cabdriver.yml');
     }
 
     getCacheBase() {

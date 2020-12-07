@@ -151,6 +151,13 @@ describe('CLI', function() {
             expect(cli.getCabdriverPath()).to.be.equal('/home/testhome/.cabdriver');
         });
 
+        it('should get get correct config file (HOME)', function() {          
+            MockFs({'/home/test': {}});
+            process.env = { 'HOME': '/home/test'};
+            var cli = new Cli();
+            expect(cli.getConfigPath()).to.be.equal('/home/test/.cabdriver/cabdriver.yml');
+        });
+
         afterEach(function () {
             process.env = env;
             MockFs.restore();
