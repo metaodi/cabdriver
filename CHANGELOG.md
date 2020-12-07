@@ -5,7 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased][unreleased]
 ### Fixed
-- Make sure to correctly join the config path
+- Make sure to correctly join the config path #121
+- For git source: check the error message in property or the error itself #122
 
 ## 4.0.0 - 2020-12-05
 ### Fixed
